@@ -2,31 +2,28 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import * as Yup from "yup"; // Importamos yup
-import { yupResolver } from "@hookform/resolvers/yup"; // Importamos el resolver
-
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { ROOM_TYPES, ROOM_STATUS } from "@/types.js";
 
-// Creamos el esquema de validación con Yup
 const schema = Yup.object().shape({
-  nombre: Yup.string().required("El nombre es obligatorio"),
-  apellido: Yup.string().required("El apellido es obligatorio"),
+  nombre: Yup.string().required("El nombre es requerido"),
+  apellido: Yup.string().required("El apellido es requerido"),
   email: Yup.string()
     .email("Ingrese un email válido")
     .required("El email es requerido"),
   telefono: Yup.string()
-    .required("El teléfono es obligatorio")
+    .required("El teléfono es requerido")
     .matches(/^[0-9]+$/, "Solo se permiten números"),
   habitacion: Yup.string().required("Debes seleccionar una habitación"),
 });
 
-const ReceptionistForm = () => {
+const Form = () => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -93,6 +90,13 @@ const ReceptionistForm = () => {
 
     if (eliminarHuesped.isConfirmed) {
       setGuests(guests.filter((guest) => guest.habitacionId !== roomId));
+      setRooms(
+        rooms.map((room) =>
+          room.id === roomId
+            ? { ...room, estado: ROOM_STATUS.DISPONIBLE }
+            : room
+        )
+      );
       Swal.fire({
         title: "Huesped eliminado con exito!",
         icon: "success",
@@ -100,12 +104,6 @@ const ReceptionistForm = () => {
     }
 
     reset();
-
-    setRooms(
-      rooms.map((room) =>
-        room.id === roomId ? { ...room, estado: ROOM_STATUS.DISPONIBLE } : room
-      )
-    );
   };
 
   const toggleRoomStatus = (roomId) => {
@@ -156,7 +154,7 @@ const ReceptionistForm = () => {
                   name="nombre"
                   id="nombre"
                   {...register("nombre")}
-                  className="appearance-none block w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
                 {errors.nombre && (
                   <p className="text-red-600 text-sm">
@@ -176,7 +174,7 @@ const ReceptionistForm = () => {
                   id="apellido"
                   name="apellido"
                   {...register("apellido")}
-                  className="appearance-none block w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
                 {errors.apellido && (
                   <p className="text-red-600 text-sm">
@@ -196,7 +194,7 @@ const ReceptionistForm = () => {
                   name="email"
                   id="email"
                   {...register("email")}
-                  className="appearance-none block w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
                 {errors.email && (
                   <p className="text-red-600 text-sm">{errors.email.message}</p>
@@ -232,7 +230,7 @@ const ReceptionistForm = () => {
                 <select
                   name="habitacion"
                   {...register("habitacion")}
-                  className="appearance-none block w-full px-3 py-1 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 >
                   <option value="">Seleccionar habitación</option>
                   {rooms
@@ -330,4 +328,4 @@ const ReceptionistForm = () => {
   );
 };
 
-export default ReceptionistForm;
+export default Form;
