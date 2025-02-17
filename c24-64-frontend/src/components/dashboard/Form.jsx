@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ROOM_TYPES, ROOM_STATUS } from "@/types.js";
 import roomsData from "@/data/rooms.js";
+import User from "@/models/user.js";
 import "./form.css";
 
 const schema = Yup.object().shape({
@@ -33,14 +34,15 @@ const Form = () => {
 
   const registerGuest = (formData) => {
     console.log(formData);
-    const newGuest = {
-      id: Date.now().toString(),
-      ...formData,
-      habitacionId: formData.habitacion,
-    };
-    console.log("nuevo huesped", newGuest);
-
+    const newGuest = new User(
+      formData.nombre,
+      formData.apellido,
+      formData.email,
+      formData.telefono,
+      formData.habitacion
+    );
     setGuests([...guests, newGuest]);
+    console.log("nuevo huesped", newGuest);
 
     setRooms(
       rooms.map((room) =>
