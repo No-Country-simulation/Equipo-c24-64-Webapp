@@ -44,7 +44,7 @@
 | Alan Guillermo Lopez Lopez       | Backend     |               |[GitHub](https://github.com/alanlopez24)                  |
 | Federico Pardo | Backend       |       |[GitHub](https://github.com/federicoPardo999)  
 | Miguel Gabrielli       | Backend       |                      |[GitHub](https://github.com/MAG-dev1) 
-| Juan Carlos Curo inga        | Backend |                |[GitHub](https://github.com/curojuan10)                    |
+| Juan Carlos Curo inga        | Backend |[Linkedin](https://www.linkedin.com/in/juan-carlos-curo-inga-5457892a4/) |                [GitHub](https://github.com/curojuan10)                    |
 
 
 
