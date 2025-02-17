@@ -1,0 +1,1 @@
+//La idea es que aqui vaya el componente de las vistas de las habitaciones y se exporte al Dashboard.jsx de manera que tengamos dos componentes por separado, uno para el formulario y otro para las habitaciones y su status.

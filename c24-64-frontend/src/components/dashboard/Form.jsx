@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ROOM_TYPES, ROOM_STATUS } from "@/types.js";
+import roomsData from "@/data/rooms.js";
+import "./form.css";
 
 const schema = Yup.object().shape({
   nombre: Yup.string().required("El nombre es requerido"),
@@ -19,6 +20,8 @@ const schema = Yup.object().shape({
 });
 
 const Form = () => {
+  const [guests, setGuests] = useState([]);
+  const [rooms, setRooms] = useState(roomsData);
   const {
     register,
     handleSubmit,
@@ -27,31 +30,6 @@ const Form = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const navigate = useNavigate();
-  const [guests, setGuests] = useState([]);
-
-  const [rooms, setRooms] = useState([
-    {
-      id: "101",
-      numero: "101",
-      tipo: ROOM_TYPES.INDIVIDUAL,
-      estado: ROOM_STATUS.DISPONIBLE,
-    },
-    {
-      id: "102",
-      numero: "102",
-      tipo: ROOM_TYPES.DOBLE,
-      estado: ROOM_STATUS.DISPONIBLE,
-    },
-    {
-      id: "103",
-      numero: "103",
-      tipo: ROOM_TYPES.SUITE,
-      estado: ROOM_STATUS.DISPONIBLE,
-    },
-  ]);
-
-  const [selectedRoom, setSelectedRoom] = useState("");
 
   const registerGuest = (formData) => {
     console.log(formData);
@@ -120,7 +98,7 @@ const Form = () => {
       })
     );
   };
-
+  console.log(rooms);
   const getRoomStatusColor = (estado) => {
     switch (estado) {
       case ROOM_STATUS.OCUPADA:
@@ -257,7 +235,7 @@ const Form = () => {
           </div>
 
           {/* Lista de Habitaciones */}
-          <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="bg-white p-6 rounded-lg shadow-md scrollable-container">
             <h2 className="text-xl font-semibold text-black mb-4 flex items-center gap-2">
               Estado de Habitaciones
             </h2>
@@ -297,6 +275,14 @@ const Form = () => {
                         )}
                       </div>
                       <div className="flex gap-2">
+                        {/* {room.estado === ROOM_STATUS.OCUPADA && (
+                          <button
+                            onClick={() => handleCheckout(room.id)}
+                            className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+                          >
+                            Checkout
+                          </button>
+                        )} */}
                         {guest && (
                           <button
                             onClick={() => handleCheckout(room.id)}
@@ -308,7 +294,11 @@ const Form = () => {
                         {!guest && (
                           <button
                             onClick={() => toggleRoomStatus(room.id)}
-                            className="bg-yellow-600 text-white py-1 px-3 rounded-md hover:bg-yellow-700 cursor-pointer"
+                            className={`${
+                              room.estado === ROOM_STATUS.MANTENIMIENTO
+                                ? "bg-green-600 hover:bg-green-700"
+                                : "bg-yellow-600 hover:bg-yellow-700"
+                            } text-white py-1 px-3 rounded-md cursor-pointer`}
                           >
                             {room.estado === ROOM_STATUS.MANTENIMIENTO
                               ? "Cambiar a Disponible"
