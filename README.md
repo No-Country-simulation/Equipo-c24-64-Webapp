@@ -37,14 +37,14 @@
 
 | Nombre                | Rol         | Linkedin                                                             | Portafolio                                   |
 |-----------------------|-------------|----------------------------------------------------------------------|----------------------------------------------|
-| Mauricio Martin Fontana        | Team Leader |[Linkedin](https://www.linkedin.com/in/)      | |
-| Jose Alvarez Domínguez              | Front End |[Linkedin](https://www.linkedin.com/in/)                     |[GitHub](https://github.com/)               |
+| Mauricio Martin Fontana        | Team Leader |[Linkedin](https://www.linkedin.com/in/mauricio-martin-fontana-a9585a58/)      | [GitHub](https://github.com/peladoo)
+| Jose Alvarez Domínguez              | Front End |                    |[GitHub](https://github.com/)               |
 | Enzo Daniel Bertolusso          | Front End   |[Linkedin](https://www.linkedin.com/in/enzobertolusso/)       | [GitHub](https://github.com/enzodb97)  |
-| Juan Gonzalez         | Front End   |[Linkedin](https://www.linkedin.com/in/juan-gonzalez-6278732a3/)       | [GitHub](https://github.com/)  |
-| Alan Guillermo Lopez Lopez       | Backend     |[Linkedin](https://www.linkedin.com/in//)                   |[GitHub](https://github.com/alanlopez24)                  |
-| Federico Pardo | Backend       |[Linkedin](https://www.linkedin.com/in//)         |[GitHub](https://github.com/federicoPardo999)  
-| Miguel Gabrielli       | Backend       |[Linkedin]()                        |[GitHub](https://github.com/MAG-dev1) 
-| Juan Carlos Curo inga        | Backend |[Linkedin](https://www.linkedin.com/in//)                 |[GitHub](https://github.com/curojuan10)                    |
+| Juan Gonzalez         | Front End   |[Linkedin](https://www.linkedin.com/in/juan-gonzalez-6278732a3/)       | [GitHub](https://github.com/juan007-play)  |
+| Alan Guillermo Lopez Lopez       | Backend     |               |[GitHub](https://github.com/alanlopez24)                  |
+| Federico Pardo | Backend       |       |[GitHub](https://github.com/federicoPardo999)  
+| Miguel Gabrielli       | Backend       |                      |[GitHub](https://github.com/MAG-dev1) 
+| Juan Carlos Curo inga        | Backend |                |[GitHub](https://github.com/curojuan10)                    |
 
 
 
