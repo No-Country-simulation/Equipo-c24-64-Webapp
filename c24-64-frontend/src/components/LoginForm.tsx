@@ -1,65 +1,63 @@
 // src/components/LoginForm.tsx
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import { useNavigate } from 'react-router-dom'
-import toast from 'react-hot-toast'
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 interface ILoginInputs {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 const schema = yup.object().shape({
   email: yup
     .string()
-    .email('Ingrese un email válido')
-    .required('El email es requerido'),
-  password: yup
-    .string()
-    .required('La contraseña es requerida')
-})
+    .email("Ingrese un email válido")
+    .required("El email es requerido"),
+  password: yup.string().required("La contraseña es requerida"),
+});
 
 const LoginForm: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ILoginInputs>({
     resolver: yupResolver(schema),
-  })
+  });
 
   const onSubmit = async (data: ILoginInputs) => {
     try {
       // Aquí irá la llamada a tu API de login
-      const response = await fetch('/api/login', {
-        method: 'POST',
+      const response = await fetch("/api/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      })
+      });
 
       if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.message)
+        const error = await response.json();
+        throw new Error(error.message);
       }
 
       // Aquí puedes manejar el token de autenticación
-      const { token } = await response.json()
-      localStorage.setItem('token', token)
+      const { token } = await response.json();
+      localStorage.setItem("token", token);
 
-      toast.success('¡Inicio de sesión exitoso!')
-      navigate('/dashboard') // O a donde quieras redirigir después del login
+      toast.success("¡Inicio de sesión exitoso!");
+      navigate("/dashboard"); // O a donde quieras redirigir después del login
     } catch (error) {
       if (error instanceof Error) {
-        toast.error(error.message)
+        toast.error(error.message);
       } else {
-        toast.error('Error al iniciar sesión')
+        toast.error("Error al iniciar sesión");
       }
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -68,7 +66,7 @@ const LoginForm: React.FC = () => {
           Iniciar Sesión
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          ¿No tienes una cuenta?{' '}
+          ¿No tienes una cuenta?{" "}
           <a
             href="/register"
             className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -90,7 +88,7 @@ const LoginForm: React.FC = () => {
               </label>
               <div className="mt-1">
                 <input
-                  {...register('email')}
+                  {...register("email")}
                   type="email"
                   autoComplete="email"
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -112,7 +110,7 @@ const LoginForm: React.FC = () => {
               </label>
               <div className="mt-1">
                 <input
-                  {...register('password')}
+                  {...register("password")}
                   type="password"
                   autoComplete="current-password"
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -156,14 +154,14 @@ const LoginForm: React.FC = () => {
                 disabled={isSubmitting}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
               >
-                {isSubmitting ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+                {isSubmitting ? "Iniciando sesión..." : "Iniciar Sesión"}
               </button>
             </div>
           </form>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;
