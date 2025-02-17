@@ -1,4 +1,4 @@
-package gestionDeReservas.services;
+package gestionDeReservas.services.impl;
 
 public class HabitacionService {
     
