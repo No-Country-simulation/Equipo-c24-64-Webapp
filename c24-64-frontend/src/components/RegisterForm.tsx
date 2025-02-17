@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 interface IFormInputs {
   nombre: string
   apellido: string
+  direccion:string
   email: string
   telefono: string
   password: string
@@ -17,6 +18,7 @@ interface IFormInputs {
 const schema = yup.object().shape({
   nombre: yup.string().required('El nombre es requerido'),
   apellido: yup.string().required('El apellido es requerido'),
+  direccion: yup.string().required('La dirección es requerido'),
   email: yup
     .string()
     .email('Ingrese un email válido')
@@ -122,6 +124,21 @@ const RegisterForm = () => {
                 />
                 {errors.apellido && (
                   <p className="mt-2 text-sm text-red-600">{errors.apellido.message}</p>
+                )}
+              </div>
+            </div>
+            <div>
+              <label htmlFor="direccion" className="block text-sm font-medium text-gray-700">
+                Dirección
+              </label>
+              <div className="mt-1">
+                <input
+                  {...register('direccion')}
+                  type="text"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+                {errors.direccion && (
+                  <p className="mt-2 text-sm text-red-600">{errors.direccion.message}</p>
                 )}
               </div>
             </div>
