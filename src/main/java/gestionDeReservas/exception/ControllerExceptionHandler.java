@@ -68,4 +68,9 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
         return  ResponseEntity.status(apiError.getStatus()).body(apiError);
     }
+
+    @ExceptionHandler(NotRoomFoundException.class)
+    protected ResponseEntity<?> NotRoomFoundExceptionException(NotRoomFoundException e){
+        return ResponseEntity.status(404).build();
+    }
 }
