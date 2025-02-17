@@ -40,7 +40,7 @@
 | Mauricio Martin Fontana        | Team Leader |[Linkedin](https://www.linkedin.com/in/)      | |
 | Jose Alvarez Domínguez              | Front End |[Linkedin](https://www.linkedin.com/in/)                     |[GitHub](https://github.com/)               |
 | Enzo Daniel Bertolusso          | Front End   |[Linkedin](https://www.linkedin.com/in/enzobertolusso/)       | [GitHub](https://github.com/enzodb97)  |
-| Juan Gonzalez         | Front End   |[Linkedin](https://www.linkedin.com/in//)       | [GitHub](https://github.com/)  |
+| Juan Gonzalez         | Front End   |[Linkedin](https://www.linkedin.com/in/juan-gonzalez-6278732a3/)       | [GitHub](https://github.com/)  |
 | Alan Guillermo Lopez Lopez       | Backend     |[Linkedin](https://www.linkedin.com/in//)                   |[GitHub](https://github.com/alanlopez24)                  |
 | Federico Pardo | Backend       |[Linkedin](https://www.linkedin.com/in//)         |[GitHub](https://github.com/federicoPardo999)  
 | Miguel Gabrielli       | Backend       |[Linkedin]()                        |[GitHub](https://github.com/MAG-dev1) 
