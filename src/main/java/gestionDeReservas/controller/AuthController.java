@@ -1,7 +1,7 @@
 package gestionDeReservas.controller;
 
-import gestionDeReservas.Model.dto.user.LoginRequestDTO;
-import gestionDeReservas.Model.dto.user.RegisterRequestDTO;
+import gestionDeReservas.Model.dto.auth.LoginRequestDTO;
+import gestionDeReservas.Model.dto.auth.RegisterRequestDTO;
 import gestionDeReservas.services.interfaces.IAuthService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

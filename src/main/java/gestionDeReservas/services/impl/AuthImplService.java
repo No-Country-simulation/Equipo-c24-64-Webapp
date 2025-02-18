@@ -1,8 +1,8 @@
 package gestionDeReservas.services.impl;
 
-import gestionDeReservas.Model.dto.user.AuthResponseDTO;
-import gestionDeReservas.Model.dto.user.LoginRequestDTO;
-import gestionDeReservas.Model.dto.user.RegisterRequestDTO;
+import gestionDeReservas.Model.dto.auth.AuthResponseDTO;
+import gestionDeReservas.Model.dto.auth.LoginRequestDTO;
+import gestionDeReservas.Model.dto.auth.RegisterRequestDTO;
 import gestionDeReservas.Model.entity.UserEntity;
 import gestionDeReservas.Model.enums.Role;
 import gestionDeReservas.config.security.jwt.JwtService;

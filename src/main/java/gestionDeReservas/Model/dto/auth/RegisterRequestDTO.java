@@ -1,4 +1,4 @@
-package gestionDeReservas.Model.dto.user;
+package gestionDeReservas.Model.dto.auth;
 
 import lombok.AccessLevel;
 import lombok.Builder;
