@@ -27,6 +27,21 @@ public class AuthImplService implements IAuthService {
     AuthenticationManager authenticationManager;
 
     @Override
+    public AuthResponseDTO register(RegisterRequestDTO userToRegisterDto) {
+        validateRegistration(userToRegisterDto);
+
+        UserEntity user = userFactory.buildUser(userToRegisterDto);
+
+        userRepository.save(user);
+
+        return AuthResponseDTO.builder()
+                .username(userToRegisterDto.username())
+                .token(jwtService.getToken(user))
+                .role(user.getRole())
+                .build();
+    }
+
+    @Override
     public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequestDTO.emailOrUserName(),
@@ -41,29 +56,17 @@ public class AuthImplService implements IAuthService {
                 .build();
     }
 
-    @Override
-    public AuthResponseDTO register(RegisterRequestDTO userToRegisterDto) {
+    private void validateRegistration(RegisterRequestDTO userToRegisterDto) {
         if (userRepository.existsByUsernameOrEmail(userToRegisterDto.username(),
                 userToRegisterDto.mail())) {
-            throw new RegisterException("the user have exists: " + userToRegisterDto.username());
+            throw new RegisterException("the user already exists");
         }
-
-        UserEntity user = userFactory.buildUser(userToRegisterDto);
-
-        userRepository.save(user);
-
-        return AuthResponseDTO.builder()
-                .username(userToRegisterDto.username())
-                .token(jwtService.getToken(user))
-                .role(user.getRole())
-                .build();
     }
 
     private UserEntity findUser(LoginRequestDTO loginRequestDTO){
         return userRepository.findByUsernameOrEmail(loginRequestDTO.emailOrUserName())
                 .orElseThrow(
                         () -> new NotFoundException("user with the name: "
-                                +loginRequestDTO.emailOrUserName()+ " not exists")
-                );
+                                +loginRequestDTO.emailOrUserName()+ " not exists"));
     }
 }
