@@ -1,10 +1,9 @@
-package gestionDeReservas.services.impl;
+package gestionDeReservas.services.implementation;
 
 import gestionDeReservas.Model.dto.auth.AuthResponseDTO;
 import gestionDeReservas.Model.dto.auth.LoginRequestDTO;
 import gestionDeReservas.Model.dto.auth.RegisterRequestDTO;
 import gestionDeReservas.Model.entity.UserEntity;
-import gestionDeReservas.Model.enums.Role;
 import gestionDeReservas.config.security.jwt.JwtService;
 import gestionDeReservas.exception.NotFoundException;
 import gestionDeReservas.exception.RegisterException;
