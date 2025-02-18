@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import gestionDeReservas.factory.ErrorFactory;
+
 @ControllerAdvice(basePackages = "gestionDeReservas.controller")
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -67,5 +69,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
 
         return  ResponseEntity.status(apiError.getStatus()).body(apiError);
+    }
+
+    @ExceptionHandler(NotRoomFoundException.class)
+    protected ResponseEntity<?> NotRoomFoundExceptionException(NotRoomFoundException e){
+        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.ROOM_NOT_FOUND, 404);
+        return ResponseEntity.status(error.getStatus()).body(error);
     }
 }
