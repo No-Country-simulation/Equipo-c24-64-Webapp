@@ -3,9 +3,12 @@
   Frontend
 </h3>
 <p align='left'>
-  <img src='https://img.shields.io/badge/React-61DAFB.svg?style=for-the-badge&logo=React&logoColor=black' />
-   <img src='https://img.shields.io/badge/shadcn/ui-000000.svg?style=for-the-badge&logo=shadcn/ui&logoColor=white' />
-   <img src='https://img.shields.io/badge/Tailwind%20CSS-06B6D4.svg?style=for-the-badge&logo=Tailwind-CSS&logoColor=white' />
+<img src='https://img.shields.io/badge/React-61DAFB.svg?style=for-the-badge&logo=React&logoColor=black' />
+<img src='https://img.shields.io/badge/Vite-646CFF.svg?style=for-the-badge&logo=Vite&logoColor=white' />
+<img src='https://img.shields.io/badge/TypeScript-3178C6.svg?style=for-the-badge&logo=TypeScript&logoColor=white' />
+<img src='https://img.shields.io/badge/shadcn/ui-000000.svg?style=for-the-badge&logo=shadcn/ui&logoColor=white' />
+<img src='https://img.shields.io/badge/Tailwind%20CSS-06B6D4.svg?style=for-the-badge&logo=Tailwind-CSS&logoColor=white' />
+
  
  
  
@@ -34,13 +37,14 @@
 
 | Nombre                | Rol         | Linkedin                                                             | Portafolio                                   |
 |-----------------------|-------------|----------------------------------------------------------------------|----------------------------------------------|
-| Mauricio Martin Fontana        | Team Leader |[Linkedin](https://www.linkedin.com/in/)      | |
-| Jose Alvarez Domínguez              | Front End |[Linkedin](https://www.linkedin.com/in/)                     |[GitHub](https://github.com/)               |
-| Enzo Daniel Bertolusso          | Front End   |[Linkedin](https://www.linkedin.com/in//)       | [GitHub](https://github.com/)  |
-| Alan Guillermo Lopez Lopez       | Backend     |[Linkedin](https://www.linkedin.com/in//)                   |[GitHub](https://github.com/)                  |
-| Federico Pardo | Backend       |[Linkedin](https://www.linkedin.com/in//)        | |
-| Miguel Gabrielli       | Backend       |[Linkedin]()                |         |
-| Juan Carlos Curo inga        | Backend |[Linkedin](https://www.linkedin.com/in//)                 |[GitHub](https://github.com/)                    |
+| Mauricio Martin Fontana        | Team Leader |[Linkedin](https://www.linkedin.com/in/mauricio-martin-fontana-a9585a58/)      | [GitHub](https://github.com/peladoo)
+| Jose Alvarez Domínguez              | Front End |                    |[GitHub](https://github.com/)               |
+| Enzo Daniel Bertolusso          | Front End   |[Linkedin](https://www.linkedin.com/in/enzobertolusso/)       | [GitHub](https://github.com/enzodb97)  |
+| Juan Gonzalez         | Front End   |[Linkedin](https://www.linkedin.com/in/juan-gonzalez-6278732a3/)       | [GitHub](https://github.com/juan007-play)  |
+| Alan Guillermo Lopez Lopez       | Backend     |               |[GitHub](https://github.com/alanlopez24)                  |
+| Federico Pardo | Backend       |       |[GitHub](https://github.com/federicoPardo999)  
+| Miguel Gabrielli       | Backend       |                      |[GitHub](https://github.com/MAG-dev1) 
+| Juan Carlos Curo inga        | Backend |[Linkedin](https://www.linkedin.com/in/juan-carlos-curo-inga-5457892a4/) |                [GitHub](https://github.com/curojuan10)                    |
 
 
 
