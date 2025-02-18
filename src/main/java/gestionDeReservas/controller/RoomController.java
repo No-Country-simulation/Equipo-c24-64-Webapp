@@ -41,8 +41,8 @@ public class RoomController {
         return ResponseEntity.ok(roomCreated);
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<?>  deleteRoom(@RequestParam int id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?>  deleteRoom(@PathVariable("id") Integer id) {
         roomService.deleteRoom(id);
         return ResponseEntity.ok("Room deleted");
     }   

@@ -12,6 +12,6 @@ public interface RoomServiceUI {
     RoomGetDTO getRoomById(int id);
     RoomGetDTO  addRoom(RoomCreateRequestDTO roomCreateRequestDTO);
     RoomGetDTO editRoom(RoomEditRequestDTO roomEditRequestDTO);
-    void deleteRoom(int id);
+    void deleteRoom(Integer id);
 
 }

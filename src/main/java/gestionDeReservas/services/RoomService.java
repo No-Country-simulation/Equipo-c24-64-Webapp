@@ -13,6 +13,7 @@ import gestionDeReservas.exception.NotRoomFoundException;
 import gestionDeReservas.factory.RoomFactory;
 import gestionDeReservas.mapper.RoomMapper;
 import gestionDeReservas.repository.RoomRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class RoomService implements RoomServiceUI {
@@ -64,8 +65,11 @@ public class RoomService implements RoomServiceUI {
     }
 
     @Override
-    public void deleteRoom(int id) {
-        roomRepository.deleteById(id);
+    @Transactional
+    public void deleteRoom(Integer id) {
+        roomRepository.delete(roomRepository
+        .findById(id)
+        .orElseThrow(() -> new NotRoomFoundException("room not found with id" + id)));
     }
 
 
