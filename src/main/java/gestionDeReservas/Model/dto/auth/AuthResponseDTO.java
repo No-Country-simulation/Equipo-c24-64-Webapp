@@ -5,11 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-@Data
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthResponseDTO {
-    String username;
-    String token;
-    Role role;
+public record AuthResponseDTO(String username,
+        String token,
+        Role role) {
 }

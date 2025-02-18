@@ -8,6 +8,7 @@ import gestionDeReservas.Model.enums.Role;
 import gestionDeReservas.config.security.jwt.JwtService;
 import gestionDeReservas.exception.NotFoundException;
 import gestionDeReservas.exception.RegisterException;
+import gestionDeReservas.factory.UserFactory;
 import gestionDeReservas.repository.IUserRepository;
 import gestionDeReservas.services.interfaces.IAuthService;
 import lombok.AccessLevel;
@@ -15,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,20 +24,19 @@ import org.springframework.stereotype.Service;
 public class AuthImplService implements IAuthService {
     IUserRepository userRepository;
     JwtService jwtService;
-    PasswordEncoder passwordEncoder;
+    UserFactory userFactory;
     AuthenticationManager authenticationManager;
 
     @Override
     public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmailOrUserName(),
-                loginRequestDTO.getPassword()));
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequestDTO.emailOrUserName(),
+                loginRequestDTO.password()));
 
-        UserEntity user = userRepository.findByUsernameOrEmail(loginRequestDTO.getEmailOrUserName()).orElseThrow(
-                () -> new NotFoundException("user with the name: "+loginRequestDTO.getEmailOrUserName()+ " not exists")
-        );
+        UserEntity user = findUser(loginRequestDTO);
 
         return AuthResponseDTO.builder()
-                .username(loginRequestDTO.getEmailOrUserName())
+                .username(loginRequestDTO.emailOrUserName())
                 .token(jwtService.getToken(user))
                 .role(user.getRole())
                 .build();
@@ -45,24 +44,27 @@ public class AuthImplService implements IAuthService {
 
     @Override
     public AuthResponseDTO register(RegisterRequestDTO userToRegisterDto) {
-        if (userRepository.existsByUsernameOrEmail(userToRegisterDto.getUsername(),
-                userToRegisterDto.getMail())) {
-            throw new RegisterException("the user have exists: " + userToRegisterDto.getUsername());
+        if (userRepository.existsByUsernameOrEmail(userToRegisterDto.username(),
+                userToRegisterDto.mail())) {
+            throw new RegisterException("the user have exists: " + userToRegisterDto.username());
         }
 
-        UserEntity user = UserEntity.builder()
-                .username(userToRegisterDto.getUsername())
-                .password(passwordEncoder.encode(userToRegisterDto.getPassword()))
-                .email(userToRegisterDto.getMail())
-                .role(Role.CUSTOMER)
-                .build();
+        UserEntity user = userFactory.buildUser(userToRegisterDto);
 
         userRepository.save(user);
 
         return AuthResponseDTO.builder()
-                .username(userToRegisterDto.getUsername())
+                .username(userToRegisterDto.username())
                 .token(jwtService.getToken(user))
                 .role(user.getRole())
                 .build();
+    }
+
+    private UserEntity findUser(LoginRequestDTO loginRequestDTO){
+        return userRepository.findByUsernameOrEmail(loginRequestDTO.emailOrUserName())
+                .orElseThrow(
+                        () -> new NotFoundException("user with the name: "
+                                +loginRequestDTO.emailOrUserName()+ " not exists")
+                );
     }
 }
