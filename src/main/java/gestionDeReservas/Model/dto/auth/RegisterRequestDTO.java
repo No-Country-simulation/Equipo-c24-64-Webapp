@@ -1,9 +1,11 @@
 package gestionDeReservas.Model.dto.auth;
 
 public record RegisterRequestDTO(
-        String username,
+        String email,
         String password,
-        String mail,
+        String name,
+        String lastName,
+        String address,
         String phoneNumber,
         String dni) {
 }

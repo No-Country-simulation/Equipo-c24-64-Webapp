@@ -62,6 +62,7 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST,"/auth/register").permitAll()
                 .requestMatchers(HttpMethod.GET, "/saludo/hola-todos").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers(HttpMethod.POST,"/auth/logout").permitAll()
                 //.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
 

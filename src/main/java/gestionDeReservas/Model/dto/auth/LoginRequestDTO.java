@@ -1,6 +1,6 @@
 package gestionDeReservas.Model.dto.auth;
 
 public record LoginRequestDTO (
-        String emailOrUserName,
+        String email,
         String password){
 }

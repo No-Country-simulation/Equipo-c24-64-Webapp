@@ -5,6 +5,7 @@ import gestionDeReservas.Model.dto.auth.LoginRequestDTO;
 import gestionDeReservas.Model.dto.auth.RegisterRequestDTO;
 import gestionDeReservas.Model.entity.UserEntity;
 import gestionDeReservas.config.security.jwt.JwtService;
+import gestionDeReservas.exception.BadRequestException;
 import gestionDeReservas.exception.NotFoundException;
 import gestionDeReservas.exception.RegisterException;
 import gestionDeReservas.factory.UserFactory;
@@ -35,7 +36,7 @@ public class AuthImplService implements IAuthService {
         userRepository.save(user);
 
         return AuthResponseDTO.builder()
-                .username(userToRegisterDto.username())
+                .username(userToRegisterDto.email())
                 .token(jwtService.getToken(user))
                 .role(user.getRole())
                 .build();
@@ -44,29 +45,27 @@ public class AuthImplService implements IAuthService {
     @Override
     public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequestDTO.emailOrUserName(),
+                new UsernamePasswordAuthenticationToken(loginRequestDTO.email(),
                 loginRequestDTO.password()));
 
-        UserEntity user = findUser(loginRequestDTO);
+        UserEntity user = userRepository.findByEmail(loginRequestDTO.email())
+                .orElseThrow(() -> new NotFoundException("user Not exists"));
 
         return AuthResponseDTO.builder()
-                .username(loginRequestDTO.emailOrUserName())
-                .token(jwtService.getToken(user))
-                .role(user.getRole())
-                .build();
+                    .username(loginRequestDTO.email())
+                    .token(jwtService.getToken(user))
+                    .role(user.getRole())
+                    .build();
+    }
+
+    @Override
+    public void logout(String token) {
+        String jwt = token.substring(7);
+        jwtService.addToBlacklist(jwt);
     }
 
     private void validateRegistration(RegisterRequestDTO userToRegisterDto) {
-        if (userRepository.existsByUsernameOrEmail(userToRegisterDto.username(),
-                userToRegisterDto.mail())) {
+        if (userRepository.existsByEmail(userToRegisterDto.email()))
             throw new RegisterException("the user already exists");
         }
-    }
-
-    private UserEntity findUser(LoginRequestDTO loginRequestDTO){
-        return userRepository.findByUsernameOrEmail(loginRequestDTO.emailOrUserName())
-                .orElseThrow(
-                        () -> new NotFoundException("user with the name: "
-                                +loginRequestDTO.emailOrUserName()+ " not exists"));
-    }
 }

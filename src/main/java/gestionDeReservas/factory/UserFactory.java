@@ -18,8 +18,10 @@ public class UserFactory {
     public UserEntity buildUser(RegisterRequestDTO registerRequestDTO){
         return UserEntity
                 .builder()
-                .username(registerRequestDTO.username())
-                .email(registerRequestDTO.mail())
+                .name(registerRequestDTO.name())
+                .email(registerRequestDTO.email())
+                .lastname(registerRequestDTO.lastName())
+                .address(registerRequestDTO.address())
                 .numberPhone(registerRequestDTO.phoneNumber())
                 .dni(registerRequestDTO.dni())
                 .password(passwordEncoder.encode(registerRequestDTO.password()))

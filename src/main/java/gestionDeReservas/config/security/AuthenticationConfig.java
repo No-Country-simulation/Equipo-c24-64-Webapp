@@ -47,7 +47,7 @@ public class AuthenticationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return usernameOrEmail -> iUserRepository.findByUsernameOrEmail(usernameOrEmail)
-                .orElseThrow(() -> new UsernameNotFoundException("user not founded: " + usernameOrEmail));
+        return email ->  iUserRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("user not founded: " + email));
     }
 }
