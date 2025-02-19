@@ -4,7 +4,7 @@ public record RegisterRequestDTO(
         String email,
         String password,
         String name,
-        String lastName,
+        String lastname,
         String address,
         String phoneNumber,
         String dni) {

@@ -48,8 +48,7 @@ public class AuthImplService implements IAuthService {
                 new UsernamePasswordAuthenticationToken(loginRequestDTO.email(),
                 loginRequestDTO.password()));
 
-        UserEntity user = userRepository.findByEmail(loginRequestDTO.email())
-                .orElseThrow(() -> new NotFoundException("user Not exists"));
+        UserEntity user = findUser(loginRequestDTO);
 
         return AuthResponseDTO.builder()
                     .username(loginRequestDTO.email())
@@ -68,4 +67,10 @@ public class AuthImplService implements IAuthService {
         if (userRepository.existsByEmail(userToRegisterDto.email()))
             throw new RegisterException("the user already exists");
         }
+
+    private UserEntity findUser(LoginRequestDTO loginRequestDTO) {
+        return userRepository.findByEmail(loginRequestDTO.email())
+                .orElseThrow(() -> new NotFoundException("user Not exists"));
+    }
+
 }

@@ -20,7 +20,7 @@ public class UserFactory {
                 .builder()
                 .name(registerRequestDTO.name())
                 .email(registerRequestDTO.email())
-                .lastname(registerRequestDTO.lastName())
+                .lastname(registerRequestDTO.lastname())
                 .address(registerRequestDTO.address())
                 .numberPhone(registerRequestDTO.phoneNumber())
                 .dni(registerRequestDTO.dni())
