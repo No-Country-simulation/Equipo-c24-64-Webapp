@@ -31,7 +31,7 @@ const LoginForm: React.FC = () => {
   const onSubmit = async (data: ILoginInputs) => {
     try {
       // Aquí irá la llamada a tu API de login
-      const response = await fetch("/api/login", {
+      const response = await fetch("http://localhost:8080/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +49,7 @@ const LoginForm: React.FC = () => {
       localStorage.setItem("token", token);
 
       toast.success("¡Inicio de sesión exitoso!");
-      navigate("/dashboard"); // O a donde quieras redirigir después del login
+      navigate("/"); // O a donde quieras redirigir después del login
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);

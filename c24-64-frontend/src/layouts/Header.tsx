@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Menu, X, Heart } from 'lucide-react';
+import React, { useState } from "react";
+import { Menu, X, Heart } from "lucide-react";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,16 +10,18 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="/homepage" className="flex items-center">
-              <span className="text-2xl font-bold text-blue-600">Luxe Haven</span>
+            <a href="/" className="flex items-center">
+              <span className="text-2xl font-bold text-blue-600">
+                Luxe Haven
+              </span>
             </a>
           </div>
 
           {/* Desktop Right Section */}
           <div className="hidden md:flex items-center space-x-8">
             {/* Favorites */}
-            <a 
-              href="/favorites" 
+            <a
+              href="/favorites"
               className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
             >
               <Heart size={20} />
@@ -27,8 +29,8 @@ const Header = () => {
             </a>
 
             {/* Login */}
-            <a 
-              href="/login" 
+            <a
+              href="/login"
               className="text-gray-700 hover:text-blue-600 transition-colors"
             >
               Iniciá sesión
@@ -47,27 +49,27 @@ const Header = () => {
               {/* Dropdown Menu */}
               {isOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 border border-gray-200">
-                  <a 
-                    href="#inicio" 
+                  <a
+                    href="#inicio"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                   >
                     Inicio
                   </a>
-                  <a 
-                    href="#galeria" 
+                  <a
+                    href="#galeria"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                   >
                     Galería
                   </a>
-                  <a 
-                    href="#contacto" 
+                  <a
+                    href="#contacto"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                   >
                     Contacto
                   </a>
                   <div className="border-t border-gray-200 my-2"></div>
-                  <a 
-                    href="/register" 
+                  <a
+                    href="/register"
                     className="block px-4 py-2 text-blue-600 hover:bg-gray-100 transition-colors"
                   >
                     Registrate
@@ -91,40 +93,40 @@ const Header = () => {
       {isOpen && (
         <div className="md:hidden border-t border-gray-200">
           <div className="px-4 py-3 space-y-3">
-            <a 
-              href="/favorites" 
+            <a
+              href="/favorites"
               className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
             >
               <Heart size={20} />
               <span>Favoritos</span>
             </a>
-            <a 
-              href="#inicio" 
+            <a
+              href="#inicio"
               className="block text-gray-700 hover:text-blue-600 transition-colors"
             >
               Inicio
             </a>
-            <a 
-              href="#galeria" 
+            <a
+              href="#galeria"
               className="block text-gray-700 hover:text-blue-600 transition-colors"
             >
               Galería
             </a>
-            <a 
-              href="#contacto" 
+            <a
+              href="#contacto"
               className="block text-gray-700 hover:text-blue-600 transition-colors"
             >
               Contacto
             </a>
             <div className="border-t border-gray-200 pt-3">
-              <a 
-                href="/login" 
+              <a
+                href="/login"
                 className="block text-gray-700 hover:text-blue-600 transition-colors"
               >
                 Iniciá sesión
               </a>
-              <a 
-                href="/register" 
+              <a
+                href="/register"
                 className="block text-blue-600 hover:text-blue-700 transition-colors mt-3"
               >
                 Registrate
