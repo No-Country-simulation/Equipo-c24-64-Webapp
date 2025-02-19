@@ -5,9 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import gestionDeReservas.Model.dto.RoomCreateRequestDTO;
-import gestionDeReservas.Model.dto.RoomGetDTO;
-import gestionDeReservas.services.RoomServiceUI;
+import gestionDeReservas.Model.dto.RoomDTO.RoomCreateRequestDTO;
+import gestionDeReservas.Model.dto.RoomDTO.RoomGetDTO;
+import gestionDeReservas.services.Interface.RoomServiceUI;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
