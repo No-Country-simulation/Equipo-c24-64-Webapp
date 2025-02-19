@@ -73,5 +73,4 @@ public class RoomService implements RoomServiceUI {
         .orElseThrow(() -> new NotRoomFoundException("room not found with id" + id)));
     }
 
-
 }

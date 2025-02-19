@@ -31,7 +31,7 @@ public class UserEntity implements UserDetails {
     Role role;
 
     @OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL)
-    Set<Reservation> reservations;
+    Set<Booking> bookings;
 
     String email;
     String password;

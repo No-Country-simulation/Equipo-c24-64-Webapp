@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class Reservation {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
@@ -29,9 +29,9 @@ public class Reservation {
     Double totalPrice;
     Integer numberOfPeople;
 
-    @Column(name = "start_date")
-    LocalDate startDate;
-    @Column(name = "end_date")
-    LocalDate endDate;
+    @Column(name = "check_in")
+    LocalDate checkIn;
+    @Column(name = "check_out")
+    LocalDate checkOut;
 
 }

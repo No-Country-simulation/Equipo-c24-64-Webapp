@@ -1,4 +1,4 @@
-package gestionDeReservas.services.interfaces;
+package gestionDeReservas.services.Interface;
 
 import gestionDeReservas.Model.dto.auth.AuthResponseDTO;
 import gestionDeReservas.Model.dto.auth.LoginRequestDTO;
