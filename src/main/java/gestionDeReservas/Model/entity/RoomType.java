@@ -9,8 +9,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -24,10 +22,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Room {
+public class RoomType {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "room_id")
+    @Column(name = "type_room_id")
     private Integer id;
 
     @Column(name = "room_name")
@@ -45,7 +44,10 @@ public class Room {
     @Max(7)
     private Integer capacity;
 
-    @ManyToOne
-    @JoinColumn(name = "type_room_id", nullable = false)
-    private RoomType roomType;
+    @Column(name = "price")
+    private Double price;
+
+     @OneToMany(mappedBy = "roomType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Room> rooms;
+
 }

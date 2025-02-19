@@ -1,9 +1,9 @@
-package gestionDeReservas.Model.dto;
+package gestionDeReservas.Model.dto.RoomDTO;
 
 import lombok.Builder;
 
 @Builder
-public record RoomEditRequestDTO(
+public record RoomGetDTO(
     Integer id,
     String name,
     String description,

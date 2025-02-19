@@ -1,18 +1,19 @@
-package gestionDeReservas.services;
+package gestionDeReservas.services.implementation;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import gestionDeReservas.Model.dto.RoomCreateRequestDTO;
-import gestionDeReservas.Model.dto.RoomEditRequestDTO;
-import gestionDeReservas.Model.dto.RoomGetDTO;
+import gestionDeReservas.Model.dto.RoomDTO.RoomCreateRequestDTO;
+import gestionDeReservas.Model.dto.RoomDTO.RoomEditRequestDTO;
+import gestionDeReservas.Model.dto.RoomDTO.RoomGetDTO;
 import gestionDeReservas.Model.entity.Room;
 import gestionDeReservas.exception.NotRoomFoundException;
 import gestionDeReservas.factory.RoomFactory;
 import gestionDeReservas.mapper.RoomMapper;
 import gestionDeReservas.repository.RoomRepository;
+import gestionDeReservas.services.Interface.RoomServiceUI;
 import jakarta.transaction.Transactional;
 
 @Service
