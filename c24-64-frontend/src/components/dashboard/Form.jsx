@@ -16,8 +16,15 @@ const schema = Yup.object().shape({
     .required("El email es requerido"),
   telefono: Yup.string()
     .required("El teléfono es requerido")
-    .matches(/^[0-9]+$/, "Solo se permiten números"),
+    .matches(/^[0-9]+$/, "Solo se permiten números")
+    .min(6, "El teléfono debe tener mínimo 6 números.")
+    .max(15, "El teléfono debe tener mínimo 6 números."),
   habitacion: Yup.string().required("Debes seleccionar una habitación"),
+  dni: Yup.string()
+    .required("El dni es requerido")
+    .matches(/^[0-9]+$/, "Solo se permiten números")
+    .min(5, "El DNI debe tener al menos 5 caracteres")
+    .max(10, "El DNI no puede tener más de 10 caracteres"),
 });
 
 const Form = () => {
@@ -37,6 +44,7 @@ const Form = () => {
     const newGuest = new User(
       formData.nombre,
       formData.apellido,
+      formData.dni,
       formData.email,
       formData.telefono,
       formData.habitacion
@@ -160,6 +168,24 @@ const Form = () => {
                   <p className="text-red-600 text-sm">
                     {errors.apellido.message}
                   </p>
+                )}
+              </div>
+              <div className="mt-1">
+                <label
+                  htmlFor="apellido"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  DNI
+                </label>
+                <input
+                  type="number"
+                  id="dni"
+                  name="dni"
+                  {...register("dni")}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+                {errors.dni && (
+                  <p className="text-red-600 text-sm">{errors.dni.message}</p>
                 )}
               </div>
               <div className="mt-1">
