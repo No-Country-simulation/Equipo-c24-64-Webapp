@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 interface IFormInputs {
   nombre: string
   apellido: string
+  dni: string
   direccion:string
   email: string
   telefono: string
@@ -19,6 +20,11 @@ const schema = yup.object().shape({
   nombre: yup.string().required('El nombre es requerido'),
   apellido: yup.string().required('El apellido es requerido'),
   direccion: yup.string().required('La dirección es requerido'),
+  dni: yup    
+    .string()
+    .matches(/^[0-9]+$/, 'Solo se permiten números')
+    .min(7, 'Mínimo 7 dígitos')
+    .required('El DNI es requerido'),
   email: yup
     .string()
     .email('Ingrese un email válido')
@@ -52,7 +58,7 @@ const RegisterForm = () => {
 
   const onSubmit = async (data: IFormInputs) => {
     try {
-      const response = await fetch('/api/register', {
+      const response = await fetch('http://localhost:8080/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -126,6 +132,21 @@ const RegisterForm = () => {
                   <p className="mt-2 text-sm text-red-600">{errors.apellido.message}</p>
                 )}
               </div>
+            </div>
+            <div>
+              <label htmlFor="dni" className="block text-sm font-medium text-gray-700">
+                DNI
+              </label>
+              <div className="mt-1">
+                <input
+                  {...register('dni')}
+                  type="dni"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+                {errors.dni && (
+                  <p className="mt-2 text-sm text-red-600">{errors.dni.message}</p>
+                )}
+              </div>  
             </div>
             <div>
               <label htmlFor="direccion" className="block text-sm font-medium text-gray-700">
