@@ -40,7 +40,6 @@ const Form = () => {
   });
 
   const registerGuest = (formData) => {
-    console.log(formData);
     const newGuest = new User(
       formData.nombre,
       formData.apellido,
@@ -108,7 +107,7 @@ const Form = () => {
       })
     );
   };
-  console.log(rooms);
+
   const getRoomStatusColor = (estado) => {
     switch (estado) {
       case ROOM_STATUS.OCUPADA:
@@ -329,8 +328,8 @@ const Form = () => {
                             } text-white py-1 px-3 rounded-md cursor-pointer`}
                           >
                             {room.estado === ROOM_STATUS.MANTENIMIENTO
-                              ? "Cambiar a Disponible"
-                              : "Cambiar a Mantenimiento"}
+                              ? "Ir a Disponible"
+                              : "Ir a Mantenimiento"}
                           </button>
                         )}
                       </div>
