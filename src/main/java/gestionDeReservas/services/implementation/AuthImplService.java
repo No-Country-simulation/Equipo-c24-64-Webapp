@@ -5,7 +5,8 @@ import gestionDeReservas.Model.dto.auth.LoginRequestDTO;
 import gestionDeReservas.Model.dto.auth.RegisterRequestDTO;
 import gestionDeReservas.Model.entity.UserEntity;
 import gestionDeReservas.config.security.jwt.JwtService;
-import gestionDeReservas.exception.NotFoundException;
+import gestionDeReservas.exception.LoginException;
+import gestionDeReservas.exception.UserNotFoundException;
 import gestionDeReservas.exception.RegisterException;
 import gestionDeReservas.factory.UserFactory;
 import gestionDeReservas.repository.IUserRepository;
@@ -69,7 +70,7 @@ public class AuthImplService implements IAuthService {
 
     private UserEntity findUser(LoginRequestDTO loginRequestDTO) {
         return userRepository.findByEmail(loginRequestDTO.email())
-                .orElseThrow(() -> new NotFoundException("user Not exists"));
+                .orElseThrow(() -> new LoginException("user Not exists"));
     }
 
 }
