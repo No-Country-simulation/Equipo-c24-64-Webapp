@@ -1,14 +1,14 @@
 import React from "react";
 import Form from "@/components/dashboard/Form.jsx";
+import Header from "@/layouts/Header";
 
 function Dashboard() {
   return (
     <>
-      <h1 className="text-3xl font-bold text-gray-800 text-center gap-2">
-        Receptionist View
-      </h1>
-
-      <Form />
+      <Header />
+      <div className="mt-16">
+        <Form />
+      </div>
       {/* <Rooms /> */}
     </>
   );
