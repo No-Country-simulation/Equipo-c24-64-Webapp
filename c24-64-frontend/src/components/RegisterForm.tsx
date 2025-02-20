@@ -18,7 +18,7 @@ interface IFormInputs {
 
 const schema = yup.object().shape({
   name: yup.string().required("El nombre es requerido"),
-  lastname: yup.string().required("El apellido es requerido"),
+  lastname: yup.string(). required("El apellido es requerido"),
   address: yup.string().required("La dirección es requerido"),
   email: yup
     .string()

@@ -2,8 +2,9 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 interface ILoginInputs {
   email: string;
@@ -52,15 +53,14 @@ const LoginForm: React.FC = () => {
       navigate("/"); // O a donde quieras redirigir después del login
     } catch (error) {
       if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("Error al iniciar sesión");
+        toast.error("Error al iniciar sesión", { duration: 3000 });
       }
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Iniciar Sesión

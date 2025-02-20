@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { Cloud, CloudRain, Sun, Loader2 } from "lucide-react";
 
 interface WeatherData {
@@ -26,7 +26,7 @@ const Weather: React.FC = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [forecast, setForecast] = useState<ForecastData | null>(null);
   const [loading, setLoading] = useState(true);
-  
+
   const API_KEY = "6d51cd4aa4deb04d9eaa166f1616a848";
   const CITY = "Buenos Aires";
 
@@ -34,8 +34,12 @@ const Weather: React.FC = () => {
     const fetchData = async () => {
       try {
         const [weatherResponse, forecastResponse] = await Promise.all([
-          fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&units=metric&appid=${API_KEY}&lang=es`),
-          fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${CITY}&units=metric&appid=${API_KEY}&lang=es`)
+          fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${CITY}&units=metric&appid=${API_KEY}&lang=es`
+          ),
+          fetch(
+            `https://api.openweathermap.org/data/2.5/forecast?q=${CITY}&units=metric&appid=${API_KEY}&lang=es`
+          ),
         ]);
 
         const weatherData = await weatherResponse.json();
@@ -55,9 +59,9 @@ const Weather: React.FC = () => {
 
   const getWeatherIcon = (main: string) => {
     switch (main.toLowerCase()) {
-      case 'clear':
+      case "clear":
         return <Sun className="w-12 h-12 text-yellow-400" />;
-      case 'rain':
+      case "rain":
         return <CloudRain className="w-12 h-12 text-blue-400" />;
       default:
         return <Cloud className="w-12 h-12 text-gray-400" />;
@@ -65,17 +69,25 @@ const Weather: React.FC = () => {
   };
 
   const getDayName = (dateStr: string) => {
-    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const days = [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado",
+    ];
     const date = new Date(dateStr);
     return days[date.getDay()];
   };
 
   const getForecastDays = () => {
     if (!forecast) return [];
-    
+
     const uniqueDays = new Map();
-    
-    forecast.list.forEach(item => {
+
+    forecast.list.forEach((item) => {
       const date = new Date(item.dt_txt).toLocaleDateString();
       if (!uniqueDays.has(date)) {
         uniqueDays.set(date, item);
@@ -98,8 +110,10 @@ const Weather: React.FC = () => {
   return (
     <div className="w-full max-w-3xl mx-auto rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 shadow-lg overflow-hidden">
       <div className="p-6">
-        <h2 className="text-2xl font-bold text-center text-blue-900 mb-6">{CITY}</h2>
-        
+        <h2 className="text-2xl font-bold text-center text-blue-900 mb-6">
+          {CITY}
+        </h2>
+
         {weather && (
           <div className="space-y-6">
             {/* Current Weather */}
@@ -131,7 +145,7 @@ const Weather: React.FC = () => {
                   className="bg-white p-4 rounded-lg shadow-sm text-center transform transition-transform duration-200 hover:scale-105"
                 >
                   <p className="font-semibold text-blue-900 mb-2">
-                    {index === 0 ? 'Hoy' : getDayName(day.dt_txt)}
+                    {index === 0 ? "Hoy" : getDayName(day.dt_txt)}
                   </p>
                   {getWeatherIcon(day.weather[0].main)}
                   <p className="text-2xl font-bold text-blue-900 mt-2">
