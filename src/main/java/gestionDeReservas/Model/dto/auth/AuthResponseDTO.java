@@ -6,5 +6,7 @@ import lombok.Builder;
 public record AuthResponseDTO(
         String username,
         String token,
-        Role role) {
+        Role role,
+        String name,
+        String lastname) {
 }

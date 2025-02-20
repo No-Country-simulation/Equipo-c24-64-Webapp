@@ -38,6 +38,8 @@ public class AuthImplService implements IAuthService {
         return AuthResponseDTO.builder()
                 .username(userToRegisterDto.email())
                 .token(jwtService.getToken(user))
+                .lastname(user.getLastname())
+                .name(user.getName())
                 .role(user.getRole())
                 .build();
     }
@@ -54,6 +56,8 @@ public class AuthImplService implements IAuthService {
                     .username(loginRequestDTO.email())
                     .token(jwtService.getToken(user))
                     .role(user.getRole())
+                    .lastname(user.getLastname())
+                    .name(user.getName())
                     .build();
     }
 
