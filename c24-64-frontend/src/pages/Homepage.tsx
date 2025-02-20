@@ -38,9 +38,8 @@ const Home: React.FC = () => {
         <div className="flex flex-wrap gap-6 justify-center">
           {hasHotels ? (
             hotels.map((hotel) => (
-              <a href={hotel.link}>
+              <a href={hotel.link} key={hotel.id}>
                 <HotelCard
-                  key={hotel.id}
                   image={hotel.image}
                   title={hotel.title}
                   location={hotel.location}

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 const Hero: React.FC = () => {
   return (
     <section className="relative w-full h-screen flex items-center justify-center bg-cover bg-center hero-bg" id="hero" 
-      style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}>
+      style={{ backgroundImage: "url('/images/hero-bg.webp')" }}>
       <div className="absolute inset-0 bg-opacity-50"></div>
       <motion.div 
         initial={{ opacity: 0, y: 50 }}
