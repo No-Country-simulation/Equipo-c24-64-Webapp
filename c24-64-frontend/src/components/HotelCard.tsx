@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
+
 interface HotelCardProps {
   image: string;
   title: string;

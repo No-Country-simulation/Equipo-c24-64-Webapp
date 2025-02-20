@@ -93,14 +93,12 @@ const Contact: React.FC = () => {
             {errors.message?.message}
           </p>
         </div>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.3 }}
+        <button
           type="submit"
-          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-lg"
+          className="w-full cursor-pointer bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-lg"
         >
           Enviar Mensaje
-        </motion.button>
+        </button>
       </motion.form>
     </section>
   );
