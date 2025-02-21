@@ -10,6 +10,7 @@ import gestionDeReservas.Model.dto.RoomDTO.RoomEditRequestDTO;
 import gestionDeReservas.Model.dto.RoomDTO.RoomGetDTO;
 import gestionDeReservas.Model.entity.Room;
 import gestionDeReservas.exception.NotRoomFoundException;
+import gestionDeReservas.exception.RoomTypeNotFoundException;
 import gestionDeReservas.factory.RoomFactory;
 import gestionDeReservas.mapper.RoomMapper;
 import gestionDeReservas.repository.RoomRepository;
@@ -38,7 +39,7 @@ public class RoomService implements RoomServiceUI {
     }
 
     @Override
-    public RoomGetDTO getRoomById(int id) {
+    public RoomGetDTO getRoomById(int id) throws Exception{
         Room room = roomRepository
         .findById(id)
         .orElseThrow(() -> new NotRoomFoundException("room not found with id" + id)) ;
@@ -47,14 +48,14 @@ public class RoomService implements RoomServiceUI {
     }
 
     @Override
-    public RoomGetDTO  addRoom(RoomCreateRequestDTO roomCreateRequestDTO) {
+    public RoomGetDTO  addRoom(RoomCreateRequestDTO roomCreateRequestDTO) throws Exception {
         Room room = roomFactory.buildRoom(roomCreateRequestDTO);
         return roomMapper.toGetDTO(roomRepository.save(room));
          
     }
 
     @Override
-    public RoomGetDTO editRoom(RoomEditRequestDTO roomEditRequestDTO) {
+    public RoomGetDTO editRoom(RoomEditRequestDTO roomEditRequestDTO) throws Exception {
         Room room = roomRepository
         .findById(roomEditRequestDTO.id())
         .orElseThrow(() -> new NotRoomFoundException("room not found with id" + roomEditRequestDTO.id())) ;
@@ -62,12 +63,17 @@ public class RoomService implements RoomServiceUI {
         room.setName(roomEditRequestDTO.name());
         room.setDescription(roomEditRequestDTO.description());
         room.setCapacity(roomEditRequestDTO.capacity());
+        if (roomEditRequestDTO.typeRoomID() != null) {
+            room.setRoomType(roomFactory
+            .getTypeRoomService()
+            .findById(roomEditRequestDTO.typeRoomID()));
+        }
         return roomMapper.toGetDTO(roomRepository.save(room));
     }
 
     @Override
     @Transactional
-    public void deleteRoom(Integer id) {
+    public void deleteRoom(Integer id) throws Exception {
         roomRepository.delete(roomRepository
         .findById(id)
         .orElseThrow(() -> new NotRoomFoundException("room not found with id" + id)));

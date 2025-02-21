@@ -14,6 +14,7 @@ public class RoomTypeMapper {
         .name(type.getName())
         .capacity(type.getCapacity())
         .description(type.getDescription())
+        .price(type.getPrice())
         .build();
         
     }

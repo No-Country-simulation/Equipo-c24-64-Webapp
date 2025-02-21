@@ -7,7 +7,8 @@ public record RoomEditRequestDTO(
     Integer id,
     String name,
     String description,
-    Integer capacity
+    Integer capacity,
+    Integer typeRoomID
 ) {
     
 }
