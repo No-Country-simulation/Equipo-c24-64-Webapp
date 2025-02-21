@@ -78,7 +78,6 @@ export const BackgroundBeams: React.FC<BackgroundBeamsProps> = React.memo(
           height="300%"
           viewBox="0 0 2784 1264"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
         >
           {paths.map((path, index) => (
             <motion.path
