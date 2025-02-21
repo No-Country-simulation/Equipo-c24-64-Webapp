@@ -2,20 +2,15 @@ package gestionDeReservas.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import gestionDeReservas.Model.dto.RoomDTO.RoomCreateRequestDTO;
 import gestionDeReservas.Model.dto.RoomDTO.RoomGetDTO;
 import gestionDeReservas.services.Interface.RoomServiceUI;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 
 
 @RestController
@@ -36,8 +31,14 @@ public class RoomController {
     }
     
     @PostMapping("")
-    public ResponseEntity<?>  createRoom(@RequestBody RoomCreateRequestDTO roomRequestDTO) {
-        RoomGetDTO roomCreated = roomService.addRoom(roomRequestDTO);
+    public ResponseEntity<?>  createRoom(@RequestPart("room") RoomCreateRequestDTO roomRequestDTO, @RequestPart List<MultipartFile> files) {
+        RoomGetDTO roomCreated = roomService.addRoom(roomRequestDTO, files);
+        return ResponseEntity.ok(roomCreated);
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<?>  uploadRoomImages(@PathVariable int id, @RequestPart List<MultipartFile> files) {
+        RoomGetDTO roomCreated = roomService.uploadRoomImages(id, files);
         return ResponseEntity.ok(roomCreated);
     }
 
@@ -45,7 +46,6 @@ public class RoomController {
     public ResponseEntity<?>  deleteRoom(@PathVariable("id") Integer id) {
         roomService.deleteRoom(id);
         return ResponseEntity.ok("Room deleted");
-    }   
-    
+    }
 }
 

@@ -1,5 +1,6 @@
 package gestionDeReservas.mapper;
 
+import gestionDeReservas.Model.dto.ImageDTO.ImageGetDTO;
 import org.springframework.stereotype.Component;
 
 import gestionDeReservas.Model.dto.RoomDTO.RoomGetDTO;
@@ -9,13 +10,18 @@ import gestionDeReservas.Model.entity.Room;
 public class RoomMapper {
     
     public RoomGetDTO toGetDTO(Room room){
+        ImageMapper imageMapper = new ImageMapper();
+
         return RoomGetDTO
-        .builder()
-        .id(room.getId())
-        .name(room.getName())
-        .description(room.getDescription())
-        .capacity(room.getCapacity())
-        .build();
+                .builder()
+                .id(room.getId())
+                .name(room.getName())
+                .description(room.getDescription())
+                .capacity(room.getCapacity())
+                .images(room.getImages()
+                        .stream()
+                        .map(imageMapper::toImageGetDTO).toList())
+                .build();
     }
 
 }

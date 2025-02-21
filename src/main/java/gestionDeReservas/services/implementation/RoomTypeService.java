@@ -1,6 +1,9 @@
 package gestionDeReservas.services.implementation;
 
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,34 +38,54 @@ public class RoomTypeService implements TypeRoomServiceUI {
     }
 
     @Override
-    public RoomType getTypeById(Integer id) {
+    public RoomType getTypeById(Integer id) throws Exception {
         RoomType type = roomTypeRepository.findById(id)
-        .orElseThrow(() -> new RoomTypeNotFoundException("Room type not found"));
+                .orElseThrow(() -> new RoomTypeNotFoundException("Room type not found"));
         return type;
     }
 
     @Override
-    public RoomTypeGetDTO createTypeRoom(CreateTypeRoomDTO roomTOCreate) {
+    public RoomTypeGetDTO createTypeRoom(CreateTypeRoomDTO roomTOCreate) throws Exception{
         RoomType room = typeRoomFactory.buildRoomType(roomTOCreate);
         roomTypeRepository.save(room);
         return roomTypeMapper.toGetDTO(room);
     }
 
     @Override
-    public void deleteTypeRoom(Integer id) {
+    public void deleteTypeRoom(Integer id) throws Exception {
+        RoomType room = roomTypeRepository
+                .findById(id)
+                .orElseThrow(() -> new RoomTypeNotFoundException("Room type not found"));
         roomTypeRepository.deleteById(id);
     }
 
     @Override
-    public RoomTypeGetDTO editTypeRoom(EditRoomTypeDTO roomType) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'editTypeRoom'");
+    public RoomTypeGetDTO editTypeRoom(EditRoomTypeDTO roomType) throws Exception{
+
+        Integer id = roomType.id();
+        RoomType room = roomTypeRepository
+                .findById(id)
+                .orElseThrow(() -> new RoomTypeNotFoundException("Room type not found"));
+
+        room.setName(roomType.name());
+        room.setDescription(roomType.description());
+        room.setPrice(roomType.price());
+        room.setCapacity(roomType.capacity());
+
+        roomTypeRepository.save(room);
+        return roomTypeMapper.toGetDTO(room);
     }
 
-   
 
-  
+    public RoomType findById(Integer typeid){
+        return roomTypeRepository
+                .findById(typeid)
+                .orElseThrow(() -> new RoomTypeNotFoundException("room type not found in database"));
+    }
 
-    
-    
+
+
+
+
+
 }

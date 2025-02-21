@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import gestionDeReservas.Model.dto.CloudinaryDTO.CloudinaryResponseDTO;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
@@ -12,6 +14,7 @@ import com.cloudinary.utils.ObjectUtils;
 
 import gestionDeReservas.services.Interface.CloudinaryServiceUI;
 
+@Service
 public class CloudinaryService implements CloudinaryServiceUI{
 
     private Cloudinary cloudinary;
@@ -20,29 +23,22 @@ public class CloudinaryService implements CloudinaryServiceUI{
         this.cloudinary = cloudinary;
     }
 
-
     @Override
-    public List<String> uploadFiles(List<MultipartFile> files) {
-        List<String> urls = new ArrayList<>();
-        for (MultipartFile multipartFile : files) {
-            urls.add(uploadImage(multipartFile));
-        }
-        return urls;
+    public List<CloudinaryResponseDTO> uploadFiles(List<byte[]> bytes) {
+        return uploadFiles(bytes, null);
     }
 
     @Override
-    public List<String> uploadFiles(List<MultipartFile> files, String folder) {
-        List<String> urls = new ArrayList<>();
-        for (MultipartFile multipartFile : files) {
-            urls.add(uploadImage(multipartFile,folder));
-        }
-
-        return urls;
+    public List<CloudinaryResponseDTO> uploadFiles(List<byte[]> bytes, String folder) {
+        return bytes.stream().map(array ->{
+           return uploadImage(array, folder);
+        }).toList();
     }
 
-    public boolean deleteFile(String fileName) {
+    @Override
+    public boolean deleteFile(String pulicId) {
         try {
-            var result = cloudinary.uploader().destroy(fileName, ObjectUtils.emptyMap());
+            var result = cloudinary.uploader().destroy(pulicId, ObjectUtils.emptyMap());
             String response = result.get("result").toString();
             return response.equals("ok") ;
         } catch (Exception e) {
@@ -50,36 +46,25 @@ public class CloudinaryService implements CloudinaryServiceUI{
         }
     }
 
-
-     public String uploadImage(MultipartFile file, String folder){
-        var param = ObjectUtils.asMap(
-            "overwrite", true,
-            "folder", folder
-        );
-        try {
-            var result = cloudinary.uploader().upload(file.getBytes(), param);
-            return result.get("url").toString();
-        } catch (IOException e) {
-            throw new RuntimeException();
-        }
-    }
-
-    
-    public String uploadImage(MultipartFile file){
+    public CloudinaryResponseDTO uploadImage(byte[] bytes, String folder){
         var param = ObjectUtils.asMap(
             "overwrite", true
         );
-        try {
-            return uploadToCloudinary(file.getBytes(), param);
-        } catch (IOException e) {
-            throw new RuntimeException();
+
+        if (folder != null && !folder.isEmpty()){
+            param.put("folder", folder);
         }
+
+        return uploadToCloudinary(bytes, param);
     }
 
-    public String uploadToCloudinary(byte[] bytes, Map<String,Object> param){
+    public CloudinaryResponseDTO uploadToCloudinary(byte[] bytes, Map<String,Object> param){
         try {
             var result = cloudinary.uploader().upload(bytes, param);
-            return result.get("url").toString();
+            String url =  result.get("url").toString();
+            String publicId = result.get("public_id").toString();
+
+            return new CloudinaryResponseDTO(url, publicId);
         } catch (IOException e) {
             throw new RuntimeException();
         } 

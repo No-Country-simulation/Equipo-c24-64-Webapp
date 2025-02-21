@@ -9,9 +9,9 @@ import gestionDeReservas.Model.entity.RoomType;
 
 public interface TypeRoomServiceUI {
     
-    RoomTypeGetDTO createTypeRoom(CreateTypeRoomDTO roomTOCreate);
+    RoomTypeGetDTO createTypeRoom(CreateTypeRoomDTO roomTOCreate) throws Exception;
     void deleteTypeRoom(Integer id);
-    RoomTypeGetDTO editTypeRoom(EditRoomTypeDTO roomType);
+    RoomTypeGetDTO editTypeRoom(EditRoomTypeDTO roomType) throws Exception;
     List<RoomTypeGetDTO> getAllTypesRooms();
-    RoomType getTypeById(Integer id);
+    RoomType getTypeById(Integer id) throws Exception;
 }
