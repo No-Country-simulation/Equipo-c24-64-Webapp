@@ -40,7 +40,7 @@ public class RoomTypeService implements TypeRoomServiceUI {
     @Override
     public RoomType getTypeById(Integer id) throws Exception {
         RoomType type = roomTypeRepository.findById(id)
-                .orElseThrow(() -> new RoomTypeNotFoundException("Room type not found"));
+        .orElseThrow(() -> new RoomTypeNotFoundException("Room type not found"));
         return type;
     }
 
@@ -54,8 +54,8 @@ public class RoomTypeService implements TypeRoomServiceUI {
     @Override
     public void deleteTypeRoom(Integer id) throws Exception {
         RoomType room = roomTypeRepository
-                .findById(id)
-                .orElseThrow(() -> new RoomTypeNotFoundException("Room type not found"));
+        .findById(id)
+        .orElseThrow(() -> new RoomTypeNotFoundException("Room type not found"));
         roomTypeRepository.deleteById(id);
     }
 
@@ -64,8 +64,8 @@ public class RoomTypeService implements TypeRoomServiceUI {
 
         Integer id = roomType.id();
         RoomType room = roomTypeRepository
-                .findById(id)
-                .orElseThrow(() -> new RoomTypeNotFoundException("Room type not found"));
+        .findById(id)
+        .orElseThrow(() -> new RoomTypeNotFoundException("Room type not found"));
 
         room.setName(roomType.name());
         room.setDescription(roomType.description());
@@ -79,8 +79,8 @@ public class RoomTypeService implements TypeRoomServiceUI {
 
     public RoomType findById(Integer typeid){
         return roomTypeRepository
-                .findById(typeid)
-                .orElseThrow(() -> new RoomTypeNotFoundException("room type not found in database"));
+        .findById(typeid)
+        .orElseThrow(() -> new RoomTypeNotFoundException("room type not found in database"));
     }
 
 

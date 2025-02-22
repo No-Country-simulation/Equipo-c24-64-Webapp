@@ -1,3 +1,6 @@
+logging:
+  level:
+    org.springframework.security: DEBUG
 server:
   servlet:
     context-path: /api
@@ -13,15 +16,9 @@ spring:
 
   application:
     name: "Gestion De Reservas"
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: admin
-    password: admin
 
-  h2:
-    console:
-      enabled: true
+  profiles:
+    active: local  # o 'prod' para producción
   jpa:
     hibernate:
       ddl-auto: update
