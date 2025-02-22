@@ -30,8 +30,13 @@ public class ImageService implements ImageServiceUI {
     @Override
     public void removeImage(int id) throws Exception {
         Image image = imageRepository.findById(id).orElseThrow(RuntimeException::new);
-        cloudinaryService.deleteFile(image.getPublicId());
         imageRepository.delete(image);
+        removeImageFromCloundinary(image);
+    }
+
+    @Override
+    public void removeImageFromCloundinary(Image image) throws Exception {
+        cloudinaryService.deleteFile(image.getPublicId());
     }
 
     @Override

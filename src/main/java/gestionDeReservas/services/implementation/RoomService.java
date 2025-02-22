@@ -2,6 +2,7 @@ package gestionDeReservas.services.implementation;
 
 import java.util.List;
 
+import gestionDeReservas.Model.entity.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,14 +77,18 @@ public class RoomService implements RoomServiceUI {
         room.getImages().addAll(
                 roomFactory.getImageService().addImages(files)
         );
-        return roomMapper.toGetDTO(room);
+
+        return roomMapper.toGetDTO(roomRepository.save(room));
     }
 
     @Override
+    @Transactional
     public void removeRoomImage(int roomId, int imageId) throws Exception{
         Room room = findRoomById(roomId);
-        roomFactory.getImageService().removeImage(imageId);
-        room.getImages().remove(imageId);
+        Image image = roomFactory.getImageService().getImageByPublicId(imageId);
+        room.getImages().remove(image);
+        roomFactory.getImageService().removeImageFromCloundinary(image);
+        roomRepository.save(room);
     }
 
     @Override

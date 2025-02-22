@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ImageServiceUI {
     void removeImage(int id) throws Exception;
+    void removeImageFromCloundinary(Image image) throws Exception;
     List<Image> addImages(List<MultipartFile> files) throws Exception;
     List<Image> getAllImages() throws Exception;
     Image getImageByPublicId(int id) throws Exception;
