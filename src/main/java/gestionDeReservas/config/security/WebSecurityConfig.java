@@ -61,7 +61,6 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST,"/auth/register").permitAll()
                 .requestMatchers(HttpMethod.GET, "/saludo/hola-todos").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/rooms").permitAll()
                 .requestMatchers(HttpMethod.POST, "/rooms").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/rooms/**").permitAll()
@@ -72,7 +71,7 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/typeRoom/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers(HttpMethod.POST,"/auth/logout").permitAll()
-                //.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
 
     }

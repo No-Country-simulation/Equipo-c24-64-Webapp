@@ -1,13 +1,13 @@
 package gestionDeReservas.exception;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import gestionDeReservas.factory.ErrorFactory;
 
-@ControllerAdvice(basePackages = "gestionDeReservas.controller")
+@RestControllerAdvice(basePackages = "gestionDeReservas.controller")
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     protected boolean isHandler(Class<?> beanType) {
