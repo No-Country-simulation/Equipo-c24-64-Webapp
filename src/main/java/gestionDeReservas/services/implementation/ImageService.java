@@ -1,6 +1,7 @@
 package gestionDeReservas.services.implementation;
 
 import gestionDeReservas.Model.dto.CloudinaryDTO.CloudinaryResponseDTO;
+import gestionDeReservas.Model.dto.ImageDTO.ImageGetDTO;
 import gestionDeReservas.Model.entity.Image;
 import gestionDeReservas.Model.entity.Room;
 import gestionDeReservas.factory.ImageFactory;
@@ -27,16 +28,27 @@ public class ImageService implements ImageServiceUI {
 
 
     @Override
-    public void removeImageByPublicId(int id) {
+    public void removeImage(int id) throws Exception {
         Image image = imageRepository.findById(id).orElseThrow(RuntimeException::new);
         cloudinaryService.deleteFile(image.getPublicId());
         imageRepository.delete(image);
     }
 
     @Override
-    public List<Image> addImages(List<MultipartFile> files, Room room) {
+    public List<Image> addImages(List<MultipartFile> files) throws Exception {
+        if (files == null || files.isEmpty()) return List.of();
         List<byte[]> images = convertMultipartFilesToByteArrays(files);
-        return cloudinaryService.uploadFiles(images).stream().map(response ->createAndSaveImage(response,room)).toList();
+        return cloudinaryService.uploadFiles(images).stream().map(this::createAndSaveImage).toList();
+    }
+
+    @Override
+    public List<Image> getAllImages() throws Exception{
+        return imageRepository.findAll();
+    }
+
+    @Override
+    public Image getImageByPublicId(int id) throws Exception {
+        return imageRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     private List<byte[]> convertMultipartFilesToByteArrays(List<MultipartFile> files) {
@@ -51,9 +63,8 @@ public class ImageService implements ImageServiceUI {
                 .toList();
     }
 
-    private Image createAndSaveImage(CloudinaryResponseDTO response, Room room) {
+    private Image createAndSaveImage(CloudinaryResponseDTO response) {
         Image image = imageFactory.buildImage(response);
-        image.setRoom(room);
         return imageRepository.save(image);
     }
 

@@ -1,5 +1,6 @@
 package gestionDeReservas.Model.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -48,4 +49,9 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "type_room_id", nullable = false)
     private RoomType roomType;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "room_id")
+    @Builder.Default
+    private List<Image> images = new ArrayList<>();
 }

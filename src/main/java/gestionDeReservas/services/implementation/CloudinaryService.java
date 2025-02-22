@@ -1,13 +1,11 @@
 package gestionDeReservas.services.implementation;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import gestionDeReservas.Model.dto.CloudinaryDTO.CloudinaryResponseDTO;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -36,11 +34,10 @@ public class CloudinaryService implements CloudinaryServiceUI{
     }
 
     @Override
-    public boolean deleteFile(String pulicId) {
+    public void deleteFile(String pulicId) {
         try {
             var result = cloudinary.uploader().destroy(pulicId, ObjectUtils.emptyMap());
             String response = result.get("result").toString();
-            return response.equals("ok") ;
         } catch (Exception e) {
             throw new RuntimeException();
         }

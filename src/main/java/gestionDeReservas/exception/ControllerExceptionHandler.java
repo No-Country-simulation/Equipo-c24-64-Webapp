@@ -1,6 +1,5 @@
 package gestionDeReservas.exception;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,62 +16,43 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ApiError> handlerException(Exception e){
-        ApiError apiError = ApiError.builder()
-                .error("internal_server_error")
-                .message(e.getMessage())
-                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .build();
-
-        return  ResponseEntity.status(apiError.getStatus()).body(apiError);
+        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.SERVER_RROR, 500);
+        return ResponseEntity.status(error.getStatus()).body(error);
     }
 
     @ExceptionHandler(RegisterException.class)
     protected ResponseEntity<ApiError> handleRegisterException(RegisterException e){
-        ApiError apiError = ApiError.builder()
-                .error("register_exception")
-                .message(e.getMessage())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .build();
-
-        return ResponseEntity.status(apiError.getStatus()).body(apiError);
+        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.USER_EXISTS, 400);
+        return ResponseEntity.status(error.getStatus()).body(error);
     }
 
     @ExceptionHandler(LoginException.class)
     protected ResponseEntity<ApiError> handlerLoginException(LoginException e) {
-        ApiError apiError = ApiError.builder()
-                .error("login_exception")
-                .message(e.getMessage())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .build();
-
-        return ResponseEntity.status(apiError.getStatus()).body(apiError);
+        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.LOGIN_ERROR, 400);
+        return ResponseEntity.status(error.getStatus()).body(error);
 
     }
 
     @ExceptionHandler(BadRequestException.class)
     protected ResponseEntity<ApiError> handlerBadRequestException(BadRequestException e) {
-        ApiError apiError = ApiError.builder()
-                .error("bad_request")
-                .message(e.getMessage())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .build();
-
-        return ResponseEntity.status(apiError.getStatus()).body(apiError);
+        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.BAD_REQUEST, 400);
+        return ResponseEntity.status(error.getStatus()).body(error);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    protected ResponseEntity<ApiError> handlerNotFoundExceptionException(NotFoundException e){
-        ApiError apiError = ApiError.builder()
-                .error("not_found")
-                .message(e.getMessage())
-                .status(HttpStatus.NOT_FOUND.value())
-                .build();
-
-        return  ResponseEntity.status(apiError.getStatus()).body(apiError);
+    @ExceptionHandler(UserNotFoundException.class)
+    protected ResponseEntity<ApiError> handlerUserNotFoundExceptionException(UserNotFoundException e){
+        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.USER_NOT_FOUND, 404);
+        return ResponseEntity.status(error.getStatus()).body(error);
     }
 
     @ExceptionHandler(NotRoomFoundException.class)
-    protected ResponseEntity<?> NotRoomFoundExceptionException(NotRoomFoundException e){
+    protected ResponseEntity<?> NotRoomFoundException(NotRoomFoundException e){
+        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.ROOM_NOT_FOUND, 404);
+        return ResponseEntity.status(error.getStatus()).body(error);
+    }
+
+    @ExceptionHandler(RoomTypeNotFoundException.class)
+    protected ResponseEntity<?> RoomTypeNotFoundException(RoomTypeNotFoundException e){
         ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.ROOM_NOT_FOUND, 404);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
