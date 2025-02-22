@@ -46,15 +46,14 @@ public class RoomService implements RoomServiceUI {
     }
 
     @Override
-    public RoomGetDTO  addRoom(RoomCreateRequestDTO roomCreateRequestDTO, List<MultipartFile> imagesRequest) throws Exception {
-        Room room = roomFactory.buildRoom(roomCreateRequestDTO, imagesRequest);
+    public RoomGetDTO  addRoom(RoomCreateRequestDTO roomCreateRequestDTO) throws Exception {
+        Room room = roomFactory.buildRoom(roomCreateRequestDTO);
         return roomMapper.toGetDTO(roomRepository.save(room));
     }
 
     @Override
     public RoomGetDTO editRoom(RoomEditRequestDTO roomEditRequestDTO) throws Exception {
         Room room = findRoomById(roomEditRequestDTO.id());
-        
         room.setName(roomEditRequestDTO.name());
         room.setDescription(roomEditRequestDTO.description());
         room.setCapacity(roomEditRequestDTO.capacity());
@@ -66,30 +65,6 @@ public class RoomService implements RoomServiceUI {
         return roomMapper.toGetDTO(roomRepository.save(room));
     }
 
-    @Override
-    public RoomGetDTO uploadRoomImages(int id, List<MultipartFile> files) throws Exception {
-        Room room = findRoomById(id);
-
-        if (files == null || files.isEmpty()) {
-            throw new NotRoomFoundException("files not found");
-        }
-
-        room.getImages().addAll(
-                roomFactory.getImageService().addImages(files)
-        );
-
-        return roomMapper.toGetDTO(roomRepository.save(room));
-    }
-
-    @Override
-    @Transactional
-    public void removeRoomImage(int roomId, int imageId) throws Exception{
-        Room room = findRoomById(roomId);
-        Image image = roomFactory.getImageService().getImageByPublicId(imageId);
-        room.getImages().remove(image);
-        roomFactory.getImageService().removeImageFromCloundinary(image);
-        roomRepository.save(room);
-    }
 
     @Override
     @Transactional
@@ -97,11 +72,9 @@ public class RoomService implements RoomServiceUI {
         roomRepository.delete(findRoomById(id));
     }
 
-
     private Room findRoomById(int id) {
         return roomRepository
                 .findById(id)
                 .orElseThrow(() -> new NotRoomFoundException("room not found with id" + id));
     }
-
 }

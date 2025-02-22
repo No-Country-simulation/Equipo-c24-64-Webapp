@@ -18,8 +18,7 @@ public class RoomMapper {
     @Autowired
     RoomTypeMapper roomTypeMapper;
 
-    @Autowired
-    ImageMapper imageMapper;
+
 
     public RoomGetDTO toGetDTO(Room room){
         return RoomGetDTO
@@ -29,7 +28,6 @@ public class RoomMapper {
                 .description(room.getDescription())
                 .capacity(room.getCapacity())
                 .typeRoom(roomTypeMapper.toGetDTO(room.getRoomType()))
-                .images(room.getImages().stream().map(image-> imageMapper.toImageGetDTO(image)).toList())
                 .build();
     }
 

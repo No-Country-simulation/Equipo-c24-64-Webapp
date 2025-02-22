@@ -25,7 +25,4 @@ public class Image {
     @Column(name = "public_id", nullable = false)
     private String publicId;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    private Room room;
 }

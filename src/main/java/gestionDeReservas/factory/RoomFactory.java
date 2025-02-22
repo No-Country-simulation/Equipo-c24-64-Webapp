@@ -27,11 +27,10 @@ public class RoomFactory {
     @Autowired
     ImageService imageService;
 
-    public Room buildRoom(RoomCreateRequestDTO roomToCreate,  List<MultipartFile> imagesRequest) throws Exception{
+    public Room buildRoom(RoomCreateRequestDTO roomToCreate){
 
         Integer typeid = roomToCreate.typeRoomID();
         RoomType roomType = TypeRoomService.findById(typeid);
-        List<Image> images = imageService.addImages(imagesRequest);
 
         return Room
                 .builder()
@@ -39,7 +38,6 @@ public class RoomFactory {
                 .description(roomToCreate.description())
                 .capacity(roomType.getCapacity())
                 .roomType(roomType)
-                .images(images)
                 .build();
     }
 }

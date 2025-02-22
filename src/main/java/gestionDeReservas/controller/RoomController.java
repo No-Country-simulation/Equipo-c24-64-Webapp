@@ -32,14 +32,9 @@ public class RoomController {
     }
     
     @PostMapping("")
-    public ResponseEntity<?>  createRoom(@RequestPart("room") RoomCreateRequestDTO roomRequestDTO, @RequestPart @Nullable List<MultipartFile> files) throws Exception {
-        RoomGetDTO roomCreated = roomService.addRoom(roomRequestDTO, files);
+    public ResponseEntity<?>  createRoom(@RequestBody RoomCreateRequestDTO roomRequestDTO) throws Exception {
+        RoomGetDTO roomCreated = roomService.addRoom(roomRequestDTO);
         return ResponseEntity.ok(roomCreated);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<?>  uploadRoomImages(@PathVariable int id, @RequestPart List<MultipartFile> files) throws Exception {
-        return ResponseEntity.ok(roomService.uploadRoomImages(id,files));
     }
 
     @PutMapping("")
@@ -47,11 +42,6 @@ public class RoomController {
         return ResponseEntity.ok(roomService.editRoom(roomEdit));
     }
 
-    @PutMapping("/{roomId}/{imageId}")
-    public ResponseEntity<?>  deleteRoomImage(@PathVariable int roomId, @PathVariable int imageId) throws Exception {
-       roomService.removeRoomImage(roomId, imageId);
-       return ResponseEntity.ok("Image deleted");
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?>  deleteRoom(@PathVariable("id") Integer id) throws Exception {
