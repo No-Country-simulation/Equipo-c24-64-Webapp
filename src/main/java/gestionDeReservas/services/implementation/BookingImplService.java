@@ -1,6 +1,6 @@
 package gestionDeReservas.services.implementation;
-
-import gestionDeReservas.exception.BadRequestException;
+//hacer validaciones de los dto y entitys
+import gestionDeReservas.exception.BookingException;
 import gestionDeReservas.exception.NotRoomFoundException;
 import gestionDeReservas.factory.BookingFactory;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
@@ -46,9 +46,10 @@ public class BookingImplService implements IBookingService {
     }
 
     private void validateBooking(BookingRequestDTO bookingRequestDTO) {
+
         if(isRoomBooked(bookingRequestDTO.idRoom(),bookingRequestDTO.checkIn()
         ,bookingRequestDTO.checkOut()) > 0){
-            throw new BadRequestException("la habitacion con id: "+bookingRequestDTO.idRoom()
+            throw new BookingException("the room with id: "+bookingRequestDTO.idRoom()
             +"already exists");
         }
     }

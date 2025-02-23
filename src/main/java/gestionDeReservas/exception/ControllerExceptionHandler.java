@@ -33,6 +33,12 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
 
+    @ExceptionHandler(BookingException.class)
+    protected ResponseEntity<ApiError> handlerBadRequestException(BookingException e) {
+        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.RESERVATION_FAILED, 400);
+        return ResponseEntity.status(error.getStatus()).body(error);
+    }
+
     @ExceptionHandler(BadRequestException.class)
     protected ResponseEntity<ApiError> handlerBadRequestException(BadRequestException e) {
         ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.BAD_REQUEST, 400);
