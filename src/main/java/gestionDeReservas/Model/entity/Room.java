@@ -30,7 +30,7 @@ public class Room {
     @Column(name = "room_id")
     private Integer id;
 
-    @Column(name = "room_name")
+    @Column(name = "room_name", nullable = false)
     @Min(2)
     @Max(100)
     private String name;
@@ -40,7 +40,7 @@ public class Room {
     @Max(100)
     private String description;
 
-    @Column(name = "capacity")
+    @Column(name = "capacity",  nullable = false)
     @Min(1)
     @Max(7)
     private Integer capacity;
