@@ -1,5 +1,6 @@
 package gestionDeReservas.controller;
 
+import gestionDeReservas.model.dto.RoomDTO.EnabledRoomsRequestDTO;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
 import gestionDeReservas.model.entity.UserEntity;
 import gestionDeReservas.services.Interface.IBookingService;
@@ -9,10 +10,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/booking")
@@ -28,5 +26,10 @@ public class BookingController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @GetMapping("/enabled-rooms")
+    public ResponseEntity<?> saveBooking(@RequestBody EnabledRoomsRequestDTO enabledRoomsRequestDTO){
+        return ResponseEntity.ok(bookingService.getEnableRooms(enabledRoomsRequestDTO.idRoomType(),
+                enabledRoomsRequestDTO.checkIn(),enabledRoomsRequestDTO.checkOut()));
 
+    }
 }

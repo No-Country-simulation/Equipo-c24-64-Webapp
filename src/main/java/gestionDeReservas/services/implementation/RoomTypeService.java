@@ -12,14 +12,14 @@ import gestionDeReservas.model.entity.RoomType;
 import gestionDeReservas.exception.RoomTypeNotFoundException;
 import gestionDeReservas.factory.TypeRoomFactory;
 import gestionDeReservas.mapper.RoomTypeMapper;
-import gestionDeReservas.repository.TypeRoomRepository;
+import gestionDeReservas.repository.IRoomTypeRepository;
 import gestionDeReservas.services.Interface.TypeRoomServiceUI;
 
 @Service
 public class RoomTypeService implements TypeRoomServiceUI {
 
     @Autowired
-    private TypeRoomRepository roomTypeRepository;
+    private IRoomTypeRepository roomTypeRepository;
 
     @Autowired
     private RoomTypeMapper roomTypeMapper;

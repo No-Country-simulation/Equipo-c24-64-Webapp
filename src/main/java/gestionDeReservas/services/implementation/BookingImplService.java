@@ -1,15 +1,17 @@
 package gestionDeReservas.services.implementation;
-//hacer validaciones de los dto y entitys
 import gestionDeReservas.exception.BookingException;
 import gestionDeReservas.exception.NotRoomFoundException;
-import gestionDeReservas.factory.BookingFactory;
+import gestionDeReservas.factory.booking.BookingFactory;
+import gestionDeReservas.factory.booking.BookingResponseFactory;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
+import gestionDeReservas.model.dto.booking.BookingResponseDTO;
 import gestionDeReservas.model.entity.Booking;
 import gestionDeReservas.model.entity.Room;
 import gestionDeReservas.model.entity.RoomType;
 import gestionDeReservas.model.entity.UserEntity;
 import gestionDeReservas.repository.IBookingRepository;
 import gestionDeReservas.repository.IRoomRepository;
+import gestionDeReservas.repository.IRoomTypeRepository;
 import gestionDeReservas.services.Interface.IBookingService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -18,47 +20,54 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class BookingImplService implements IBookingService {
     IBookingRepository bookingRepository;
-    IRoomRepository roomRepository;
+    IRoomTypeRepository roomTypeRepository;
     BookingFactory bookingFactory;
+    BookingResponseFactory bookingResponseFactory;
 
     @Override
-    public void saveBooking(UserEntity user, BookingRequestDTO bookingRequestDTO) {
-        Room room = findRoom(bookingRequestDTO.idRoom());
-        validateBooking(bookingRequestDTO);
+    public BookingResponseDTO saveBooking(UserEntity user, BookingRequestDTO bookingRequestDTO) {
+        RoomType roomType = findRoomType(bookingRequestDTO.idRoomType());
 
-        RoomType roomType = room.getRoomType();
-        Long stayDuration = calculateHotelStayDuration(bookingRequestDTO.checkIn(),bookingRequestDTO.checkOut());
-        Double bookingPrice = roomType.getPrice() * stayDuration;
+        LocalDate checkIn = bookingRequestDTO.checkIn();
+        LocalDate checkOut = bookingRequestDTO.checkOut();
 
-        Booking booking = bookingFactory.buildBooking(bookingRequestDTO,user,room,bookingPrice);
+        List<Room> enableRooms = this.getEnableRooms(roomType.getId(),checkIn,checkOut);
+
+        if(enableRooms.isEmpty())
+            throw new BookingException("no se encontraron reservas para las fechas solicitadas");
+
+        Booking booking = bookingFactory.buildBooking(bookingRequestDTO,user,enableRooms.get(0));
         bookingRepository.save(booking);
+
+        return bookingResponseFactory.buildBookingResponse(booking.getTotalPrice(),checkIn,checkOut);
     }
 
-    private Room findRoom(Integer idRoom) {
-        return roomRepository.findById(idRoom)
-                .orElseThrow(() -> new NotRoomFoundException("not found room"));
-    }
+    @Override
+    public List<Room> getEnableRooms(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {
+        List<Room> enabledRooms =  new ArrayList<>();
+        RoomType roomType = findRoomType(roomTypeId);
 
-    private void validateBooking(BookingRequestDTO bookingRequestDTO) {
-
-        if(isRoomBooked(bookingRequestDTO.idRoom(),bookingRequestDTO.checkIn()
-        ,bookingRequestDTO.checkOut()) > 0){
-            throw new BookingException("the room with id: "+bookingRequestDTO.idRoom()
-            +"already exists");
+        for(Room room: roomType.getRooms()){
+            if(!isRoomBooked(room.getId(),checkIn,checkOut))
+                enabledRooms.add(room);
         }
+        return  enabledRooms;
     }
 
-    private Long isRoomBooked(Integer idRoom, LocalDate checkIn, LocalDate checkOut) {
+    private Boolean isRoomBooked(Integer idRoom, LocalDate checkIn, LocalDate checkOut) {
         return bookingRepository.countOverlappingReservations(idRoom,checkIn,checkOut);
     }
 
-    private Long calculateHotelStayDuration(LocalDate checkInDate, LocalDate checkOutDate) {
-        return ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+    private RoomType findRoomType(Integer idRoomType) {
+        return roomTypeRepository.findById(idRoomType)
+                .orElseThrow(() -> new NotRoomFoundException("not found room"));
     }
 }
