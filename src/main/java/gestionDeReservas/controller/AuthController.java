@@ -1,7 +1,7 @@
 package gestionDeReservas.controller;
 
-import gestionDeReservas.Model.dto.auth.LoginRequestDTO;
-import gestionDeReservas.Model.dto.auth.RegisterRequestDTO;
+import gestionDeReservas.model.dto.auth.LoginRequestDTO;
+import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
 import gestionDeReservas.services.Interface.IAuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

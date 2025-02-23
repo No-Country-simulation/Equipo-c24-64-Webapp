@@ -1,12 +1,11 @@
 package gestionDeReservas.services.implementation;
 
-import gestionDeReservas.Model.dto.auth.AuthResponseDTO;
-import gestionDeReservas.Model.dto.auth.LoginRequestDTO;
-import gestionDeReservas.Model.dto.auth.RegisterRequestDTO;
-import gestionDeReservas.Model.entity.UserEntity;
+import gestionDeReservas.model.dto.auth.AuthResponseDTO;
+import gestionDeReservas.model.dto.auth.LoginRequestDTO;
+import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
+import gestionDeReservas.model.entity.UserEntity;
 import gestionDeReservas.config.security.jwt.JwtService;
 import gestionDeReservas.exception.LoginException;
-import gestionDeReservas.exception.UserNotFoundException;
 import gestionDeReservas.exception.RegisterException;
 import gestionDeReservas.factory.UserFactory;
 import gestionDeReservas.repository.IUserRepository;

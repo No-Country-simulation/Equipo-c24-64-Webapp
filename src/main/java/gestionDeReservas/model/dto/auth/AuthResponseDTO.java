@@ -1,5 +1,5 @@
-package gestionDeReservas.Model.dto.auth;
-import gestionDeReservas.Model.enums.Role;
+package gestionDeReservas.model.dto.auth;
+import gestionDeReservas.model.enums.Role;
 import lombok.Builder;
 
 @Builder

@@ -1,7 +1,6 @@
-package gestionDeReservas.Model.dto.RoomDTO;
+package gestionDeReservas.model.dto.RoomDTO;
 
-import gestionDeReservas.Model.dto.TypeRoomDTO.RoomTypeGetDTO;
-import gestionDeReservas.Model.entity.RoomType;
+import gestionDeReservas.model.dto.TypeRoomDTO.RoomTypeGetDTO;
 import lombok.Builder;
 
 @Builder

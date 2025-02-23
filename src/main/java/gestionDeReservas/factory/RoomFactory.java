@@ -3,12 +3,9 @@ package gestionDeReservas.factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import gestionDeReservas.Model.dto.RoomDTO.RoomCreateRequestDTO;
-import gestionDeReservas.Model.dto.RoomDTO.RoomGetDTO;
-import gestionDeReservas.Model.entity.Room;
-import gestionDeReservas.Model.entity.RoomType;
-import gestionDeReservas.exception.RoomTypeNotFoundException;
-import gestionDeReservas.repository.TypeRoomRepository;
+import gestionDeReservas.model.dto.RoomDTO.RoomCreateRequestDTO;
+import gestionDeReservas.model.entity.Room;
+import gestionDeReservas.model.entity.RoomType;
 import gestionDeReservas.services.implementation.RoomTypeService;
 import lombok.AccessLevel;
 import lombok.Data;

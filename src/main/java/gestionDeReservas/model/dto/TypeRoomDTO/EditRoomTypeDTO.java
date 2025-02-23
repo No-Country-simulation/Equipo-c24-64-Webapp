@@ -1,4 +1,4 @@
-package gestionDeReservas.Model.dto.TypeRoomDTO;
+package gestionDeReservas.model.dto.TypeRoomDTO;
 
 import lombok.Builder;
 

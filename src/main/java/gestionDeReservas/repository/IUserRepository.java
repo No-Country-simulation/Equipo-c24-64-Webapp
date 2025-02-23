@@ -1,6 +1,6 @@
 package gestionDeReservas.repository;
 
-import gestionDeReservas.Model.entity.UserEntity;
+import gestionDeReservas.model.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 
-import gestionDeReservas.Model.dto.TypeRoomDTO.CreateTypeRoomDTO;
-import gestionDeReservas.Model.entity.Room;
-import gestionDeReservas.Model.entity.RoomType;
+import gestionDeReservas.model.dto.TypeRoomDTO.CreateTypeRoomDTO;
+import gestionDeReservas.model.entity.Room;
+import gestionDeReservas.model.entity.RoomType;
 
 @Component
 public class TypeRoomFactory {

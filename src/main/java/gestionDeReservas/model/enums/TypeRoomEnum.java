@@ -1,4 +1,4 @@
-package gestionDeReservas.Model.enums;
+package gestionDeReservas.model.enums;
 
 public enum TypeRoomEnum {
     SINGLE,

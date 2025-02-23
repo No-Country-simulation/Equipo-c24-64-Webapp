@@ -2,10 +2,10 @@ package gestionDeReservas.services.Interface;
 
 import java.util.List;
 
-import gestionDeReservas.Model.dto.TypeRoomDTO.CreateTypeRoomDTO;
-import gestionDeReservas.Model.dto.TypeRoomDTO.EditRoomTypeDTO;
-import gestionDeReservas.Model.dto.TypeRoomDTO.RoomTypeGetDTO;
-import gestionDeReservas.Model.entity.RoomType;
+import gestionDeReservas.model.dto.TypeRoomDTO.CreateTypeRoomDTO;
+import gestionDeReservas.model.dto.TypeRoomDTO.EditRoomTypeDTO;
+import gestionDeReservas.model.dto.TypeRoomDTO.RoomTypeGetDTO;
+import gestionDeReservas.model.entity.RoomType;
 
 public interface TypeRoomServiceUI {
     

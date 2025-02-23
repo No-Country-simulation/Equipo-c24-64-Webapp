@@ -10,12 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import gestionDeReservas.Model.dto.RoomDTO.RoomCreateRequestDTO;
-import gestionDeReservas.Model.dto.RoomDTO.RoomGetDTO;
-import gestionDeReservas.Model.dto.TypeRoomDTO.CreateTypeRoomDTO;
-import gestionDeReservas.Model.dto.TypeRoomDTO.EditRoomTypeDTO;
-import gestionDeReservas.Model.dto.TypeRoomDTO.RoomTypeGetDTO;
-import gestionDeReservas.services.Interface.RoomServiceUI;
+import gestionDeReservas.model.dto.TypeRoomDTO.CreateTypeRoomDTO;
+import gestionDeReservas.model.dto.TypeRoomDTO.EditRoomTypeDTO;
+import gestionDeReservas.model.dto.TypeRoomDTO.RoomTypeGetDTO;
 import gestionDeReservas.services.Interface.TypeRoomServiceUI;
 import org.springframework.web.bind.annotation.PutMapping;
 

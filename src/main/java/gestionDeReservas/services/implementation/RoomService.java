@@ -5,15 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import gestionDeReservas.Model.dto.RoomDTO.RoomCreateRequestDTO;
-import gestionDeReservas.Model.dto.RoomDTO.RoomEditRequestDTO;
-import gestionDeReservas.Model.dto.RoomDTO.RoomGetDTO;
-import gestionDeReservas.Model.entity.Room;
+import gestionDeReservas.model.dto.RoomDTO.RoomCreateRequestDTO;
+import gestionDeReservas.model.dto.RoomDTO.RoomEditRequestDTO;
+import gestionDeReservas.model.dto.RoomDTO.RoomGetDTO;
+import gestionDeReservas.model.entity.Room;
 import gestionDeReservas.exception.NotRoomFoundException;
-import gestionDeReservas.exception.RoomTypeNotFoundException;
 import gestionDeReservas.factory.RoomFactory;
 import gestionDeReservas.mapper.RoomMapper;
-import gestionDeReservas.repository.RoomRepository;
+import gestionDeReservas.repository.IRoomRepository;
 import gestionDeReservas.services.Interface.RoomServiceUI;
 import jakarta.transaction.Transactional;
 
@@ -21,7 +20,7 @@ import jakarta.transaction.Transactional;
 public class RoomService implements RoomServiceUI {
     
     @Autowired
-    private RoomRepository roomRepository;
+    private IRoomRepository IRoomRepository;
 
     @Autowired
     private RoomMapper roomMapper;
@@ -31,7 +30,7 @@ public class RoomService implements RoomServiceUI {
 
     @Override
     public List<RoomGetDTO> getAllRooms() {
-        return roomRepository
+        return IRoomRepository
         .findAll()
         .stream()
         .map((r) -> roomMapper.toGetDTO(r))
@@ -40,7 +39,7 @@ public class RoomService implements RoomServiceUI {
 
     @Override
     public RoomGetDTO getRoomById(int id) throws Exception{
-        Room room = roomRepository
+        Room room = IRoomRepository
         .findById(id)
         .orElseThrow(() -> new NotRoomFoundException("room not found with id" + id)) ;
 
@@ -50,13 +49,13 @@ public class RoomService implements RoomServiceUI {
     @Override
     public RoomGetDTO  addRoom(RoomCreateRequestDTO roomCreateRequestDTO) throws Exception {
         Room room = roomFactory.buildRoom(roomCreateRequestDTO);
-        return roomMapper.toGetDTO(roomRepository.save(room));
+        return roomMapper.toGetDTO(IRoomRepository.save(room));
          
     }
 
     @Override
     public RoomGetDTO editRoom(RoomEditRequestDTO roomEditRequestDTO) throws Exception {
-        Room room = roomRepository
+        Room room = IRoomRepository
         .findById(roomEditRequestDTO.id())
         .orElseThrow(() -> new NotRoomFoundException("room not found with id" + roomEditRequestDTO.id())) ;
         
@@ -68,13 +67,13 @@ public class RoomService implements RoomServiceUI {
             .getTypeRoomService()
             .findById(roomEditRequestDTO.typeRoomID()));
         }
-        return roomMapper.toGetDTO(roomRepository.save(room));
+        return roomMapper.toGetDTO(IRoomRepository.save(room));
     }
 
     @Override
     @Transactional
     public void deleteRoom(Integer id) throws Exception {
-        roomRepository.delete(roomRepository
+        IRoomRepository.delete(IRoomRepository
         .findById(id)
         .orElseThrow(() -> new NotRoomFoundException("room not found with id" + id)));
     }

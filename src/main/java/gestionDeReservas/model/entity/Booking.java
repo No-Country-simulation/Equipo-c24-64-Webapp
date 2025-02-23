@@ -1,4 +1,4 @@
-package gestionDeReservas.Model.entity;
+package gestionDeReservas.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,12 +26,13 @@ public class Booking {
     @JoinColumn(name = "room_id")
     Room room;
 
+    @Column(name = "total_price")
     Double totalPrice;
-    Integer numberOfPeople;
+    @Column(name = "people_quantity")
+    Integer peopleQuantity;
 
     @Column(name = "check_in")
     LocalDate checkIn;
     @Column(name = "check_out")
     LocalDate checkOut;
-
 }

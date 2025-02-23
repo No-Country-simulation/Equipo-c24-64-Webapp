@@ -21,4 +21,13 @@ public class EjSwagger {
         return  "hola cliente";
     }
 
+    @GetMapping("/hola-fede")
+    public String holaFede(){
+        return  "hola fede";
+    }
+
+    @GetMapping("/funciona")
+    public String funciona(){
+        return  "funciona automatizacion de cambios";
+    }
 }

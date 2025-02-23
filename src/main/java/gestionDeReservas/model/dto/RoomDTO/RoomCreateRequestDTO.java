@@ -1,4 +1,4 @@
-package gestionDeReservas.Model.dto.RoomDTO;
+package gestionDeReservas.model.dto.RoomDTO;
 
 public record  RoomCreateRequestDTO(
     String name,

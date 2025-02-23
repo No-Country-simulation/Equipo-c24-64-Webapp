@@ -1,8 +1,8 @@
 package gestionDeReservas.services.Interface;
 
-import gestionDeReservas.Model.dto.auth.AuthResponseDTO;
-import gestionDeReservas.Model.dto.auth.LoginRequestDTO;
-import gestionDeReservas.Model.dto.auth.RegisterRequestDTO;
+import gestionDeReservas.model.dto.auth.AuthResponseDTO;
+import gestionDeReservas.model.dto.auth.LoginRequestDTO;
+import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
 
 public interface IAuthService {
     AuthResponseDTO login (LoginRequestDTO loginRequestDTO);

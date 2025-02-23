@@ -2,9 +2,8 @@ package gestionDeReservas.mapper;
 
 import org.springframework.stereotype.Component;
 
-import gestionDeReservas.Model.dto.RoomDTO.RoomGetDTO;
-import gestionDeReservas.Model.dto.TypeRoomDTO.RoomTypeGetDTO;
-import gestionDeReservas.Model.entity.RoomType;
+import gestionDeReservas.model.dto.TypeRoomDTO.RoomTypeGetDTO;
+import gestionDeReservas.model.entity.RoomType;
 
 @Component
 public class RoomTypeMapper {

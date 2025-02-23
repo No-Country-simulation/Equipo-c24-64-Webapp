@@ -1,4 +1,4 @@
-package gestionDeReservas.Model.dto.auth;
+package gestionDeReservas.model.dto.auth;
 
 public record RegisterRequestDTO(
         String email,

@@ -1,9 +1,9 @@
-package gestionDeReservas.Model.dto.TypeRoomDTO;
+package gestionDeReservas.model.dto.TypeRoomDTO;
 
 import lombok.Builder;
 
 @Builder
-public record CreateTypeRoomDTO(
+public record RoomTypeGetDTO(
     String name,   
     String description,
     Integer capacity,
