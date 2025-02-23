@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
-import Hero from "../components/Hero";
-import SearchBar from "../components/SearchBar";
-import Gallery from "../components/Gallery";
-import FAQ from "../components/FAQ";
+import Hero from "../components/homepage/Hero";
+import SearchBar from "../components/homepage/SearchBar";
+import Gallery from "../components/homepage/Gallery";
+import FAQ from "../components/homepage/FAQ";
 import Weather from "../components/Weather";
-import Contact from "../components/Contact";
-import HotelCard from "../components/HotelCard";
+import Contact from "../components/homepage/Contact";
+import HotelCard from "../components/homepage/HotelCard";
 import hotels from "../data/hotel";
 
 const Home: React.FC = () => {
