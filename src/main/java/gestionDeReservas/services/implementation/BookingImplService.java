@@ -29,8 +29,7 @@ public class BookingImplService implements IBookingService {
 
     @Override
     public void saveBooking(UserEntity user, BookingRequestDTO bookingRequestDTO) {
-        Room room = roomRepository.findById(bookingRequestDTO.idRoom())
-                .orElseThrow(() -> new NotRoomFoundException("not found room"));
+        Room room = findRoom(bookingRequestDTO.idRoom());
         validateBooking(bookingRequestDTO);
 
         RoomType roomType = room.getRoomType();
@@ -39,6 +38,11 @@ public class BookingImplService implements IBookingService {
 
         Booking booking = bookingFactory.buildBooking(bookingRequestDTO,user,room,bookingPrice);
         bookingRepository.save(booking);
+    }
+
+    private Room findRoom(Integer idRoom) {
+        return roomRepository.findById(idRoom)
+                .orElseThrow(() -> new NotRoomFoundException("not found room"));
     }
 
     private void validateBooking(BookingRequestDTO bookingRequestDTO) {
@@ -53,7 +57,7 @@ public class BookingImplService implements IBookingService {
         return bookingRepository.countOverlappingReservations(idRoom,checkIn,checkOut);
     }
 
-    public Long calculateHotelStayDuration(LocalDate checkInDate, LocalDate checkOutDate) {
+    private Long calculateHotelStayDuration(LocalDate checkInDate, LocalDate checkOutDate) {
         return ChronoUnit.DAYS.between(checkInDate, checkOutDate);
     }
 }
