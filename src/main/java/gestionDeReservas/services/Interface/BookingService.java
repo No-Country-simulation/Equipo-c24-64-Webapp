@@ -8,7 +8,7 @@ import gestionDeReservas.model.entity.UserEntity;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface IBookingService {
+public interface BookingService {
      BookingResponseDTO saveBooking(UserEntity user, BookingRequestDTO bookingRequestDTO) ;
      List<Room> getEnableRooms(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut);
 }

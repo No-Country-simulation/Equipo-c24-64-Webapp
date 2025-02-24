@@ -16,7 +16,6 @@ import gestionDeReservas.model.dto.TypeRoomDTO.RoomTypeGetDTO;
 import gestionDeReservas.services.Interface.TypeRoomServiceUI;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
 @RestController
 @RequestMapping("/typeRoom")
 public class RoomTypeController {

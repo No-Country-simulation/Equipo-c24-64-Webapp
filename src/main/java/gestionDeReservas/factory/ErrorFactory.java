@@ -13,7 +13,8 @@ public class ErrorFactory {
     public static final String RESERVATION_FAILED = "Room already reserved";
     public static final String USER_NOT_FOUND = "User not found";
     public static final String BAD_REQUEST = "Bad Request";
-    public static final String SERVER_RROR = "internal_server_error";
+    public static final String SERVER_ERROR = "internal_server_error";
+    public static final String DATE_RANGE_EXCEPTION = "range of the dates are invalid";
 
 
     public static ApiError buildError(String error, String message, int status){
@@ -23,5 +24,4 @@ public class ErrorFactory {
                 .status(status)
                 .build();
     }
-
 }

@@ -16,7 +16,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ApiError> handlerException(Exception e){
-        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.SERVER_RROR, 500);
+        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.SERVER_ERROR, 500);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
 
@@ -60,6 +60,12 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(RoomTypeNotFoundException.class)
     protected ResponseEntity<?> RoomTypeNotFoundException(RoomTypeNotFoundException e){
         ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.ROOM_NOT_FOUND, 404);
+        return ResponseEntity.status(error.getStatus()).body(error);
+    }
+
+    @ExceptionHandler(DateRangeException.class)
+    protected ResponseEntity<?> RoomTypeNotFoundException(DateRangeException e){
+        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.DATE_RANGE_EXCEPTION, 400);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
 }

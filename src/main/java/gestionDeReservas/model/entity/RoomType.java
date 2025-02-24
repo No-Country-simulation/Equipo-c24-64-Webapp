@@ -30,18 +30,15 @@ public class RoomType {
     private Integer id;
 
     @Column(name = "room_name", nullable = false)
-    @Min(2)
-    @Max(100)
+
     private String name;
 
     @Column(name = "description", nullable = false)
-    @Min(2)
-    @Max(100)
+
     private String description;
 
     @Column(name = "capacity", nullable = false)
-    @Min(1)
-    @Max(7)
+
     private Integer capacity;
 
     @Column(name = "price", nullable = false)

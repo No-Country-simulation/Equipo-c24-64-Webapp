@@ -9,7 +9,7 @@ import gestionDeReservas.exception.LoginException;
 import gestionDeReservas.exception.RegisterException;
 import gestionDeReservas.factory.UserFactory;
 import gestionDeReservas.repository.IUserRepository;
-import gestionDeReservas.services.Interface.IAuthService;
+import gestionDeReservas.services.Interface.AuthService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
-public class AuthImplService implements IAuthService {
+public class AuthImplService implements AuthService {
     IUserRepository userRepository;
     JwtService jwtService;
     UserFactory userFactory;
@@ -75,5 +75,4 @@ public class AuthImplService implements IAuthService {
         return userRepository.findByEmail(loginRequestDTO.email())
                 .orElseThrow(() -> new LoginException("user Not exists"));
     }
-
 }

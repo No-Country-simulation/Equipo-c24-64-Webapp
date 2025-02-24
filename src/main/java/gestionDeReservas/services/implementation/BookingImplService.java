@@ -1,5 +1,6 @@
 package gestionDeReservas.services.implementation;
 import gestionDeReservas.exception.BookingException;
+import gestionDeReservas.exception.DateRangeException;
 import gestionDeReservas.exception.NotRoomFoundException;
 import gestionDeReservas.factory.booking.BookingFactory;
 import gestionDeReservas.factory.booking.BookingResponseFactory;
@@ -10,23 +11,21 @@ import gestionDeReservas.model.entity.Room;
 import gestionDeReservas.model.entity.RoomType;
 import gestionDeReservas.model.entity.UserEntity;
 import gestionDeReservas.repository.IBookingRepository;
-import gestionDeReservas.repository.IRoomRepository;
 import gestionDeReservas.repository.IRoomTypeRepository;
-import gestionDeReservas.services.Interface.IBookingService;
+import gestionDeReservas.services.Interface.BookingService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
-public class BookingImplService implements IBookingService {
+public class BookingImplService implements BookingService {
     IBookingRepository bookingRepository;
     IRoomTypeRepository roomTypeRepository;
     BookingFactory bookingFactory;
@@ -38,11 +37,12 @@ public class BookingImplService implements IBookingService {
 
         LocalDate checkIn = bookingRequestDTO.checkIn();
         LocalDate checkOut = bookingRequestDTO.checkOut();
+        validateDates(checkIn,checkOut);
 
         List<Room> enableRooms = this.getEnableRooms(roomType.getId(),checkIn,checkOut);
 
         if(enableRooms.isEmpty())
-            throw new BookingException("no se encontraron reservas para las fechas solicitadas");
+            throw new BookingException("No reservations found for the requested dates");
 
         Booking booking = bookingFactory.buildBooking(bookingRequestDTO,user,enableRooms.get(0));
         bookingRepository.save(booking);
@@ -69,5 +69,10 @@ public class BookingImplService implements IBookingService {
     private RoomType findRoomType(Integer idRoomType) {
         return roomTypeRepository.findById(idRoomType)
                 .orElseThrow(() -> new NotRoomFoundException("not found room"));
+    }
+
+    private void validateDates(LocalDate checkIn, LocalDate checkOut) {
+        if(checkOut.isBefore(checkIn))
+            throw new DateRangeException("dates are invalid");
     }
 }

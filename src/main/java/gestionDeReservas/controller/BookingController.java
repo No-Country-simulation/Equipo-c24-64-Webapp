@@ -3,7 +3,7 @@ package gestionDeReservas.controller;
 import gestionDeReservas.model.dto.RoomDTO.EnabledRoomsRequestDTO;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
 import gestionDeReservas.model.entity.UserEntity;
-import gestionDeReservas.services.Interface.IBookingService;
+import gestionDeReservas.services.Interface.BookingService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class BookingController {
-    IBookingService bookingService;
+    BookingService bookingService;
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<?> saveBooking(@AuthenticationPrincipal UserEntity user,
                                          @RequestBody BookingRequestDTO bookingRequestDTO){
         bookingService.saveBooking(user,bookingRequestDTO);

@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-
 @Entity
 @Data
 @Builder
@@ -75,5 +74,4 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }
