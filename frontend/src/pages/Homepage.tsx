@@ -31,7 +31,7 @@ const Home: React.FC = () => {
       <Contact />
 
       {/* Sección de Ofertas de Hoteles */}
-      <section className="py-12">
+      <section className="py-12" id="ofertas">
         <h2 className="text-2xl font-bold text-center mb-6">
           Ofertas de hoteles imperdibles
         </h2>

@@ -10,7 +10,7 @@ const FAQ = () => {
   };
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-8">
+    <section className="max-w-6xl mx-auto px-4 py-8" id="faq">
       <h2 className="text-2xl font-bold text-center mb-6">Preguntas Frecuentes</h2>
       <div className="space-y-4 cursor-pointer">
         {questions.map((item: Question, index: number) => (
