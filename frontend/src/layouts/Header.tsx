@@ -4,12 +4,13 @@ import { FaRegUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [usuario, setUsuario] = useState(false);
+  const [usuario, setUsuario] = useState(null);
   const usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado"));
   useEffect(() => {
     setUsuario(usuarioLogeado);
   }, [setUsuario]);
 
+  // const { username } = usuario;
   return (
     <header
       className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50"
@@ -41,7 +42,7 @@ const Header = () => {
               <>
                 <FaRegUserCircle size={24} />
                 <a href="/usuario" className="font-semibold ">
-                  {usuario.nombre}
+                  {usuario.username}
                 </a>
               </>
             ) : (

@@ -8,6 +8,7 @@ import { BackgroundBeams } from "@/styles/bgLogin/BackgroundBeams";
 
 interface IFormInputs {
   name: string;
+  username: string;
   lastname: string;
   address: string;
   email: string;
@@ -19,6 +20,7 @@ interface IFormInputs {
 
 const schema = yup.object().shape({
   name: yup.string().required("El nombre es requerido"),
+  username: yup.string().required("El nombre es requerido"),
   lastname: yup.string().required("El apellido es requerido"),
   address: yup.string().required("La dirección es requerido"),
   email: yup
@@ -146,6 +148,29 @@ const RegisterForm = () => {
                   {errors.lastname && (
                     <p className="mt-2 text-sm text-red-600">
                       {errors.lastname.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="username"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Nombre de Usuario
+                </label>
+                <div className="mt-1">
+                  <input
+                    {...register("username")}
+                    type="text"
+                    name="username"
+                    id="username"
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                  {errors.username && (
+                    <p className="mt-2 text-sm text-red-600">
+                      {errors.username.message}
                     </p>
                   )}
                 </div>
