@@ -7,7 +7,7 @@ const Contacto = () => {
     <>
       <Header />
       <div className="p-8 rounded-lg shadow-md w-full mx-auto my-16">
-        <h1 className="font-semibold text-2xl text-blue-600 text-center mt-10">
+        <h1 className="font-bold text-2xl text-blue-600 text-center mt-10">
           Luxe Haven | Contacto
         </h1>
         <div className="grid md:grid-cols-2 gap-10 mx-auto max-w-4xl items-center justify-center">
