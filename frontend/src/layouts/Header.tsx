@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Menu, X, Heart } from "lucide-react";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [usuario, setUsuario] = useState(false);
+  const usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado"));
+  useEffect(() => {
+    setUsuario(usuarioLogeado);
+  }, [setUsuario]);
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
@@ -16,9 +22,8 @@ const Header = () => {
               </span>
             </a>
           </div>
-
           {/* Desktop Right Section */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             {/* Favorites */}
             <a
               href="/favorites"
@@ -29,12 +34,21 @@ const Header = () => {
             </a>
 
             {/* Login */}
-            <a
-              href="/login"
-              className="text-gray-700 hover:text-blue-600 transition-colors"
-            >
-              Iniciá sesión
-            </a>
+            {usuario ? (
+              <>
+                <FaRegUserCircle size={24} />
+                <a href="/usuario" className="font-semibold ">
+                  {usuario.nombre}
+                </a>
+              </>
+            ) : (
+              <a
+                href="/login"
+                className="text-gray-700 hover:text-blue-600 transition-colors"
+              >
+                Iniciá sesión
+              </a>
+            )}
 
             {/* Menu Button */}
             <div className="relative">
