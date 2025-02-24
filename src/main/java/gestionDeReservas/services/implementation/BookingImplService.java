@@ -5,7 +5,6 @@ import gestionDeReservas.exception.NotRoomFoundException;
 import gestionDeReservas.factory.booking.BookingFactory;
 import gestionDeReservas.factory.booking.BookingResponseFactory;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
-import gestionDeReservas.model.dto.booking.BookingResponseDTO;
 import gestionDeReservas.model.entity.Booking;
 import gestionDeReservas.model.entity.Room;
 import gestionDeReservas.model.entity.RoomType;
@@ -29,25 +28,22 @@ public class BookingImplService implements BookingService {
     IBookingRepository bookingRepository;
     IRoomTypeRepository roomTypeRepository;
     BookingFactory bookingFactory;
-    BookingResponseFactory bookingResponseFactory;
 
     @Override
-    public BookingResponseDTO saveBooking(UserEntity user, BookingRequestDTO bookingRequestDTO) {
+    public void bookingRooms(UserEntity user, BookingRequestDTO bookingRequestDTO) {
         RoomType roomType = findRoomType(bookingRequestDTO.idRoomType());
-
         LocalDate checkIn = bookingRequestDTO.checkIn();
         LocalDate checkOut = bookingRequestDTO.checkOut();
-        validateDates(checkIn,checkOut);
 
-        List<Room> enableRooms = this.getEnableRooms(roomType.getId(),checkIn,checkOut);
+        validateDates(checkIn, checkOut);
 
-        if(enableRooms.isEmpty())
-            throw new BookingException("No reservations found for the requested dates");
+        List<Room> enableRooms = this.getEnableRooms(roomType.getId(), checkIn, checkOut);
 
-        Booking booking = bookingFactory.buildBooking(bookingRequestDTO,user,enableRooms.get(0));
-        bookingRepository.save(booking);
+        validateQuantityRoomsToBooking(enableRooms,bookingRequestDTO.roomsQuantity());
 
-        return bookingResponseFactory.buildBookingResponse(booking.getTotalPrice(),checkIn,checkOut);
+        validateEnablesRooms(enableRooms);
+
+        saveBookings(enableRooms, user, bookingRequestDTO);
     }
 
     @Override
@@ -60,6 +56,23 @@ public class BookingImplService implements BookingService {
                 enabledRooms.add(room);
         }
         return  enabledRooms;
+    }
+
+    private void saveBookings(List<Room> enableRooms, UserEntity user, BookingRequestDTO bookingRequestDTO) {
+        for (int i = 0; i < bookingRequestDTO.roomsQuantity(); i++){
+            Booking booking = bookingFactory.buildBooking(bookingRequestDTO, user, enableRooms.get(i));
+            bookingRepository.save(booking);
+        }
+    }
+
+    private void validateQuantityRoomsToBooking(List<Room> enableRooms, Integer roomsToBooking) {
+        if(enableRooms.size() < roomsToBooking)
+            throw new BookingException("rooms to booking are invalid");
+    }
+
+    private void validateEnablesRooms(List<Room> enableRooms) {
+        if(enableRooms.isEmpty())
+            throw new BookingException("No reservations found for the requested dates");
     }
 
     private Boolean isRoomBooked(Integer idRoom, LocalDate checkIn, LocalDate checkOut) {

@@ -12,7 +12,9 @@ public record BookingRequestDTO (
         @NotNull
         LocalDate checkOut,
         @NotNull
-        @Min(value = 1)
-        Integer peopleQuantity
+        @Min(1)
+        Integer peopleQuantity,
+        @Min(1)
+        Integer roomsQuantity
 ) {
 }

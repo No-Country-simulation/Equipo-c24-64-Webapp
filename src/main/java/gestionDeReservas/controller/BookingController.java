@@ -22,7 +22,7 @@ public class BookingController {
     @PostMapping
     public ResponseEntity<?> saveBooking(@AuthenticationPrincipal UserEntity user,
                                          @RequestBody BookingRequestDTO bookingRequestDTO){
-        bookingService.saveBooking(user,bookingRequestDTO);
+        bookingService.bookingRooms(user,bookingRequestDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

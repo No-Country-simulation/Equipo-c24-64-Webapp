@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@Tag(name = "Authentication", description = "Endpoints para registro, login y logout de usuarios")
+@Tag(name = "Authentication", description = "Endpoints for user registration, login and logout")
 public class AuthController {
     AuthService authService;
 
     @PostMapping("/login")
-    @Operation(summary = "login", description = "Autentica un usuario y retorna un token JWT")
+    @Operation(summary = "login", description = "Authenticates a user and returns a JWT token")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful login "),
             @ApiResponse(responseCode = "401", description = "invalid credentials")
@@ -35,23 +35,23 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    @Operation(summary = "Registrar usuario", description = "Crea una nueva cuenta de usuario")
+    @Operation(summary = "Register user", description = "Create a new user account")
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Usuario registrado exitosamente"),
-            @ApiResponse(responseCode = "400", description = "Datos de registro inválidos")
+            @ApiResponse(responseCode = "201", description = "Successfully registered user"),
+            @ApiResponse(responseCode = "400", description = "Invalid registration data")
     })
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequestDTO registerRequestDTO) { // Corrige el nombre del método (error tipográfico)
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequestDTO registerRequestDTO) {
         return new ResponseEntity<>(authService.register(registerRequestDTO), HttpStatus.CREATED);
     }
 
     @PostMapping("/logout")
-    @Operation(summary = "Cerrar sesión", description = "Invalida el token JWT del usuario")
+    @Operation(summary = "Log out", description = "Invalidate the user's JWT token")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Logout exitoso"),
-            @ApiResponse(responseCode = "401", description = "Token inválido o ausente")
+            @ApiResponse(responseCode = "200", description = "Successfully Logout"),
+            @ApiResponse(responseCode = "403", description = "Invalid or missing token")
     })
     public ResponseEntity<?> logout(
-            @Parameter(description = "Token JWT en formato 'Bearer {token}'", required = true)
+            @Parameter(description = "JWT token in 'Bearer {token}' format", required = true)
             @RequestHeader("Authorization") String token
     ) {
         authService.logout(token);
