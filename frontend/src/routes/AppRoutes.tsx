@@ -3,7 +3,7 @@ import Register from "../pages/Register";
 import Login from "../pages/Login";
 import HomePage from "../pages/Homepage";
 import Dashboard from "../pages/Dashboard.jsx";
-import RoomListing from "../components/rooms/rooms.tsx";
+import Rooms from "../pages/Rooms.jsx";
 
 const AppRoutes = () => {
   return (
@@ -11,7 +11,7 @@ const AppRoutes = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/rooms" element={<RoomListing />} />
+      <Route path="/rooms" element={<Rooms />} />
       <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   );
