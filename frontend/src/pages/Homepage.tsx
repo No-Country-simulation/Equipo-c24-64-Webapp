@@ -28,7 +28,6 @@ const Home: React.FC = () => {
       <Gallery />
       <Weather />
       <FAQ />
-      <h2 className="text-3xl font-bold text-center mt-4 inter">Contacto</h2>
       <Contact />
 
       {/* Sección de Ofertas de Hoteles */}

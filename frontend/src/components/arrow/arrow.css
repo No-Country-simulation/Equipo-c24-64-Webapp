@@ -1,0 +1,15 @@
+.go-top {
+  position: fixed;
+  bottom: 20px;
+  right: 4%;
+  padding: 0.5rem 0.7rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  font-size: 22px;
+  z-index: 99;
+  background-color: rgb(184, 184, 184);
+  transition-duration: 0.3s;
+}
+.go-top:hover {
+  background-color: white;
+}
