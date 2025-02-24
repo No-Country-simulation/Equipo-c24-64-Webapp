@@ -1,152 +1,221 @@
-import React from "react";
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
-import american from "@/assets/american.svg";
-import mastercard from "@/assets/mastercard.svg";
-import paypal from "@/assets/paypal.svg";
-import visa from "@/assets/visa.svg";
-const Footer = () => {
+import React, { useState } from "react";
+import { Facebook, Instagram, Twitter } from "lucide-react";
+import { useForm } from "react-hook-form";
+
+interface INewsletterForm {
+  email: string;
+}
+function Footer() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<INewsletterForm>();
+  const onSubmit = async (data: INewsletterForm) => {
+    try {
+      const response = await fetch("#", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      console.log(response);
+
+      if (response.ok) {
+        alert("¡Te has suscrito con éxito!");
+        reset();
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("Error", error.message);
+      }
+    }
+  };
   return (
-    <footer className="bg-[#222] text-white pt-10 pb-2">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <div className="space-y-8 max-w-full">
+    <div className=" bg-gray-100">
+      <footer className="bg-gray-900 text-gray-300">
+        <div className="bg-blue-600 py-8">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-white">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="flex items-center gap-2">
+                  <div>
+                    <h3 className="text-sm font-medium">
+                      RECIBE TODAS LAS OFERTAS EN TU EMAIL
+                    </h3>
+                    <p className="text-lg font-semibold">
+                      Suscríbete a nuestra newsletter
+                    </p>
+                  </div>
+                </div>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="flex w-full md:w-auto gap-2"
+                >
+                  <input
+                    type="email"
+                    placeholder="Ingresa tu email"
+                    className={`px-4 py-2 rounded-lg bg-gray-100 w-full md:w-80 text-black ${
+                      errors.email ? "border-red-500 border-2" : ""
+                    }`}
+                    {...register("email", {
+                      required: "El email es requerido",
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "Email inválido",
+                      },
+                    })}
+                    disabled={isSubmitting}
+                    aria-invalid={errors.email ? "true" : "false"}
+                  />
+                  <button
+                    type="submit"
+                    title="Suscribirse a la newsletter"
+                    role="button"
+                    className="bg-white cursor-pointer text-blue-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Enviando..." : "Enviar"}
+                  </button>
+                </form>
+              </div>
+              {errors.email && (
+                <p className="text-red-500 text-sm md:ps-5 md:text-center lg:text-end lg:pe-26" aria-live="polite">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="container mx-auto px-4 pt-12 pb-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="flex flex-col items-center md:items-start">
+              <div className="flex items-center text-2xl font-bold text-white ">
+                <span className="text-blue-500">Luxe Haven</span>
+              </div>
+              <p className="text-sm text-white font-medium text-center md:text-left">
+                HOTELS & RESORTS
+              </p>
+              <div className="mt-6">
+                <h4 className="font-medium mb-4 text-center md:text-left">
+                  Nuestras redes sociales
+                </h4>
+                <div className="flex gap-4">
+                  <a href="#" className="hover:text-blue-400 transition-colors">
+                    <Facebook className="w-6 h-6" />
+                  </a>
+                  <a href="#" className="hover:text-blue-400 transition-colors">
+                    <Instagram className="w-6 h-6" />
+                  </a>
+                  <a href="#" className="hover:text-blue-400 transition-colors">
+                    <Twitter className="w-6 h-6" />
+                  </a>
+                </div>
+              </div>
+            </div>
             <div>
-              <h3 className="text-xl font-bold mb-4 sm:text-center text-center">
+              <h3 className="text-lg font-semibold text-white mb-4">
+                Acerca de Luxe Haven
+              </h3>
+              <ul className="space-y-3">
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Empresa
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Contacto
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Ubicación
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-white mb-4">
+                Servicios
+              </h3>
+              <ul className="space-y-3">
+                <li>
+                  <a href="#faq" className="hover:text-white transition-colors">
+                    Preguntas Frecuentes
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Cómo Reservar
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#ofertas"
+                    className="hover:text-white transition-colors"
+                  >
+                    Promociones
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Pagos y Seguridad
               </h3>
-              <div className="flex space-x-4 sm:justify-center justify-center">
-                <img src={visa} alt="logo visa" className="w-10 h-10" />
-                <img src={mastercard} alt="logo visa" className="w-10 h-10" />
-                <img src={paypal} alt="logo visa" className="w-10 h-10" />
-                <img src={american} alt="logo visa" className="w-10 h-10" />
-              </div>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold mb-4 text-center">
-                Newsletter | Promos especiales
-              </h3>
-              <div className="flex w-full">
-                <input
-                  type="email"
-                  placeholder="Ingresa tu email"
-                  className="w-full px-4 py-2 rounded-l-md text-black bg-gray-100"
-                />
-                <button className="px-6 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 transition">
-                  Subscribe
-                </button>
-              </div>
-            </div>
-
-            {/* Payment Methods */}
-          </div>
-
-          {/* Right Column */}
-          <div>
-            {/* Hotel Name */}
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-2 text-blue-500">
-                Luxe Haven
-              </h2>
-            </div>
-
-            {/* Three Column Links */}
-            <div className="grid grid-cols-2 gap-1 text-center sm:text-center md:text-center lg:text-center">
-              <div>
-                <h4 className="font-semibold mb-3 ">Acerca de Luxe Haven</h4>
-                <ul className="space-y-2">
-                  <li>
-                    <a href="#" className="hover:text-blue-300">
-                      Empresa
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="hover:text-blue-300">
-                      Contacto
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="hover:text-blue-300">
-                      Ubicación
-                    </a>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-semibold mb-3">Servicios</h4>
-                <ul className="space-y-2">
-                  <li>
-                    <a href="#faq" className="hover:text-blue-300">
-                      Preguntas Frecuentes
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="hover:text-blue-300">
-                      Como Reservar
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#ofertas" className="hover:text-blue-300">
-                      Promociones{" "}
-                    </a>
-                  </li>
-                </ul>
+              <div className="grid grid-cols-2 gap-4">
+                <a href="">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
+                    alt="Visa"
+                    className="h-8 bg-white p-1 rounded"
+                  />
+                </a>
+                <a href="">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+                    alt="Mastercard"
+                    className="h-8 bg-white p-1 rounded"
+                  />
+                </a>
+                <a href="">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+                    alt="PayPal"
+                    className="h-8 bg-white p-1 rounded"
+                  />
+                </a>
+                <a href="#">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg"
+                    alt="American Express"
+                    className="h-8 bg-white p-1 rounded"
+                  />
+                </a>
               </div>
             </div>
           </div>
-        </div>
-        <div className="pt-5">
-          {/* Social Media Links */}
-          <div className="flex justify-center items-center space-x-6 mt-4 pt-4 flex-col gap-2">
-            <div className="block">
-              <h4 className="font-bold"> Nuestras redes sociales</h4>
-            </div>
-            <div className="flex gap-2">
-              <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-blue-300"
-              >
-                <FaFacebook size={24} />
+          <div className="mt-10 pt-4 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+            <div className="flex gap-6">
+              <a href="#" className="hover:text-white transition-colors">
+                Términos y Condiciones
               </a>
-              <a
-                href="https://www.instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-blue-300"
-              >
-                <FaInstagram size={24} />
-              </a>
-              <a
-                href="https://www.twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-blue-300"
-              >
-                <FaTwitter size={24} />
+              <a href="#" className="hover:text-white transition-colors">
+                Privacidad
               </a>
             </div>
+            <p className="text-gray-400">
+              © 2025 Hotel Luxe Haven. <br />
+              by No-Country
+            </p>
           </div>
         </div>
-        {/* Copyright */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-5">
-          <div className="pt-1 text-sm text-gray-400 flex gap-4 justify-center md:justify-end">
-            <a href="#" className="hover:text-blue-300">
-              Términos y Condiciones
-            </a>
-            <a href="#" className="hover:text-blue-300">
-              Privacidad
-            </a>
-          </div>
-          <div className="text-sm text-gray-400 text-center md:text-end">
-            <p>&copy; 2025 Hotel Luxe Haven.</p>
-            <p className="md:pe-6">by No-Country</p>
-          </div>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   );
-};
+}
 
 export default Footer;
