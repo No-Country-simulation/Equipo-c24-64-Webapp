@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import HomePage from "../pages/Homepage";
 import Dashboard from "../pages/Dashboard.jsx";
 import Rooms from "../pages/Rooms.jsx";
+import Contacto from "../pages/Contacto.jsx";
 
 const AppRoutes = () => {
   return (
@@ -13,6 +14,7 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/rooms" element={<Rooms />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/contacto" element={<Contacto />} />
     </Routes>
   );
 };
