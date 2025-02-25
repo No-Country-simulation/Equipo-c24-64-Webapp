@@ -1,20 +1,20 @@
 package gestionDeReservas.controller;
 
+import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 import gestionDeReservas.model.dto.TypeRoomDTO.CreateTypeRoomDTO;
 import gestionDeReservas.model.dto.TypeRoomDTO.EditRoomTypeDTO;
 import gestionDeReservas.model.dto.TypeRoomDTO.RoomTypeGetDTO;
 import gestionDeReservas.services.Interface.TypeRoomServiceUI;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/typeRoom")
@@ -33,10 +33,22 @@ public class RoomTypeController {
     }
     
     @PostMapping("")
-    public ResponseEntity<?>  createTypeRoom(@RequestBody CreateTypeRoomDTO roomRequestDTO) throws Exception{
-        RoomTypeGetDTO roomTypeCreated = roomService.createTypeRoom(roomRequestDTO);
+    public ResponseEntity<?>  createTypeRoom(@RequestPart("roomType") CreateTypeRoomDTO roomRequestDTO, @RequestPart @Nullable List<MultipartFile> files) throws Exception{
+        RoomTypeGetDTO roomTypeCreated = roomService.createTypeRoom(roomRequestDTO,files);
         return ResponseEntity.ok(roomTypeCreated);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?>  uploadRoomTypeImages(@PathVariable int id, @RequestPart List<MultipartFile> files) throws Exception {
+        return ResponseEntity.ok(roomService.uploadRoomTypeImages(id,files));
+    }
+
+    @PutMapping("/{roomId}/{imageId}")
+    public ResponseEntity<?>  deleteRoomTypeImage(@PathVariable int roomId, @PathVariable int imageId) throws Exception {
+        roomService.removeRoomImage(roomId, imageId);
+        return ResponseEntity.ok("Image deleted");
+    }
+
 
     @PutMapping("")
     public ResponseEntity<?> editTypeRoom(@RequestBody EditRoomTypeDTO entity)  throws Exception{

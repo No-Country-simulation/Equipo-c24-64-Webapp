@@ -1,5 +1,7 @@
 package gestionDeReservas.factory;
 
+
+import gestionDeReservas.services.implementation.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,21 +17,24 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 public class RoomFactory {
-    
+
     @Autowired
     RoomTypeService TypeRoomService;
 
-    public Room buildRoom(RoomCreateRequestDTO roomToCreate) throws Exception{
+    @Autowired
+    ImageService imageService;
+
+    public Room buildRoom(RoomCreateRequestDTO roomToCreate){
 
         Integer typeid = roomToCreate.typeRoomID();
         RoomType roomType = TypeRoomService.findById(typeid);
 
         return Room
-        .builder()
-        .name(roomToCreate.name())
-        .description(roomToCreate.description())
-        .capacity(roomType.getCapacity())
-        .roomType(roomType)
-        .build();
+                .builder()
+                .name(roomToCreate.name())
+                .description(roomToCreate.description())
+                .capacity(roomType.getCapacity())
+                .roomType(roomType)
+                .build();
     }
 }
