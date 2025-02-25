@@ -2,8 +2,9 @@ import { motion } from "framer-motion";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import Hero from "../components/homepage/Hero";
-import SearchBar from "../components/homepage/SearchBar";
-import Gallery from "../components/homepage/Gallery";
+// import SearchBar from "../components/homepage/SearchBar";
+// import Gallery from "../components/homepage/Gallery";
+import RoomListing from "@/components/rooms/RoomsListing";
 import FAQ from "../components/homepage/FAQ";
 import Weather from "../components/Weather";
 import HotelCard from "../components/homepage/HotelCard";
@@ -21,9 +22,10 @@ const Home: React.FC = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <SearchBar />
       </motion.div>
-      <Gallery />
+      {/* <Gallery/> */}
+      {/* <SearchBar/> */}
+      <RoomListing />
       <Weather />
       <FAQ />
       {/* Sección de Ofertas de Hoteles */}
