@@ -42,6 +42,7 @@ public class BookingFactory {
     }
 
     private Long calculateHotelStayDuration(LocalDate checkInDate, LocalDate checkOutDate) {
-        return ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+        return ChronoUnit.DAYS.between(checkInDate, checkOutDate) + 1;
+
     }
 }
