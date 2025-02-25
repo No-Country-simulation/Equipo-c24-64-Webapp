@@ -6,9 +6,9 @@ import gestionDeReservas.Model.dto.auth.RegisterRequestDTO;
 import gestionDeReservas.Model.entity.UserEntity;
 import gestionDeReservas.config.security.jwt.JwtService;
 import gestionDeReservas.exception.LoginException;
-import gestionDeReservas.exception.UserNotFoundException;
 import gestionDeReservas.exception.RegisterException;
-import gestionDeReservas.factory.UserFactory;
+import gestionDeReservas.factory.auth.AuthResponseDTOFactory;
+import gestionDeReservas.factory.auth.UserFactory;
 import gestionDeReservas.repository.IUserRepository;
 import gestionDeReservas.services.Interface.IAuthService;
 import lombok.AccessLevel;
@@ -23,9 +23,21 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class AuthImplService implements IAuthService {
     IUserRepository userRepository;
-    JwtService jwtService;
     UserFactory userFactory;
     AuthenticationManager authenticationManager;
+    AuthResponseDTOFactory authResponseFactory;
+    JwtService jwtService;
+
+    @Override
+    public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequestDTO.identifier(),
+                        loginRequestDTO.password()));
+
+        UserEntity user = findUser(loginRequestDTO);
+
+        return authResponseFactory.buildResponseAuthDTO(user);
+    }
 
     @Override
     public AuthResponseDTO register(RegisterRequestDTO userToRegisterDto) {
@@ -35,30 +47,7 @@ public class AuthImplService implements IAuthService {
 
         userRepository.save(user);
 
-        return AuthResponseDTO.builder()
-                .username(userToRegisterDto.email())
-                .token(jwtService.getToken(user))
-                .lastname(user.getLastname())
-                .name(user.getName())
-                .role(user.getRole())
-                .build();
-    }
-
-    @Override
-    public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequestDTO.email(),
-                loginRequestDTO.password()));
-
-        UserEntity user = findUser(loginRequestDTO);
-
-        return AuthResponseDTO.builder()
-                    .username(loginRequestDTO.email())
-                    .token(jwtService.getToken(user))
-                    .role(user.getRole())
-                    .lastname(user.getLastname())
-                    .name(user.getName())
-                    .build();
+        return authResponseFactory.buildResponseAuthDTO(user);
     }
 
     @Override
@@ -68,13 +57,13 @@ public class AuthImplService implements IAuthService {
     }
 
     private void validateRegistration(RegisterRequestDTO userToRegisterDto) {
-        if (userRepository.existsByEmail(userToRegisterDto.email()))
+        if (userRepository.existsByEmailOrUsername(userToRegisterDto.email(),
+        userToRegisterDto.username()))
             throw new RegisterException("the user already exists");
-        }
-
-    private UserEntity findUser(LoginRequestDTO loginRequestDTO) {
-        return userRepository.findByEmail(loginRequestDTO.email())
-                .orElseThrow(() -> new LoginException("user Not exists"));
     }
 
+    private UserEntity findUser(LoginRequestDTO loginRequestDTO) {
+        return userRepository.findByUsernameOrEmail(loginRequestDTO.identifier())
+                .orElseThrow(() -> new LoginException("user Not exists"));
+    }
 }

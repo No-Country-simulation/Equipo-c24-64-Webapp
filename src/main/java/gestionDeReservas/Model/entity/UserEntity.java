@@ -20,7 +20,8 @@ import java.util.Set;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "user_entity", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
+        @UniqueConstraint(columnNames = "email"),
+        @UniqueConstraint(columnNames = "username")
 })
 public class UserEntity implements UserDetails {
     @Id
@@ -33,6 +34,7 @@ public class UserEntity implements UserDetails {
     @OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL)
     Set<Booking> bookings;
 
+    String username;
     String email;
     String password;
     String name;
@@ -53,7 +55,7 @@ public class UserEntity implements UserDetails {
     }
 
     @Override
-    public String getUsername() {return this.email;}
+    public String getUsername() {return this.username;}
 
 
     @Override
