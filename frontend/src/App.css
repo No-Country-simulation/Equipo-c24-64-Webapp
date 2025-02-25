@@ -7,3 +7,7 @@
   --color-detalles-2: #c8c8f4;
   --color-text-primary: #101010;
 }
+* {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}

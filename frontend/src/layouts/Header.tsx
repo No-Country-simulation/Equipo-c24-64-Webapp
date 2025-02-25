@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Menu, X, Heart } from "lucide-react";
 import { FaRegUserCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [usuario, setUsuario] = useState(null);
+  const [usuario, setUsuario] = useState(true);
   const usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado"));
   useEffect(() => {
     setUsuario(usuarioLogeado);
@@ -79,12 +80,12 @@ const Header = () => {
                   >
                     Galería
                   </a>
-                  <a
-                    href="#contacto"
+                  <Link
+                    to="/contacto"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                   >
                     Contacto
-                  </a>
+                  </Link>
                   <div className="border-t border-gray-200 my-2"></div>
                   <a
                     href="/register"

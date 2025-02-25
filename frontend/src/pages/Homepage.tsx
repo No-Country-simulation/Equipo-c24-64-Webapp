@@ -6,16 +6,14 @@ import SearchBar from "../components/homepage/SearchBar";
 import Gallery from "../components/homepage/Gallery";
 import FAQ from "../components/homepage/FAQ";
 import Weather from "../components/Weather";
-import Contact from "../components/homepage/Contact";
 import HotelCard from "../components/homepage/HotelCard";
 import hotels from "../data/hotel";
-
 const Home: React.FC = () => {
   // Verifica si los componentes existen antes de renderizarlos
   const hasHotels = Array.isArray(hotels) && hotels.length > 0;
 
   return (
-    <div className="bg-white text-black min-h-screen">
+    <div className="bg-white text-black min-h-screen ">
       <Header />
       <Hero />
       <motion.div
@@ -28,8 +26,6 @@ const Home: React.FC = () => {
       <Gallery />
       <Weather />
       <FAQ />
-      <Contact />
-
       {/* Sección de Ofertas de Hoteles */}
       <section className="py-12" id="ofertas">
         <h2 className="text-2xl font-bold text-center mb-6">
