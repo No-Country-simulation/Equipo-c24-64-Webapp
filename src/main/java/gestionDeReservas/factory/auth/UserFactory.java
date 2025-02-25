@@ -1,4 +1,4 @@
-package gestionDeReservas.factory;
+package gestionDeReservas.factory.auth;
 
 import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
 import gestionDeReservas.model.entity.UserEntity;
@@ -18,8 +18,9 @@ public class UserFactory {
     public UserEntity buildUser(RegisterRequestDTO registerRequestDTO){
         return UserEntity
                 .builder()
-                .name(registerRequestDTO.name())
+                .username(registerRequestDTO.username())
                 .email(registerRequestDTO.email())
+                .name(registerRequestDTO.name())
                 .lastname(registerRequestDTO.lastname())
                 .address(registerRequestDTO.address())
                 .numberPhone(registerRequestDTO.phoneNumber())
