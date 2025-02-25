@@ -64,7 +64,7 @@ const rooms = [
   {
     id: 9,
     name: "Habitación Cuádruple",
-    type: "double",
+    type: "cuadruple",
     price: 220,
     people: 4,
   },
@@ -87,7 +87,7 @@ const rooms = [
   {
     id: 14,
     name: "Habitación Triple Superior",
-    type: "double",
+    type: "triple",
     price: 250,
     people: 3,
   },
@@ -110,7 +110,7 @@ const rooms = [
   {
     id: 19,
     name: "Habitación Cuádruple Confort",
-    type: "double",
+    type: "cuadruple",
     price: 260,
     people: 4,
   },
@@ -133,7 +133,7 @@ const rooms = [
   {
     id: 24,
     name: "Habitación Cuádruple Familiar",
-    type: "double",
+    type: "cuadruple",
     price: 280,
     people: 4,
   },
@@ -156,7 +156,7 @@ const rooms = [
   {
     id: 29,
     name: "Habitación Triple Deluxe",
-    type: "double",
+    type: "triple",
     price: 270,
     people: 3,
   },
@@ -168,12 +168,16 @@ const RoomListing: React.FC = () => {
 
   const getFilteredRooms = useMemo(() => {
     return rooms.filter((room) => {
-     
+      if (
+        roomType !== "all" &&
+        room.type.toLowerCase() !== roomType.toLowerCase()
+      ) {
+        return false;
+      }
       if (
         guests &&
         room.people < (guests.adults || 0) + (guests.children || 0)
       ) {
-        console.log(`Filtered out ${room.name} by guest count.`);
         return false;
       }
       return true;

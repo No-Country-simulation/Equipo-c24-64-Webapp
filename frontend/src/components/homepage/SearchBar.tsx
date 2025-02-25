@@ -37,8 +37,10 @@ const SearchBar = () => {
               className="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 appearance-none cursor-pointer"
             >
               <option value="">Tipo de habitación</option>
-              <option value="standard">Habitación Estándar</option>
-              <option value="deluxe">Habitación Deluxe</option>
+              <option value="single">Habitación Single</option>
+              <option value="double">Habitación Doble</option>
+              <option value="triple">Habitación Triple</option>
+              <option value="cuadruple">Habitación Cuadruple</option>
               <option value="suite">Suite</option>
             </select>
             <ChevronDown
