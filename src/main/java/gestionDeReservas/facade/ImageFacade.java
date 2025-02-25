@@ -1,10 +1,9 @@
 package gestionDeReservas.facade;
 
-import gestionDeReservas.Model.dto.ImageDTO.ImageGetDTO;
-import gestionDeReservas.Model.entity.Image;
+import gestionDeReservas.model.dto.ImageDTO.ImageGetDTO;
+import gestionDeReservas.model.entity.Image;
 import gestionDeReservas.mapper.ImageMapper;
 import gestionDeReservas.services.Interface.ImageServiceUI;
-import gestionDeReservas.services.implementation.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

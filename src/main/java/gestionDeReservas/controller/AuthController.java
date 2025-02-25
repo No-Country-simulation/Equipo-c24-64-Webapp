@@ -1,8 +1,14 @@
 package gestionDeReservas.controller;
 
-import gestionDeReservas.Model.dto.auth.LoginRequestDTO;
-import gestionDeReservas.Model.dto.auth.RegisterRequestDTO;
-import gestionDeReservas.services.Interface.IAuthService;
+import gestionDeReservas.model.dto.auth.LoginRequestDTO;
+import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
+import gestionDeReservas.services.Interface.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,24 +19,42 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Tag(name = "Authentication", description = "Endpoints for user registration, login and logout")
 public class AuthController {
-    IAuthService authService;
+    AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO){
-        return  ResponseEntity.ok(authService.login(loginRequestDTO));
+    @Operation(summary = "login", description = "Authenticates a user and returns a JWT token")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successful login "),
+            @ApiResponse(responseCode = "401", description = "invalid credentials")
+    })
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+        return ResponseEntity.ok(authService.login(loginRequestDTO));
     }
 
     @PostMapping("/register")
-    public ResponseEntity <?> login(@RequestBody RegisterRequestDTO registerRequestDTO){
+    @Operation(summary = "Register user", description = "Create a new user account")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Successfully registered user"),
+            @ApiResponse(responseCode = "400", description = "Invalid registration data")
+    })
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequestDTO registerRequestDTO) {
         return new ResponseEntity<>(authService.register(registerRequestDTO), HttpStatus.CREATED);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestHeader("Authorization") String token) {
+    @Operation(summary = "Log out", description = "Invalidate the user's JWT token")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully Logout"),
+            @ApiResponse(responseCode = "403", description = "Invalid or missing token")
+    })
+    public ResponseEntity<?> logout(
+            @Parameter(description = "JWT token in 'Bearer {token}' format", required = true)
+            @RequestHeader("Authorization") String token
+    ) {
         authService.logout(token);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

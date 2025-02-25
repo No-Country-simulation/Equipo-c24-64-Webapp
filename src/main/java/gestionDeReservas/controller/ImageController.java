@@ -1,6 +1,6 @@
 package gestionDeReservas.controller;
 
-import gestionDeReservas.Model.dto.ImageDTO.ImageGetDTO;
+import gestionDeReservas.model.dto.ImageDTO.ImageGetDTO;
 import gestionDeReservas.facade.ImageFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

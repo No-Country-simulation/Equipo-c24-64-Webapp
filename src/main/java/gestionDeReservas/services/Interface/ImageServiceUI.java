@@ -1,6 +1,6 @@
 package gestionDeReservas.services.Interface;
 
-import gestionDeReservas.Model.entity.Image;
+import gestionDeReservas.model.entity.Image;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

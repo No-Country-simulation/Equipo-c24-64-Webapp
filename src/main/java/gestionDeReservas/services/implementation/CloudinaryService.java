@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import gestionDeReservas.Model.dto.CloudinaryDTO.CloudinaryResponseDTO;
+import gestionDeReservas.model.dto.CloudinaryDTO.CloudinaryResponseDTO;
 import org.springframework.stereotype.Service;
 
 import com.cloudinary.Cloudinary;

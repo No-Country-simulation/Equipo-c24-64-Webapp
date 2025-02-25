@@ -23,10 +23,9 @@ import java.util.function.Function;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class JwtService {
-
-    static final String SECRET_KEY = "fHjqZ9LwR3vC7nKy2tXsD4mW8bN6pVeAxJ5cGhUz1rM0dFBoOQlIuEeYmPiS";
-    Map<String, Date> blacklist = new HashMap<>();
-    ScheduledExecutorService scheduler;
+     static final String SECRET_KEY = "fHjqZ9LwR3vC7nKy2tXsD4mW8bN6pVeAxJ5cGhUz1rM0dFBoOQlIuEeYmPiS";
+     final Map<String, Date> blacklist = new HashMap<>();
+     ScheduledExecutorService scheduler;
 
     public String getToken(UserDetails user) {
         return getToken(new HashMap<>(), user);
@@ -37,7 +36,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 600))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 120))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

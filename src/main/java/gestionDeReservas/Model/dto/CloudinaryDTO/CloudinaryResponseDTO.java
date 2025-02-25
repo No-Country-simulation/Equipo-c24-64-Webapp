@@ -1,4 +1,4 @@
-package gestionDeReservas.Model.dto.CloudinaryDTO;
+package gestionDeReservas.model.dto.CloudinaryDTO;
 
 public record CloudinaryResponseDTO(
         String url,

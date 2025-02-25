@@ -3,10 +3,8 @@ package gestionDeReservas.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import gestionDeReservas.Model.dto.RoomDTO.RoomGetDTO;
-import gestionDeReservas.Model.entity.Room;
-import gestionDeReservas.Model.entity.RoomType;
-import gestionDeReservas.repository.TypeRoomRepository;
+import gestionDeReservas.model.dto.RoomDTO.RoomGetDTO;
+import gestionDeReservas.model.entity.Room;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 

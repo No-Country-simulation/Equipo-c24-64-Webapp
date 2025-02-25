@@ -1,17 +1,22 @@
 package gestionDeReservas.controller;
 
-import gestionDeReservas.Model.dto.RoomDTO.RoomEditRequestDTO;
-import jakarta.annotation.Nullable;
+import gestionDeReservas.model.dto.RoomDTO.RoomEditRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import gestionDeReservas.Model.dto.RoomDTO.RoomCreateRequestDTO;
-import gestionDeReservas.Model.dto.RoomDTO.RoomGetDTO;
+import gestionDeReservas.model.dto.RoomDTO.RoomCreateRequestDTO;
+import gestionDeReservas.model.dto.RoomDTO.RoomGetDTO;
 import gestionDeReservas.services.Interface.RoomServiceUI;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
+
 
 
 @RestController

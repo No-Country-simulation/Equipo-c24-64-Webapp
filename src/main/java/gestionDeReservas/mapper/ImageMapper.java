@@ -1,7 +1,7 @@
 package gestionDeReservas.mapper;
 
-import gestionDeReservas.Model.dto.ImageDTO.ImageGetDTO;
-import gestionDeReservas.Model.entity.Image;
+import gestionDeReservas.model.dto.ImageDTO.ImageGetDTO;
+import gestionDeReservas.model.entity.Image;
 import org.springframework.stereotype.Component;
 
 @Component

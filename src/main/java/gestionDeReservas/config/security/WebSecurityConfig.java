@@ -2,10 +2,8 @@ package gestionDeReservas.config.security;
 
 import gestionDeReservas.config.security.jwt.JwtAuthenticationFilter;
 
-import gestionDeReservas.Model.enums.Role;
-import lombok.AccessLevel;
+import gestionDeReservas.model.enums.Role;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -61,7 +59,9 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST,"/auth/register").permitAll()
                 .requestMatchers(HttpMethod.GET, "/saludo/hola-todos").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/saludo/hola-fede").permitAll()
+                .requestMatchers(HttpMethod.GET, "/saludo/funciona").permitAll()
+
                 .requestMatchers(HttpMethod.GET, "/rooms").permitAll()
                 .requestMatchers(HttpMethod.POST, "/rooms").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/rooms/**").permitAll()
@@ -72,14 +72,16 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/typeRoom/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers(HttpMethod.POST,"/auth/logout").permitAll()
-                //.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
 
     }
 
 
     private void configureCustomerEndPoints(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authRequest) {
-        authRequest.requestMatchers(HttpMethod.GET, "/saludo/hola-cliente").hasRole(CUSTOMER);
+        authRequest.requestMatchers(HttpMethod.GET, "/saludo/hola-cliente").hasRole(CUSTOMER)
+                .requestMatchers(HttpMethod.POST,"/booking").hasRole(CUSTOMER);
+
     }
 
     private void configureReceptionistsEndpoint(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authRequest) {

@@ -2,10 +2,9 @@ package gestionDeReservas.services.Interface;
 
 import java.util.List;
 
-import gestionDeReservas.Model.dto.RoomDTO.RoomCreateRequestDTO;
-import gestionDeReservas.Model.dto.RoomDTO.RoomEditRequestDTO;
-import gestionDeReservas.Model.dto.RoomDTO.RoomGetDTO;
-import org.springframework.web.multipart.MultipartFile;
+import gestionDeReservas.model.dto.RoomDTO.RoomCreateRequestDTO;
+import gestionDeReservas.model.dto.RoomDTO.RoomEditRequestDTO;
+import gestionDeReservas.model.dto.RoomDTO.RoomGetDTO;
 
 public interface RoomServiceUI {
     List<RoomGetDTO> getAllRooms();

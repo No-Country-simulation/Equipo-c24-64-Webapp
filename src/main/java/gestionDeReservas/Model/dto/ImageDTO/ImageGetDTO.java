@@ -1,4 +1,4 @@
-package gestionDeReservas.Model.dto.ImageDTO;
+package gestionDeReservas.model.dto.ImageDTO;
 
 import lombok.Builder;
 

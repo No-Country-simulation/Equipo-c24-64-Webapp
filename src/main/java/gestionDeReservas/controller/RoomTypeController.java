@@ -6,10 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import gestionDeReservas.Model.dto.TypeRoomDTO.CreateTypeRoomDTO;
-import gestionDeReservas.Model.dto.TypeRoomDTO.EditRoomTypeDTO;
-import gestionDeReservas.Model.dto.TypeRoomDTO.RoomTypeGetDTO;
+import gestionDeReservas.model.dto.TypeRoomDTO.CreateTypeRoomDTO;
+import gestionDeReservas.model.dto.TypeRoomDTO.EditRoomTypeDTO;
+import gestionDeReservas.model.dto.TypeRoomDTO.RoomTypeGetDTO;
 import gestionDeReservas.services.Interface.TypeRoomServiceUI;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

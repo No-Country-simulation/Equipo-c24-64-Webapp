@@ -1,20 +1,17 @@
 package gestionDeReservas.factory;
 
-import gestionDeReservas.Model.entity.Image;
+
 import gestionDeReservas.services.implementation.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import gestionDeReservas.Model.dto.RoomDTO.RoomCreateRequestDTO;
-import gestionDeReservas.Model.entity.Room;
-import gestionDeReservas.Model.entity.RoomType;
+import gestionDeReservas.model.dto.RoomDTO.RoomCreateRequestDTO;
+import gestionDeReservas.model.entity.Room;
+import gestionDeReservas.model.entity.RoomType;
 import gestionDeReservas.services.implementation.RoomTypeService;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)

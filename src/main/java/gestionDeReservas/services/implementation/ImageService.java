@@ -1,9 +1,9 @@
 package gestionDeReservas.services.implementation;
 
-import gestionDeReservas.Model.dto.CloudinaryDTO.CloudinaryResponseDTO;
-import gestionDeReservas.Model.dto.ImageDTO.ImageGetDTO;
-import gestionDeReservas.Model.entity.Image;
-import gestionDeReservas.Model.entity.Room;
+import gestionDeReservas.model.dto.CloudinaryDTO.CloudinaryResponseDTO;
+import gestionDeReservas.model.dto.ImageDTO.ImageGetDTO;
+import gestionDeReservas.model.entity.Image;
+import gestionDeReservas.model.entity.Room;
 import gestionDeReservas.factory.ImageFactory;
 import gestionDeReservas.repository.ImageRepository;
 import gestionDeReservas.services.Interface.ImageServiceUI;

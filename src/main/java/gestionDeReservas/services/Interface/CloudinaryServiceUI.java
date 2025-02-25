@@ -2,7 +2,7 @@ package gestionDeReservas.services.Interface;
 
 import java.util.List;
 
-import gestionDeReservas.Model.dto.CloudinaryDTO.CloudinaryResponseDTO;
+import gestionDeReservas.model.dto.CloudinaryDTO.CloudinaryResponseDTO;
 
 public interface CloudinaryServiceUI {
     List<CloudinaryResponseDTO> uploadFiles(List<byte[]> bytes);
