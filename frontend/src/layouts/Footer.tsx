@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 interface INewsletterForm {
   email: string;
@@ -82,7 +83,10 @@ function Footer() {
                 </form>
               </div>
               {errors.email && (
-                <p className="text-red-500 text-sm md:ps-5 md:text-center lg:text-end lg:pe-26" aria-live="polite">
+                <p
+                  className="text-red-500 text-sm md:ps-5 md:text-center lg:text-end lg:pe-26"
+                  aria-live="polite"
+                >
                   {errors.email.message}
                 </p>
               )}
@@ -126,14 +130,20 @@ function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <Link
+                    to="/contacto"
+                    className="hover:text-white transition-colors"
+                  >
                     Contacto
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <Link
+                    to="/contacto"
+                    className="hover:text-white transition-colors"
+                  >
                     Ubicación
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -148,7 +158,7 @@ function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a href="#faq" className="hover:text-white transition-colors">
                     Cómo Reservar
                   </a>
                 </li>
@@ -167,21 +177,21 @@ function Footer() {
                 Pagos y Seguridad
               </h3>
               <div className="grid grid-cols-2 gap-4">
-                <a href="">
+                <a href="#">
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
                     alt="Visa"
                     className="h-8 bg-white p-1 rounded"
                   />
                 </a>
-                <a href="">
+                <a href="#">
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
                     alt="Mastercard"
                     className="h-8 bg-white p-1 rounded"
                   />
                 </a>
-                <a href="">
+                <a href="#">
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
                     alt="PayPal"

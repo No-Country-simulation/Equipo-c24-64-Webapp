@@ -5,8 +5,14 @@ import HomePage from "../pages/Homepage";
 import Dashboard from "../pages/Dashboard.jsx";
 import Rooms from "../pages/Rooms.jsx";
 import Contacto from "../pages/Contacto.jsx";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const AppRoutes = () => {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />

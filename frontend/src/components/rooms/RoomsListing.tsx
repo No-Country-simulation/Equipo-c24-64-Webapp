@@ -187,9 +187,11 @@ const RoomListing: React.FC = () => {
   return (
     <div className="p-4">
       <SearchBar />
-      <h2 className="text-3xl font-bold text-center text-purple-600 mb-8">
-        Habitaciones disponibles
-      </h2>
+      {roomType && (
+        <h2 className="text-2xl pt-6 pb-2 font-bold text-center text-black mb-8">
+          Habitaciónes recomendadas
+        </h2>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {getFilteredRooms.map((room) => (
           <div

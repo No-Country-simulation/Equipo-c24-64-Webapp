@@ -19,7 +19,6 @@ const Header = () => {
     >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
           <div className="flex-shrink-0">
             <a href="/" className="flex items-center">
               <span className="text-2xl font-bold text-blue-600">
@@ -27,9 +26,7 @@ const Header = () => {
               </span>
             </a>
           </div>
-          {/* Desktop Right Section */}
           <div className="hidden md:flex items-center space-x-6">
-            {/* Favorites */}
             <a
               href="/favorites"
               className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
@@ -37,7 +34,6 @@ const Header = () => {
               <Heart size={20} />
               <span>Favoritos</span>
             </a>
-
             {/* Login */}
             {usuario ? (
               <>
@@ -54,8 +50,6 @@ const Header = () => {
                 Iniciá sesión
               </a>
             )}
-
-            {/* Menu Button */}
             <div className="relative">
               <button
                 onClick={() => setIsOpen(!isOpen)}
@@ -64,16 +58,14 @@ const Header = () => {
                 <Menu size={20} />
                 <span>Menú</span>
               </button>
-
-              {/* Dropdown Menu */}
               {isOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 border border-gray-200">
-                  <a
-                    href="#inicio"
+                  <Link
+                    to="/"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                   >
                     Inicio
-                  </a>
+                  </Link>
                   <a
                     href="#galeria"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
