@@ -3,7 +3,6 @@ import gestionDeReservas.exception.BookingException;
 import gestionDeReservas.exception.DateRangeException;
 import gestionDeReservas.exception.NotRoomFoundException;
 import gestionDeReservas.factory.booking.BookingFactory;
-import gestionDeReservas.factory.booking.BookingResponseFactory;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
 import gestionDeReservas.model.entity.Booking;
 import gestionDeReservas.model.entity.Room;

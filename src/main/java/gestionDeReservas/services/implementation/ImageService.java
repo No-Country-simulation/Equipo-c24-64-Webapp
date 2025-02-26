@@ -1,9 +1,7 @@
 package gestionDeReservas.services.implementation;
 
 import gestionDeReservas.model.dto.CloudinaryDTO.CloudinaryResponseDTO;
-import gestionDeReservas.model.dto.ImageDTO.ImageGetDTO;
 import gestionDeReservas.model.entity.Image;
-import gestionDeReservas.model.entity.Room;
 import gestionDeReservas.factory.ImageFactory;
 import gestionDeReservas.repository.ImageRepository;
 import gestionDeReservas.services.Interface.ImageServiceUI;
@@ -25,7 +23,6 @@ public class ImageService implements ImageServiceUI {
 
     @Autowired
     private ImageRepository imageRepository;
-
 
     @Override
     public void removeImage(int id) throws Exception {

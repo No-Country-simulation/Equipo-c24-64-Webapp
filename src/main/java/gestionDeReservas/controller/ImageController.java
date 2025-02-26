@@ -1,12 +1,10 @@
 package gestionDeReservas.controller;
 
-import gestionDeReservas.model.dto.ImageDTO.ImageGetDTO;
 import gestionDeReservas.facade.ImageFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 
@@ -16,7 +14,6 @@ public class ImageController {
 
     @Autowired
     ImageFacade imageFacade;
-
 
     @GetMapping
     public ResponseEntity<?> getAll() throws Exception {
