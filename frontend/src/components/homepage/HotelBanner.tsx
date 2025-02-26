@@ -1,26 +1,53 @@
-import React, { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper/modules';
-import { hotelSlides } from '../../data/HotelBanner';
-import { FaWifi, FaSwimmingPool, FaUtensils } from 'react-icons/fa';
-import { MdElectricalServices, MdFitnessCenter, MdSpa, MdMoreHoriz } from 'react-icons/md';
-import { BsHouseDoor } from 'react-icons/bs';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import React, { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import { hotelSlides } from "../../data/HotelBanner";
+import { FaWifi, FaSwimmingPool, FaUtensils } from "react-icons/fa";
+import {
+  MdElectricalServices,
+  MdFitnessCenter,
+  MdSpa,
+  MdMoreHoriz,
+} from "react-icons/md";
+import { BsHouseDoor } from "react-icons/bs";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Link } from "react-router-dom";
 
 const HotelBanner: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const facilities = [
-    { icon: <FaWifi className="text-indigo-400 text-xl" />, name: "Libre Wifi" },
-    { icon: <FaSwimmingPool className="text-indigo-400 text-xl" />, name: "Pileta" },
-    { icon: <BsHouseDoor className="text-indigo-400 text-xl" />, name: "Zona de trabajo" },
-    { icon: <FaUtensils className="text-indigo-400 text-xl" />, name: "Comedor" },
-    { icon: <MdElectricalServices className="text-purple-400 text-xl" />, name: "Energía libre" },
-    { icon: <MdFitnessCenter className="text-purple-400 text-xl" />, name: "Gym" },
+    {
+      icon: <FaWifi className="text-indigo-400 text-xl" />,
+      name: "Libre Wifi",
+    },
+    {
+      icon: <FaSwimmingPool className="text-indigo-400 text-xl" />,
+      name: "Pileta",
+    },
+    {
+      icon: <BsHouseDoor className="text-indigo-400 text-xl" />,
+      name: "Zona de trabajo",
+    },
+    {
+      icon: <FaUtensils className="text-indigo-400 text-xl" />,
+      name: "Comedor",
+    },
+    {
+      icon: <MdElectricalServices className="text-purple-400 text-xl" />,
+      name: "Energía libre",
+    },
+    {
+      icon: <MdFitnessCenter className="text-purple-400 text-xl" />,
+      name: "Gym",
+    },
     { icon: <MdSpa className="text-purple-400 text-xl" />, name: "Spa" },
-    { icon: <MdMoreHoriz className="text-purple-400 text-xl" />, name: "Otros servicios" },
+    {
+      icon: <MdMoreHoriz className="text-purple-400 text-xl" />,
+      name: "Otros servicios",
+    },
   ];
 
   return (
@@ -30,14 +57,12 @@ const HotelBanner: React.FC = () => {
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           Nuestras mejores comodidades
         </h1>
-        <p className="text-gray-400 mb-8">
-          Reserva hoy, disfrutá mañana
-        </p>
-        
+        <p className="text-gray-400 mb-8">Reserva hoy, disfrutá mañana</p>
+
         <button className="bg-gray-600 hover:bg-gray-700 transition-colors duration-300 text-white font-medium py-3 px-6 rounded-md mb-10">
-          <a href="/contacto">Contáctenos</a>
+          <Link to="/contacto">Contáctenos</Link>
         </button>
-        
+
         <div className="grid grid-cols-2 gap-x-4 gap-y-6">
           {facilities.map((facility, index) => (
             <div key={index} className="flex items-center">
@@ -47,7 +72,7 @@ const HotelBanner: React.FC = () => {
           ))}
         </div>
       </div>
-      
+
       {/* Right side carousel */}
       <div className="w-full lg:w-1/2 relative">
         <Swiper
@@ -62,9 +87,9 @@ const HotelBanner: React.FC = () => {
           {hotelSlides.map((slide, index) => (
             <SwiperSlide key={index}>
               <div className="relative w-full h-full">
-                <img 
-                  src={slide.image} 
-                  alt={slide.title} 
+                <img
+                  src={slide.image}
+                  alt={slide.title}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
@@ -75,9 +100,20 @@ const HotelBanner: React.FC = () => {
                     </div>
                     <div>
                       <button className="flex items-center text-white hover:text-gray-300 transition-colors duration-300">
-                        <span className="mr-2"><a href="/rooms">Reservar ahora</a></span>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        <span className="mr-2">
+                          <a href="/rooms">Reservar ahora</a>
+                        </span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                       </button>
                     </div>
