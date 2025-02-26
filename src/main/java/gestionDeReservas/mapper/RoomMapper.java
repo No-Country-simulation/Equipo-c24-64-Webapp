@@ -12,11 +12,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoomMapper {
 
-
     @Autowired
     RoomTypeMapper roomTypeMapper;
-
-
 
     public RoomGetDTO toGetDTO(Room room){
         return RoomGetDTO
