@@ -6,6 +6,7 @@ interface SearchState {
   checkIn: string;
   checkOut: string;
   roomType: string;
+  rooms: string[];
   guests: {
     adults: number;
     children: number;
@@ -14,6 +15,7 @@ interface SearchState {
   setIsGuestsOpen: (state: boolean) => void;
   setCheckIn: (date: string) => void;
   setCheckOut: (date: string) => void;
+  setRooms: (rooms: string[]) => void;
   setRoomType: (roomType: string) => void;
   setGuests: (guests: {
     adults: number;
@@ -31,6 +33,7 @@ const useSearchStore = create<SearchState>((set) => ({
   checkIn: "",
   checkOut: "",
   roomType: "",
+  rooms: [],
   guests: {
     adults: 2,
     children: 0,
@@ -41,6 +44,7 @@ const useSearchStore = create<SearchState>((set) => ({
   setCheckOut: (date) => set({ checkOut: date }),
   setRoomType: (roomType) => set({ roomType }),
   setGuests: (guests) => set({ guests }),
+  setRooms: (rooms) => set({ rooms }),
   handleGuestsChange: (type, operation) => {
     set((state) => ({
       guests: {
