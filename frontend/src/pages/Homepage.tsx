@@ -9,6 +9,7 @@ import FAQ from "../components/homepage/FAQ";
 import Weather from "../components/Weather";
 import HotelCard from "../components/homepage/HotelCard";
 import hotels from "../data/hotel";
+import HotelBanner from"../components/homepage/HotelBanner";
 const Home: React.FC = () => {
   // Verifica si los componentes existen antes de renderizarlos
   const hasHotels = Array.isArray(hotels) && hotels.length > 0;
@@ -26,6 +27,7 @@ const Home: React.FC = () => {
       {/* <SearchBar/> */}
       <RoomListing />
        <ServiceCard/> 
+       <HotelBanner/>
       <Weather />
       <FAQ />
       {/* Sección de Ofertas de Hoteles */}
