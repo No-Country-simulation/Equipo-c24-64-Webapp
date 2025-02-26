@@ -35,7 +35,7 @@ const HotelBanner: React.FC = () => {
         </p>
         
         <button className="bg-gray-600 hover:bg-gray-700 transition-colors duration-300 text-white font-medium py-3 px-6 rounded-md mb-10">
-          <a href="#contact">Contáctenos</a>
+          <a href="/contacto">Contáctenos</a>
         </button>
         
         <div className="grid grid-cols-2 gap-x-4 gap-y-6">
