@@ -16,25 +16,25 @@ export interface HotelSlide {
     },
     {
       image: "https://i.postimg.cc/nLwNjxYW/vecteezy-minimalist-living-room-interior-indoor-display-by-shining-28625869.jpg", 
-      title: "Titulo 1",
+      title: "Titulo 2",
       subtitle: "",
       link: "#"
     },
     {
       image: "https://i.postimg.cc/Wz0Lry5P/vecteezy-luxurious-pool-in-the-garden-of-a-private-villa-hanging-11602775.jpg", 
-      title: "Titulo 1",
+      title: "Titulo 3",
       subtitle: "",
       link: "#"
     },
     {
       image: "https://i.postimg.cc/Wz0Lry5P/vecteezy-luxurious-pool-in-the-garden-of-a-private-villa-hanging-11602775.jpg", 
-      title: "Titulo 1",
+      title: "Titulo 4",
       subtitle: "",
      link: "#"
     },
     {
       image: "https://i.postimg.cc/Wz0Lry5P/vecteezy-luxurious-pool-in-the-garden-of-a-private-villa-hanging-11602775.jpg", 
-      title: "Titulo 1",
+      title: "Titulo 5",
       subtitle: "",
       link: "#"
     }
