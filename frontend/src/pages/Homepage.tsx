@@ -3,7 +3,7 @@ import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import Hero from "../components/homepage/Hero";
 // import SearchBar from "../components/homepage/SearchBar";
-// import Gallery from "../components/homepage/Gallery";
+import ServiceCard from "../components/homepage/ServiceCard";
 import RoomListing from "@/components/rooms/RoomsListing";
 import FAQ from "../components/homepage/FAQ";
 import Weather from "../components/Weather";
@@ -23,9 +23,9 @@ const Home: React.FC = () => {
         transition={{ duration: 1 }}
       >
       </motion.div>
-      {/* <Gallery/> */}
       {/* <SearchBar/> */}
       <RoomListing />
+       <ServiceCard/> 
       <Weather />
       <FAQ />
       {/* Sección de Ofertas de Hoteles */}
