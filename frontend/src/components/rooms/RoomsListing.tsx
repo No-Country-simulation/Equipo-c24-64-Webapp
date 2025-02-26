@@ -2,20 +2,30 @@ import React, { useState, useEffect } from "react";
 import { Users, DollarSign } from "lucide-react";
 import SearchBar from "../homepage/SearchBar";
 import useSearchStore from "@/hooks/useSearchStore";
-import fetchRooms from "@/utils/fetchRooms";
 
 const RoomListing: React.FC = () => {
-  const { guests, roomType, checkIn, checkOut, rooms } = useSearchStore();
+  const { rooms, guests, checkIn, checkOut, roomType } = useSearchStore();
 
-console.log(rooms)
+  // const habitacionesFiltradas = rooms.filter((room) => {
+  //   const filtrarCapacidad = room.capacity >= guests;
+  //   const filtrarRoomType =
+  //     room.typeRoom.name.toLowerCase() === roomType.toLowerCase();
+
+  //   return filtrarCapacidad && filtrarRoomType;
+  // });
+
   return (
     <div className="p-4">
       <SearchBar />
-      {rooms && rooms.length > 0 && (
+      {/* {habitacionesFiltradas.length > 0 ? (
         <h2 className="text-2xl pt-6 pb-2 font-bold text-center text-black mb-8">
           Habitaciones recomendadas
         </h2>
-      )}
+      ) : (
+        <h2 className="text-xl pt-6 pb-2 font-bold text-center text-black mb-8">
+          Realiza una búsqueda para ver las habitaciones disponibles
+        </h2>
+      )} */}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {rooms.length > 0 ? (

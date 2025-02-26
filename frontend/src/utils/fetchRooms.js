@@ -1,4 +1,4 @@
-const fetchRooms = async (guests, roomType, checkIn, checkOut) => {
+const fetchRooms = async () => {
   try {
     const response = await fetch(`https://hotels-1-0.onrender.com/api/rooms`);
     const data = await response.json();

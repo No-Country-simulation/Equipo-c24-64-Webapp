@@ -1,45 +1,42 @@
 import React from "react";
-import { Calendar, Users, ChevronDown, Search } from "lucide-react";
-import { useForm } from "react-hook-form"; // Importar useForm
+import { Users, ChevronDown, Search } from "lucide-react";
+import { useForm } from "react-hook-form";
 import useSearchStore from "@/hooks/useSearchStore.tsx";
 import fetchRooms from "@/utils/fetchRooms";
 import "./home.css";
-const SearchBar = () => {
+
+interface SearchForm {
+  roomType: string;
+  checkIn: string;
+  checkOut: string;
+}
+const SearchBar: React.FC = () => {
   const {
     isGuestsOpen,
     checkIn,
     checkOut,
     roomType,
     guests,
-    rooms,
     setIsGuestsOpen,
     setCheckIn,
     setCheckOut,
     setRoomType,
-    setGuests,
     setRooms,
     handleGuestsChange,
   } = useSearchStore();
-
-  // Usamos useForm para manejar el estado y validación del formulario
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-  } = useForm();
+  } = useForm<SearchForm>();
 
-  // Manejo de la búsqueda de habitaciones
-  const handleFetchRooms = async () => {
-    console.log("cargando");
-    const info = await fetchRooms(guests, roomType, checkIn, checkOut);
+  const onSubmit = async (data) => {
+    const { roomType, checkIn, checkOut } = data;
+    setRoomType(roomType);
+    setCheckIn(checkIn);
+    setCheckOut(checkOut);
+    const info = await fetchRooms();
     setRooms(info);
-  };
-
-  // Manejo de la validación y envío del formulario
-  const onSubmit = (data: any) => {
-    console.log(data);
-    handleFetchRooms();
   };
 
   return (
@@ -58,6 +55,7 @@ const SearchBar = () => {
                 {...register("roomType", {
                   required: "",
                 })}
+                value={roomType}
                 onChange={(e) => setRoomType(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 appearance-none cursor-pointer"
               >
@@ -87,7 +85,9 @@ const SearchBar = () => {
               />
 
               <div className=" left-0 right-0 text-red-500 text-sm my-1 ">
-                {errors.checkIn && <span>{errors.checkIn.message}</span>}
+                {errors.checkIn && (
+                  <span>{String(errors.checkIn.message)}</span>
+                )}
               </div>
             </div>
 
@@ -103,18 +103,25 @@ const SearchBar = () => {
                 placeholder="Check Out"
               />
               <div className=" left-0 right-0 text-red-500 text-sm my-1">
-                {errors.checkOut && <span>{errors.checkOut.message}</span>}
+                {errors.checkOut && (
+                  <span>{String(errors.checkOut.message)}</span>
+                )}
               </div>
             </div>
             <div className="relative">
               <button
+                type="button"
                 onClick={() => setIsGuestsOpen(!isGuestsOpen)}
                 className="w-full p-3 border border-gray-300 rounded-lg text-left focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Users size={20} className="text-gray-400" />
-                    <span className="text-sm">Viajeros</span>
+                    {!guests ? (
+                      <span className="text-sm">Viajeros</span>
+                    ) : (
+                      <span>{guests.adults} Adultos</span>
+                    )}
                     <br />
                   </div>
                   <ChevronDown size={20} className="text-gray-400" />
@@ -127,9 +134,11 @@ const SearchBar = () => {
                       <span>Adultos</span>
                       <div className="flex items-center gap-3">
                         <button
+                          type="button"
                           onClick={() =>
                             handleGuestsChange("adults", "subtract")
                           }
+                          value={guests.adults - 1}
                           className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
                           disabled={guests.adults <= 1}
                         >
@@ -137,6 +146,8 @@ const SearchBar = () => {
                         </button>
                         <span>{guests.adults}</span>
                         <button
+                          value={guests.adults + 1}
+                          type="button"
                           onClick={() => handleGuestsChange("adults", "add")}
                           className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
                         >
@@ -148,6 +159,8 @@ const SearchBar = () => {
                       <span>Niños</span>
                       <div className="flex items-center gap-3">
                         <button
+                          type="button"
+                          value={guests.children - 1}
                           onClick={() =>
                             handleGuestsChange("children", "subtract")
                           }
@@ -158,6 +171,8 @@ const SearchBar = () => {
                         </button>
                         <span>{guests.children}</span>
                         <button
+                          type="button"
+                          value={guests.children + 1}
                           onClick={() => handleGuestsChange("children", "add")}
                           className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
                         >
@@ -169,6 +184,7 @@ const SearchBar = () => {
                       <span>Habitaciones</span>
                       <div className="flex items-center gap-3">
                         <button
+                          type="button"
                           onClick={() =>
                             handleGuestsChange("rooms", "subtract")
                           }
@@ -179,6 +195,7 @@ const SearchBar = () => {
                         </button>
                         <span>{guests.rooms}</span>
                         <button
+                          type="button"
                           onClick={() => handleGuestsChange("rooms", "add")}
                           className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
                         >
@@ -188,6 +205,7 @@ const SearchBar = () => {
                     </div>
                   </div>
                   <button
+                    type="button"
                     onClick={() => setIsGuestsOpen(false)}
                     className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
                   >
