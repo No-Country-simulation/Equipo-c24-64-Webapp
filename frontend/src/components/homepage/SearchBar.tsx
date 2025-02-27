@@ -10,6 +10,7 @@ interface SearchForm {
   checkIn: string;
   checkOut: string;
 }
+
 const SearchBar: React.FC = () => {
   const {
     isGuestsOpen,
@@ -24,6 +25,7 @@ const SearchBar: React.FC = () => {
     setRooms,
     handleGuestsChange,
   } = useSearchStore();
+
   const {
     register,
     handleSubmit,
@@ -32,11 +34,14 @@ const SearchBar: React.FC = () => {
 
   const onSubmit = async (data) => {
     const { roomType, checkIn, checkOut } = data;
+    
+    // Actualizar el estado global con los criterios de búsqueda
     setRoomType(roomType);
     setCheckIn(checkIn);
     setCheckOut(checkOut);
-    const info = await fetchRooms();
-    setRooms(info);
+    
+    // Buscar y filtrar habitaciones según los criterios seleccionados
+    await fetchRooms();
   };
 
   return (
@@ -45,12 +50,10 @@ const SearchBar: React.FC = () => {
         <h2 className="text-2xl font-bold mb-2">
           Ahorrá hasta un 45% en tu próxima estadía de hotel
         </h2>
-        <h3 className="text-xl  mb-2">
-        Encontrá tu habitación ideal
-
+        <h3 className="text-xl mb-2">
+          Encontrá tu habitación ideal
         </h3>
       </div>
-
       <div className="bg-white rounded-lg shadow-lg py-4 px-3">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
@@ -68,6 +71,7 @@ const SearchBar: React.FC = () => {
                 <option value="double">Habitación Doble</option>
                 <option value="triple">Habitación Triple</option>
                 <option value="cuadruple">Habitación Cuadruple</option>
+                <option value="quintuple">Habitación Quintuple</option>
                 <option value="suite">Suite</option>
               </select>
               <ChevronDown
@@ -87,14 +91,12 @@ const SearchBar: React.FC = () => {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 placeholder="Check In"
               />
-
               <div className=" left-0 right-0 text-red-500 text-sm my-1 ">
                 {errors.checkIn && (
                   <span>{String(errors.checkIn.message)}</span>
                 )}
               </div>
             </div>
-
             <div className="relative">
               <input
                 {...register("checkOut", {
