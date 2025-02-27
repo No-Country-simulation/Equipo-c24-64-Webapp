@@ -115,6 +115,7 @@ function HotelBanner() {
                 <img
                   src={slide.image}
                   alt={slide.title}
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-8">

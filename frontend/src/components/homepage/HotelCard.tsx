@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-
 interface HotelCardProps {
   image: string;
   title: string;
@@ -22,6 +21,7 @@ const HotelCard: React.FC<HotelCardProps> = ({
         <img
           src={image}
           alt={title}
+          loading="lazy"
           className="w-full h-48 object-cover"
           onError={(e) => {
             const target = e.target as HTMLImageElement;

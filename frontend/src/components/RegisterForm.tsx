@@ -1,9 +1,9 @@
-// src/components/RegisterForm.tsx
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { BackgroundBeams } from "@/styles/bgLogin/BackgroundBeams";
 
 interface IFormInputs {
@@ -79,15 +79,14 @@ const RegisterForm = () => {
       navigate("/login");
     } catch (error) {
       if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("Error al registrar usuario");
+        toast.error("Error al registrar usuario", { duration: 3000 });
       }
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <Toaster position="top-center" reverseOrder={false} />
       <BackgroundBeams className="min-h-[162vh]" />
       <div className="my-4 sm:mx-auto sm:w-full sm:max-w-md z-10">
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -307,14 +306,21 @@ const RegisterForm = () => {
                   )}
                 </div>
               </div>
-
               <div>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                  className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 ${
+                    isSubmitting ? "cursor-wait" : ""
+                  }`}
                 >
-                  {isSubmitting ? "Registrando..." : "Registrarse"}
+                  {isSubmitting ? (
+                    <>
+                      <span className="loader"></span>
+                    </>
+                  ) : (
+                    "Registrarse"
+                  )}
                 </button>
               </div>
             </form>

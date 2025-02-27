@@ -1,4 +1,3 @@
-// src/components/LoginForm.tsx
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -42,7 +41,6 @@ const LoginForm: React.FC = () => {
           password: data.password,
         }),
       });
-      console.log(response);
 
       if (!response.ok) {
         const error = await response.json();
