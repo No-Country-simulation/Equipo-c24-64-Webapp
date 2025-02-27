@@ -13,7 +13,7 @@ const RoomListing: React.FC = () => {
     // Cargar habitaciones al montar el componente
     console.log("toy pidiendo a la db");
 
-    // fetchRooms().then(setRooms);
+    fetchRooms().then(setRooms);
   }, []);
 
   // Función para obtener el nombre legible del tipo de habitación
@@ -46,7 +46,6 @@ const RoomListing: React.FC = () => {
             Habitaciones disponibles
             {roomType && ` - ${getRoomTypeName(roomType)}`}
           </h2>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {rooms.map((room) => (
               <div
