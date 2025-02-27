@@ -26,7 +26,7 @@ const Home: React.FC = () => {
       <section className="pt-12 pb-4">
         <RoomListing />
       </section>
-      <section className="py-12">
+      <section className="pb-12">
         <ServiceCard />
       </section>
       <section className="py-12">

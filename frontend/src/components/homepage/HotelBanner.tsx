@@ -66,12 +66,11 @@ function HotelBanner() {
       <div className="w-full max-w-7xl mx-auto rounded-2xl overflow-hidden shadow-2xl bg-slate-900 text-white">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
           {/* Left Content */}
-
           <motion.div
             ref={ref}
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 1, delay: 0.1 }}
+            transition={{ duration: 2, delay: 0.1 }}
             className="p-8 md:p-12 flex flex-col justify-center "
           >
             <div className="mb-12 text-center sm:text-start">
@@ -99,7 +98,13 @@ function HotelBanner() {
               ))}
             </div>
           </motion.div>
-          <div className="relative h-full min-h-[400px] lg:min-h-[600px]">
+          <motion.div
+            ref={ref}
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 2, delay: 0.1 }}
+            className="relative h-full min-h-[400px] lg:min-h-[600px]"
+          >
             {hotelSlides.map((slide, index) => (
               <div
                 key={index}
@@ -154,7 +159,7 @@ function HotelBanner() {
             >
               <ChevronRight className="w-6 h-6 text-white" />
             </button>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import Footer from "@/layouts/Footer";
 import Header from "@/layouts/Header";
 import Contact from "@/components/homepage/Contact";
-
+import { motion } from "framer-motion";
 const Contacto = () => {
   return (
     <>
@@ -11,7 +11,11 @@ const Contacto = () => {
           Luxe Haven | Contacto
         </h1>
         <div className="grid md:grid-cols-2 gap-10 mx-auto max-w-4xl items-center justify-center">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <p className="text-lg leading-relaxed text-slate-500 mt-3">
               Estamos aquí para ayudarte. <br />
               Rellena el formulario o envíanos un email o llámanos.
@@ -44,7 +48,7 @@ const Contacto = () => {
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
           <div>
             <Contact />
           </div>
