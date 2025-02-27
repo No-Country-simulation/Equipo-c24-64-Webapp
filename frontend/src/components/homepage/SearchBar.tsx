@@ -45,6 +45,10 @@ const SearchBar: React.FC = () => {
         <h2 className="text-2xl font-bold mb-2">
           Ahorrá hasta un 45% en tu próxima estadía de hotel
         </h2>
+        <h3 className="text-xl  mb-2">
+        Encontrá tu habitación ideal
+
+        </h3>
       </div>
 
       <div className="bg-white rounded-lg shadow-lg py-4 px-3">
