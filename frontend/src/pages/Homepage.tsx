@@ -9,8 +9,10 @@ import Weather from "../components/Weather";
 import HotelCard from "../components/homepage/HotelCard";
 import hotels from "../data/hotel";
 import HotelBanner from "../components/homepage/HotelBanner";
-
+import { motion } from "framer-motion";
+import useScrollAnimation from "@/hooks/useInView";
 const Home: React.FC = () => {
+  const { ref, inView } = useScrollAnimation();
   const hasHotels = Array.isArray(hotels) && hotels.length > 0;
 
   return (
@@ -44,14 +46,21 @@ const Home: React.FC = () => {
         <div className="flex flex-wrap gap-6 justify-center">
           {hasHotels ? (
             hotels.map((hotel) => (
-              <a href={hotel.link} key={hotel.id}>
+              <motion.a
+                ref={ref}
+                initial={{ opacity: 0, y: 100 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 1 }}
+                href={hotel.link}
+                key={hotel.id}
+              >
                 <HotelCard
                   image={hotel.image}
                   title={hotel.title}
                   location={hotel.location}
                   price={hotel.price}
                 />
-              </a>
+              </motion.a>
             ))
           ) : (
             <p>No hay ofertas disponibles en este momento.</p>

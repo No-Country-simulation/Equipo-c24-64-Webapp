@@ -11,8 +11,6 @@ const RoomListing: React.FC = () => {
   const { ref, inView } = useScrollAnimation();
   useEffect(() => {
     // Cargar habitaciones al montar el componente
-    console.log("toy pidiendo a la db");
-
     fetchRooms().then(setRooms);
   }, []);
 
