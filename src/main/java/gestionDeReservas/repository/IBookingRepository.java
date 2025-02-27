@@ -10,14 +10,18 @@ import java.time.LocalDate;
 
 @Repository
 public interface IBookingRepository extends JpaRepository<Booking,Integer> {
+//    @Query("SELECT (COUNT(b) > 0) FROM Booking b JOIN b.rooms r WHERE r.id = :roomId " +
+//            "AND ((:checkIn BETWEEN b.checkIn AND b.checkOut) " +
+//            "OR (:checkOut BETWEEN b.checkIn AND b.checkOut) " +
+//            "OR (b.checkIn BETWEEN :checkIn AND :checkOut))")
+//    Boolean countOverlappingReservations(@Param("roomId") Integer roomId,
+//                                         @Param("checkIn") LocalDate checkIn,
+//                                         @Param("checkOut") LocalDate checkOut);
+
     @Query("SELECT (COUNT(b) > 0) FROM Booking b JOIN b.rooms r WHERE r.id = :roomId " +
-            "AND ((:checkIn BETWEEN b.checkIn AND b.checkOut) " +
-            "OR (:checkOut BETWEEN b.checkIn AND b.checkOut) " +
-            "OR (b.checkIn BETWEEN :checkIn AND :checkOut))")
+            "AND b.checkIn < :checkOut " +
+            "AND b.checkOut > :checkIn ")
     Boolean countOverlappingReservations(@Param("roomId") Integer roomId,
                                          @Param("checkIn") LocalDate checkIn,
                                          @Param("checkOut") LocalDate checkOut);
-
-
-
 }

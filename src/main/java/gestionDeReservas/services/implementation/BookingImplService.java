@@ -79,7 +79,8 @@ public class BookingImplService implements BookingService {
     }
 
     private void validateDates(LocalDate checkIn, LocalDate checkOut) {
-        if (checkOut.isBefore(checkIn))
+        LocalDate validDate = checkIn.plusDays(1);
+        if (checkOut.isBefore(validDate))
             throw new DateRangeException("The date range is invalid");
     }
 }
