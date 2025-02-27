@@ -21,6 +21,7 @@ const HotelCard: React.FC<HotelCardProps> = ({
         <img
           src={image}
           alt={title}
+          title={title}
           loading="lazy"
           className="w-full h-48 object-cover"
           onError={(e) => {
@@ -34,7 +35,11 @@ const HotelCard: React.FC<HotelCardProps> = ({
         <h3 className="text-lg font-bold">{title}</h3>
         <p className="text-gray-600">{location}</p>
         <p className="text-xl font-semibold mt-2">${price} por noche</p>
-        <button className="block mt-4 bg-blue-600 px-2 text-white text-center w-full py-2 rounded-lg hover:bg-blue-700 transition">
+        <button
+          className="block mt-4 bg-blue-600 px-2 text-white text-center w-full py-2 rounded-lg hover:bg-blue-700 transition"
+          aria-label="Ir a reservar"
+          title="Ir a reservar"
+        >
           Reservar ahora
         </button>
       </div>

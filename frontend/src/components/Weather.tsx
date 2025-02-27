@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Cloud, CloudRain, Sun, Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
+import useScrollAnimation from "@/hooks/useInView.ts";
 
 interface WeatherData {
   main: {
@@ -23,6 +25,7 @@ interface ForecastData {
 }
 
 const Weather: React.FC = () => {
+  const { ref, inView } = useScrollAnimation();
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [forecast, setForecast] = useState<ForecastData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -131,58 +134,98 @@ const Weather: React.FC = () => {
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 shadow-lg overflow-hidden">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-center text-blue-900 mb-6">
-          {CITY}
-        </h2>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg shadow-lg">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 2 }}
+        className="w-full max-w-3xl mx-auto rounded-lg overflow-hidden"
+      >
+        <div className="p-6">
+          <h2 className="text-2xl font-bold text-center text-blue-900 mb-1">
+            {CITY}
+          </h2>
+          <h3 className="text-md font-medium text-center text-black mb-6">
+            Conoce el clima en {CITY} para el día de tu llegada y prepara tu
+            viaje con anticipación.
+          </h3>
 
-        {weather && (
-          <div className="space-y-6">
-            {/* Current Weather */}
-            <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm">
-              <div className="text-center">
-                {getWeatherIcon(weather.weather[0].main)}
-                <div className="mt-2">
-                  <span className="text-4xl font-bold text-blue-900">
-                    {Math.round(weather.main.temp)}°C
-                  </span>
-                  <p className="text-gray-600 capitalize mt-1">
-                    {weather.weather[0].description}
-                  </p>
-                  <p className="text-sm text-gray-500 mt-1">
-                    Sensación térmica: {Math.round(weather.main.feels_like)}°C
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Humedad: {weather.main.humidity}%
-                  </p>
+          {weather && (
+            <div className="space-y-6">
+              {/* Current Weather */}
+              <div className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm">
+                <div className="text-center">
+                  {getWeatherIcon(weather.weather[0].main)}
+                  <div className="mt-2">
+                    <span className="text-4xl font-bold text-blue-900">
+                      {Math.round(weather.main.temp)}°C
+                    </span>
+                    <p className="text-gray-600 capitalize mt-1">
+                      {weather.weather[0].description}
+                    </p>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Sensación térmica: {Math.round(weather.main.feels_like)}°C
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Humedad: {weather.main.humidity}%
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Forecast */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              {getForecastDays().map((day, index) => (
-                <div
-                  key={index}
-                  className="bg-white p-4 rounded-lg shadow-sm text-center transform transition-transform duration-200 hover:scale-105"
-                >
-                  <p className="font-semibold text-blue-900 mb-2">
-                    {index === 0 ? "Hoy" : getDayName(day.dt_txt)}
-                  </p>
-                  {getWeatherIcon(day.weather[0].main)}
-                  <p className="text-2xl font-bold text-blue-900 mt-2">
-                    {Math.round(day.main.temp)}°C
-                  </p>
-                  <p className="text-sm text-gray-600 capitalize">
-                    {day.weather[0].description}
-                  </p>
-                </div>
-              ))}
+              {/* Forecast */}
+              <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
+                {getForecastDays().map((day, index) => (
+                  <div
+                    key={index}
+                    className="bg-white p-3 rounded-lg shadow-sm text-center transform transition-transform duration-200 hover:scale-105"
+                  >
+                    <p className="font-semibold text-blue-900 mb-2">
+                      {index === 0 ? "Hoy" : getDayName(day.dt_txt)}
+                    </p>
+                    <div className="flex justify-center">
+                      {getWeatherIcon(day.weather[0].main)}
+                    </div>
+                    <p className="text-2xl font-bold text-blue-900 mt-2">
+                      {Math.round(day.main.temp)}°C
+                    </p>
+                    <p className="text-sm text-gray-600 capitalize">
+                      {day.weather[0].description}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      </motion.div>
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 2 }}
+        className="pt-6 flex flex-col"
+      >
+        <h4 className="text-3xl font-semibold text-blue-900 text-center mb-1">
+          ¿Quieres saber dónde estamos?
+        </h4>
+        <p className="text-md font-medium text-center text-black mb-6">
+          Visítanos en el corazón de Recoleta, en pleno centro de la Ciudad
+          Autónoma de Buenos Aires. ¡Te esperamos con todo lo que necesitas!
+        </p>
+        <div className="flex justify-center">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1234.7929356020893!2d-58.38880786249812!3d-34.588944528226406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca99c609fc2f%3A0x392ca99351808a75!2sRecoleta%2C%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1740431473590!5m2!1ses-419!2sar"
+            width="800"
+            height="400"
+            allowFullScreen
+            className="rounded-lg shadow-lg brightness-75 hover:brightness-100 duration-300 border-2 border-gray-200 "
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </motion.div>
     </div>
   );
 };

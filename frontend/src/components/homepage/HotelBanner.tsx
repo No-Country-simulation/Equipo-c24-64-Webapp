@@ -62,17 +62,17 @@ function HotelBanner() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4 md:p-8">
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0 }}
+      animate={inView ? { opacity: 1 } : {}}
+      transition={{ duration: 2 }}
+      className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4 md:p-8"
+    >
       <div className="w-full max-w-7xl mx-auto rounded-2xl overflow-hidden shadow-2xl bg-slate-900 text-white">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
           {/* Left Content */}
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 2, delay: 0.1 }}
-            className="p-8 md:p-12 flex flex-col justify-center "
-          >
+          <div className="p-8 md:p-12 flex flex-col justify-center ">
             <div className="mb-12 text-center sm:text-start">
               <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                 Nuestras mejores comodidades
@@ -97,8 +97,8 @@ function HotelBanner() {
                 </div>
               ))}
             </div>
-          </motion.div>
-          <motion.div
+          </div>
+          <div
             ref={ref}
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
@@ -137,6 +137,7 @@ function HotelBanner() {
                     </div>
                     <Link
                       to="/rooms"
+                      title="Ir a reservar una habitación"
                       className="px-4 flex py-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg text-white font-medium transition-all hover:shadow-lg hover:shadow-blue-500/30"
                     >
                       Reservar ahora
@@ -160,10 +161,10 @@ function HotelBanner() {
             >
               <ChevronRight className="w-6 h-6 text-white" />
             </button>
-          </motion.div>
+          </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

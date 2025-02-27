@@ -49,6 +49,7 @@ const ServiceCards: React.FC<ServiceCardsProps> = ({
               {/* Enlace clickeable */}
               <Link
                 to={service.link}
+                title={service.title}
                 className="absolute inset-0"
                 aria-label={`View ${service.title}`}
               />

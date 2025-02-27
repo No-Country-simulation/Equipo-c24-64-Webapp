@@ -29,6 +29,7 @@ const FAQ = () => {
               ease: "easeOut",
             }}
             className="bg-white p-4 rounded-lg shadow-lg"
+            title="Desplegar respuesta"
           >
             <h3
               className="text-xl font-semibold w-full text-left flex justify-between"
@@ -36,7 +37,7 @@ const FAQ = () => {
               role="button"
             >
               {item.question}
-              <span className="text-lg">
+              <span className="text-lg" aria-label="Ver respuesta">
                 {activeIndex === index ? <AiOutlineUp /> : <AiOutlineDown />}
               </span>
             </h3>
