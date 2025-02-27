@@ -25,7 +25,7 @@ const FAQ = () => {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{
               duration: 0.6,
-              delay: index * 0.2,
+              delay: index * 0.3,
               ease: "easeOut",
             }}
             className="bg-white p-4 rounded-lg shadow-lg"

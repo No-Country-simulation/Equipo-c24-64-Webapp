@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Users, DollarSign } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Users, DollarSign, ChevronLeft, ChevronRight } from "lucide-react";
 import SearchBar from "../homepage/SearchBar";
 import useSearchStore from "@/hooks/useSearchStore";
 import fetchRooms from "../../utils/fetchRooms";
@@ -9,14 +9,13 @@ import useScrollAnimation from "@/hooks/useInView.ts";
 const RoomListing: React.FC = () => {
   const { rooms, setRooms, roomType } = useSearchStore();
   const { ref, inView } = useScrollAnimation();
-  useEffect(() => {
-    // Cargar habitaciones al montar el componente
-    fetchRooms().then(setRooms);
-  }, []);
 
-  // Función para obtener el nombre legible del tipo de habitación
-  const getRoomTypeName = (type) => {
-    const typeMap = {
+  useEffect(() => {
+    fetchRooms().then(setRooms);
+  }, [setRooms]);
+
+  const getRoomTypeName = (type: string) => {
+    const typeMap: Record<string, string> = {
       single: "Habitación Single",
       double: "Habitación Doble",
       triple: "Habitación Triple",
@@ -41,31 +40,53 @@ const RoomListing: React.FC = () => {
       {rooms.length > 0 ? (
         <>
           <h2 className="text-2xl pt-6 pb-2 font-bold text-center text-black mb-8">
-            Habitaciones disponibles
+            Habitaciones disponibles{" "}
             {roomType && ` - ${getRoomTypeName(roomType)}`}
           </h2>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {rooms.map((room) => (
               <div
                 key={room.id}
-                className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow"
+                className="bg-white grid grid-cols-1 gap-3 sm:grid-cols-2 rounded-lg shadow p-6 hover:shadow-lg transition-shadow"
               >
-                <h3 className="text-xl font-semibold mb-2">{room.name}</h3>
-                <p className="text-gray-600">{room.description}</p>
                 <div className="mt-4 space-y-2">
+                  <h3 className="text-xl font-semibold mb-2 text-center sm:text-start">
+                    {room.name}
+                  </h3>
                   <div className="flex items-center text-gray-600">
                     <DollarSign className="w-4 h-4 mr-2" />
                     <span>${room.typeRoom.price} / noche</span>
                   </div>
                   <div className="flex items-center text-gray-600">
                     <Users className="w-4 h-4 mr-2" />
-                    <span>Capacidad: {room.capacity} personas</span>
+                    <span>
+                      {room.capacity}{" "}
+                      {room.capacity === 1 ? "persona" : "personas"}
+                    </span>
                   </div>
                   <div className="flex items-center text-gray-600">
                     <span className="inline-block bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">
                       {room.typeRoom.name}
                     </span>
                   </div>
+                </div>
+                {/* Por ahora el carrousel de imagenes no hace cambio de imagenes porque en la ddbb no hay ninguna cargada, estoamos mostrando una estatica por ahora */}
+                <div className="relative w-full max-w-lg mx-auto flex items-center ">
+                  <button className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md z-10">
+                    <ChevronLeft className="w-5 h-5 text-gray-700" />
+                  </button>
+                  <img
+                    src="https://media-cdn.tripadvisor.com/media/photo-s/12/33/02/0b/habitacion-doble-twin.jpg"
+                    alt="prueba"
+                    className="rounded-lg w-full"
+                  />
+                  <button className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md z-10">
+                    <ChevronRight className="w-5 h-5 text-gray-700" />
+                  </button>
+                </div>
+                <div className="col-span-full text-center mt-6">
+                  <p className="text-gray-600">{room.description}</p>
                 </div>
               </div>
             ))}
