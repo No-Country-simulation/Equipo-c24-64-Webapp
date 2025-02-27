@@ -10,8 +10,11 @@ import {
 } from "react-icons/md";
 import { BsHouseDoor } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import useScrollAnimation from "@/hooks/useInView";
+import { motion } from "framer-motion";
 
 function HotelBanner() {
+  const { ref, inView } = useScrollAnimation();
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const amenities = [
@@ -63,7 +66,14 @@ function HotelBanner() {
       <div className="w-full max-w-7xl mx-auto rounded-2xl overflow-hidden shadow-2xl bg-slate-900 text-white">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
           {/* Left Content */}
-          <div className="p-8 md:p-12 flex flex-col justify-center ">
+
+          <motion.div
+            ref={ref}
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 1, delay: 0.1 }}
+            className="p-8 md:p-12 flex flex-col justify-center "
+          >
             <div className="mb-12 text-center sm:text-start">
               <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                 Nuestras mejores comodidades
@@ -88,7 +98,7 @@ function HotelBanner() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
           <div className="relative h-full min-h-[400px] lg:min-h-[600px]">
             {hotelSlides.map((slide, index) => (
               <div

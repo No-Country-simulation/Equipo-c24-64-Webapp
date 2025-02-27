@@ -3,42 +3,56 @@ import { Users, DollarSign } from "lucide-react";
 import SearchBar from "../homepage/SearchBar";
 import useSearchStore from "@/hooks/useSearchStore";
 import fetchRooms from "../../utils/fetchRooms";
+import { motion } from "framer-motion";
+import useScrollAnimation from "@/hooks/useInView.ts";
 
 const RoomListing: React.FC = () => {
   const { rooms, setRooms, roomType } = useSearchStore();
-  
+  const { ref, inView } = useScrollAnimation();
   useEffect(() => {
     // Cargar habitaciones al montar el componente
-    fetchRooms().then(setRooms);
+    console.log("toy pidiendo a la db");
+
+    // fetchRooms().then(setRooms);
   }, []);
-  
+
   // Función para obtener el nombre legible del tipo de habitación
   const getRoomTypeName = (type) => {
     const typeMap = {
-      'single': 'Habitación Single',
-      'double': 'Habitación Doble',
-      'triple': 'Habitación Triple',
-      'cuadruple': 'Habitación Cuádruple',
-      'quintuple': 'Habitación Quíntuple',
-      'suite': 'Suite'
+      single: "Habitación Single",
+      double: "Habitación Doble",
+      triple: "Habitación Triple",
+      cuadruple: "Habitación Cuádruple",
+      quintuple: "Habitación Quíntuple",
+      suite: "Suite",
     };
-    return typeMap[type] || '';
+    return typeMap[type] || "";
   };
 
   return (
     <div className="p-4">
-      <SearchBar />
-      
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8 }}
+      >
+        <SearchBar />
+      </motion.div>
+
       {rooms.length > 0 ? (
         <>
           <h2 className="text-2xl pt-6 pb-2 font-bold text-center text-black mb-8">
             Habitaciones disponibles
             {roomType && ` - ${getRoomTypeName(roomType)}`}
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {rooms.map((room) => (
-              <div key={room.id} className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+              <div
+                key={room.id}
+                className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow"
+              >
                 <h3 className="text-xl font-semibold mb-2">{room.name}</h3>
                 <p className="text-gray-600">{room.description}</p>
                 <div className="mt-4 space-y-2">
@@ -66,9 +80,11 @@ const RoomListing: React.FC = () => {
             No hay habitaciones disponibles
           </h2>
           <p className="text-gray-500 max-w-md mx-auto">
-            {roomType 
-              ? `No se encontraron habitaciones de tipo ${getRoomTypeName(roomType)}.` 
-              : 'No se encontraron habitaciones disponibles en este momento.'}
+            {roomType
+              ? `No se encontraron habitaciones de tipo ${getRoomTypeName(
+                  roomType
+                )}.`
+              : "No se encontraron habitaciones disponibles en este momento."}
             <br />
             Por favor, intenta con diferentes criterios de búsqueda.
           </p>

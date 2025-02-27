@@ -1,34 +1,40 @@
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import Hero from "../components/homepage/Hero";
-// import SearchBar from "../components/homepage/SearchBar";
 import ServiceCard from "../components/homepage/ServiceCard";
 import RoomListing from "@/components/rooms/RoomsListing";
 import FAQ from "../components/homepage/FAQ";
 import Weather from "../components/Weather";
 import HotelCard from "../components/homepage/HotelCard";
 import hotels from "../data/hotel";
-import HotelBanner from"../components/homepage/HotelBanner";
+import HotelBanner from "../components/homepage/HotelBanner";
+
 const Home: React.FC = () => {
-  // Verifica si los componentes existen antes de renderizarlos
   const hasHotels = Array.isArray(hotels) && hotels.length > 0;
 
   return (
     <div className="bg-white text-black min-h-screen ">
       <Header />
       <Hero />
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-      >
-      </motion.div>
+      ></motion.div> */}
       {/* <SearchBar/> */}
-      <RoomListing />
-       <ServiceCard/> 
-       <HotelBanner/>
-      <Weather />
+      <section className="pt-12 pb-4">
+        <RoomListing />
+      </section>
+      <section className="py-12">
+        <ServiceCard />
+      </section>
+      <section className="py-12">
+        <HotelBanner />
+      </section>
+      <section className="py-12">
+        <Weather />
+      </section>
       <FAQ />
       {/* Sección de Ofertas de Hoteles */}
       <section className="py-12" id="ofertas">

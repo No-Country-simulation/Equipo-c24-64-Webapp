@@ -23,7 +23,7 @@ const Hero: React.FC = () => {
         <motion.a
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
-          href="#searchbar"
+          href="#searchBar"
           className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg"
         >
           Reservar Ahora

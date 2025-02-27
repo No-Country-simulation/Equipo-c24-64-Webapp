@@ -29,28 +29,51 @@ const Weather: React.FC = () => {
 
   const API_KEY = "6d51cd4aa4deb04d9eaa166f1616a848";
   const CITY = "Buenos Aires";
+  //el tiempo es en ms asi que si lo cambias usa ms. basicamente se guarda la response en localStorage para no realizar el pedido en cada montaje del componente.
+  const CACHE_TIME = 5 * 60 * 1000;
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const [weatherResponse, forecastResponse] = await Promise.all([
-          fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=${CITY}&units=metric&appid=${API_KEY}&lang=es`
-          ),
-          fetch(
-            `https://api.openweathermap.org/data/2.5/forecast?q=${CITY}&units=metric&appid=${API_KEY}&lang=es`
-          ),
-        ]);
+      const cachedWeatherData = localStorage.getItem("weatherData");
+      const cachedForecastData = localStorage.getItem("forecastData");
+      const cachedTime = localStorage.getItem("cacheTime");
 
-        const weatherData = await weatherResponse.json();
-        const forecastData = await forecastResponse.json();
+      const currentTime = new Date().getTime();
 
-        setWeather(weatherData);
-        setForecast(forecastData);
+      if (
+        cachedWeatherData &&
+        cachedForecastData &&
+        cachedTime &&
+        currentTime - Number(cachedTime) < CACHE_TIME
+      ) {
+        setWeather(JSON.parse(cachedWeatherData));
+        setForecast(JSON.parse(cachedForecastData));
         setLoading(false);
-      } catch (error) {
-        console.error("Error fetching weather data:", error);
-        setLoading(false);
+      } else {
+        try {
+          const [weatherResponse, forecastResponse] = await Promise.all([
+            fetch(
+              `https://api.openweathermap.org/data/2.5/weather?q=${CITY}&units=metric&appid=${API_KEY}&lang=es`
+            ),
+            fetch(
+              `https://api.openweathermap.org/data/2.5/forecast?q=${CITY}&units=metric&appid=${API_KEY}&lang=es`
+            ),
+          ]);
+
+          const weatherData = await weatherResponse.json();
+          const forecastData = await forecastResponse.json();
+
+          localStorage.setItem("weatherData", JSON.stringify(weatherData));
+          localStorage.setItem("forecastData", JSON.stringify(forecastData));
+          localStorage.setItem("cacheTime", currentTime.toString());
+
+          setWeather(weatherData);
+          setForecast(forecastData);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching weather data:", error);
+          setLoading(false);
+        }
       }
     };
 

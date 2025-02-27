@@ -45,7 +45,7 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 mt-8" id="searchbar">
+    <div className="max-w-6xl mx-auto px-4 mt-8" id="searchBar">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold mb-2">
           Ahorrá hasta un 45% en tu próxima estadía de hotel
