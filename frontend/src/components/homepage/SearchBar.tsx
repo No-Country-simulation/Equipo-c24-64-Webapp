@@ -29,17 +29,17 @@ const SearchBar: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<SearchForm>();
 
   const onSubmit = async (data) => {
     const { roomType, checkIn, checkOut } = data;
-    
+
     // Actualizar el estado global con los criterios de búsqueda
     setRoomType(roomType);
     setCheckIn(checkIn);
     setCheckOut(checkOut);
-    
+
     // Buscar y filtrar habitaciones según los criterios seleccionados
     await fetchRooms();
   };
@@ -50,9 +50,7 @@ const SearchBar: React.FC = () => {
         <h2 className="text-2xl font-bold mb-2">
           Ahorrá hasta un 45% en tu próxima estadía de hotel
         </h2>
-        <h3 className="text-xl mb-2">
-          Encontrá tu habitación ideal
-        </h3>
+        <h3 className="text-xl mb-2">Encontrá tu habitación ideal</h3>
       </div>
       <div className="bg-white rounded-lg shadow-lg py-4 px-3">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -222,11 +220,25 @@ const SearchBar: React.FC = () => {
             </div>
           </div>
           <button
+            disabled={isSubmitting}
             type="submit"
-            className="w-full mt-4 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+            className={`w-full mt-4 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 ${
+              isSubmitting ? "cursor-wait" : ""
+            }`}
           >
-            <Search size={20} />
-            <span>Buscar</span>
+            {isSubmitting ? (
+              <>
+                <div className="flex">
+                  <span className="loader"></span>
+                  <span className="ms-12">Buscando habitaciones</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <Search size={20} />
+                Buscar
+              </>
+            )}
           </button>
         </form>
       </div>
