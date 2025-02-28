@@ -27,15 +27,15 @@ const Home: React.FC = () => {
       <section className="pb-12 px-4 sm:px-8">
         <ServiceCard />
       </section>
-      <section className="pb-12 px-4 sm:px-8">
-        <div className="p-12 bg-gradient-to-br from-indigo-50 to-purple-100 rounded-lg">
-          <SpaSection />
-        </div>
-      </section>
       <section className="py-12">
         <HotelBanner />
       </section>
-      <section className="pb-12 px-4 sm:px-8">
+      <section className="pb-12 px-4 sm:px-8 flex justify-center">
+        <div className="p-12 max-w-7xl bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg ">
+          <SpaSection />
+        </div>
+      </section>
+      <section className="pb-12 px-4 sm:px-0 lg:max-w-full">
         <Weather />
       </section>
       <FAQ />

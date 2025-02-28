@@ -134,7 +134,7 @@ const Weather: React.FC = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg shadow-lg">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gradient-to-br from-slate-900 to-slate-800 p-6 shadow-lg">
       <motion.div
         ref={ref}
         initial={{ opacity: 0 }}
@@ -143,10 +143,10 @@ const Weather: React.FC = () => {
         className="w-full max-w-3xl mx-auto rounded-lg overflow-hidden"
       >
         <div className="p-6">
-          <h2 className="text-2xl font-bold text-center text-blue-900 mb-1">
+          <h2 className="text-2xl font-bold text-center text-white mb-1">
             {CITY}
           </h2>
-          <h3 className="text-md font-medium text-center text-black mb-6">
+          <h3 className="text-md font-medium text-center text-white mb-6">
             Conoce el clima en {CITY} para el día de tu llegada y prepara tu
             viaje con anticipación.
           </h3>
@@ -207,20 +207,23 @@ const Weather: React.FC = () => {
         transition={{ duration: 2 }}
         className="pt-6 flex flex-col"
       >
-        <h4 className="text-3xl font-semibold text-blue-900 text-center mb-1">
-          ¿Quieres saber dónde estamos?
-        </h4>
-        <p className="text-md font-medium text-center text-black mb-6">
-          Visítanos en el corazón de Recoleta, en pleno centro de la Ciudad
-          Autónoma de Buenos Aires. ¡Te esperamos con todo lo que necesitas!
-        </p>
-        <div className="flex justify-center">
+        <div>
+          <h4 className="text-3xl font-semibold text-white text-center mb-1">
+            ¿Quieres saber dónde estamos?
+          </h4>
+          <p className="text-md font-medium text-center text-white mb-6">
+            Visítanos en el corazón de Recoleta, en pleno centro de la Ciudad
+            Autónoma de Buenos Aires. ¡Te esperamos con todo lo que necesitas!
+          </p>
+        </div>
+
+        <div className="flex mt-12">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1234.7929356020893!2d-58.38880786249812!3d-34.588944528226406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca99c609fc2f%3A0x392ca99351808a75!2sRecoleta%2C%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1740431473590!5m2!1ses-419!2sar"
             width="800"
             height="400"
             allowFullScreen
-            className="rounded-lg shadow-lg brightness-75 hover:brightness-100 duration-300 border-2 border-gray-200 "
+            className="rounded-lg shadow-lg brightness-90 hover:brightness-100 duration-300 border-2 border-gray-200 "
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           ></iframe>

@@ -20,13 +20,13 @@ import "swiper/css/autoplay";
 
 const amenitiesData = [
   {
-    icon: <Heart className="h-6 w-6 text-indigo-600" />,
+    icon: <Heart className="h-6 w-6 text-blue-700" />,
     title: "Masajes Terapéuticos",
     description:
       "Nuestros terapeutas certificados personalizan cada sesión para aliviar tensiones y restaurar el equilibrio de tu cuerpo.",
   },
   {
-    icon: <Users className="h-6 w-6 text-indigo-600" />,
+    icon: <Users className="h-6 w-6 text-blue-700" />,
     title: "Acceso Sin Hospedaje",
     description:
       "Disfruta de todas nuestras instalaciones premium sin necesidad de hospedarte. Perfecto para un día de desconexión y bienestar.",
@@ -50,10 +50,10 @@ const SpaSection: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-indigo-900 mb-4">
+        <h1 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
           Luxe Haven Spa & Wellness
         </h1>
-        <p className="text-lg text-indigo-700 max-w-2xl mx-auto">
+        <p className="text-lg text-blue-700 max-w-2xl mx-auto">
           Tu refugio de bienestar en el corazón de{" "}
           <span className="font-bold">Recoleta</span>
         </p>
@@ -63,7 +63,7 @@ const SpaSection: React.FC = () => {
         <div className="bg-white rounded-2xl shadow-xl p-8 order-2 md:order-1">
           <div className="flex items-center gap-2 mb-6">
             <Sparkles className="h-7 w-7 text-indigo-600 animate-bounce" />
-            <h2 className="text-2xl font-bold text-gray-800">
+            <h2 className="text-2xl font-bold text-blue-900">
               Experiencia Premium
             </h2>
           </div>
@@ -82,7 +82,7 @@ const SpaSection: React.FC = () => {
           <div className="mt-8 border-t border-gray-100 pt-6">
             <div className="sm:flex items-center justify-between mb-4">
               <div className="flex items-center gap-1 mb-2">
-                <Award className="h-5 w-5 text-indigo-600" />
+                <Award className="h-5 w-5 text-blue-700" />
                 <span className="text-sm font-medium text-gray-700">
                   Premio Excelencia 2025
                 </span>
@@ -198,7 +198,7 @@ const FeatureCard: React.FC<{
       <div className="flex items-start gap-3">
         <div className="bg-indigo-100 p-2 rounded-lg">{icon}</div>
         <div>
-          <h3 className="font-semibold text-indigo-900 mb-1">{title}</h3>
+          <h3 className="font-semibold text-blue-900 mb-1">{title}</h3>
           <p className="text-gray-600">{description}</p>
         </div>
       </div>
@@ -213,7 +213,7 @@ const ReviewCard: React.FC<{ text: string; author: string }> = ({
   return (
     <div className="bg-indigo-50 p-4 rounded-lg w-auto mx-auto ">
       <p className="italic text-gray-700 text-sm">{text}</p>
-      <p className="text-right mt-2 text-sm font-medium text-indigo-700">
+      <p className="text-right mt-2 text-sm font-medium text-blue-700">
         — {author}
       </p>
     </div>

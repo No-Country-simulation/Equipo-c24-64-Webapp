@@ -37,14 +37,14 @@ const Descuento: React.FC = () => {
           <div className="mt-4">
             <button
               onClick={handleCopy}
-              className="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300"
+              className="px-6 py-2 bg-green-400 text-white font-semibold rounded-lg hover:bg-green-500 transition duration-300"
             >
               Copiar código
             </button>
           </div>
 
           {copiaExitosa && (
-            <p className="mt-2 text-sm text-green-500">{copiaExitosa}</p>
+            <p className="mt-2 font-semibold text-sm text-green-500">{copiaExitosa}</p>
           )}
         </div>
       </div>
