@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Descuento: React.FC = () => {
   const { codigoDescuento } = useParams<{ codigoDescuento: string }>();
@@ -14,7 +14,7 @@ const Descuento: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen max-w-full flex items-center">
+    <div className="min-h-screen max-w-full pt-12">
       <div className="max-w-md mx-auto bg-white rounded-xl shadow-md p-6 ">
         <h1 className="text-2xl font-bold text-center text-indigo-600">
           ¡Descuento Confirmado!
@@ -47,6 +47,15 @@ const Descuento: React.FC = () => {
             <p className="mt-2 text-sm text-green-500">{copiaExitosa}</p>
           )}
         </div>
+      </div>
+      <div className="pt-8 text-center">
+        <Link
+          to="/"
+          className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300"
+        >
+          {" "}
+          Volver al inicio
+        </Link>
       </div>
     </div>
   );
