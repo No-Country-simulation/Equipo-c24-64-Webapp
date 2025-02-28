@@ -31,11 +31,11 @@ const Home: React.FC = () => {
         <HotelBanner />
       </section>
       <section className="pb-12 px-4 sm:px-8 flex justify-center">
-        <div className="p-12 max-w-7xl bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg ">
+        <div className="p-4 sm:p-12 max-w-7xl bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg ">
           <SpaSection />
         </div>
       </section>
-      <section className="pb-12 px-4 sm:px-0 lg:max-w-full">
+      <section className="pb-12 lg:max-w-full">
         <Weather />
       </section>
       <FAQ />

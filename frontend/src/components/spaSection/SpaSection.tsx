@@ -158,10 +158,10 @@ const SpaSection: React.FC = () => {
                     <Link
                       to="/spa"
                       title="Ir a obtener descuento"
-                      className="px-4 flex py-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg text-white font-medium transition-all hover:shadow-lg hover:shadow-blue-500/30"
+                      className="px-4 flex items-center py-2 bg-gradient-to-r text-sm sm:text-base  from-blue-500 to-purple-500 rounded-lg text-white font-medium transition-all hover:shadow-lg hover:shadow-blue-500/30"
                     >
                       Obtener descuento
-                      <ChevronRight className="w-5 h-5 align-middle" />
+                      <ChevronRight className="w-5 h-5 " />
                     </Link>
                   </div>
                 </div>
