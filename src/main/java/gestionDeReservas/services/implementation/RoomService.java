@@ -16,18 +16,19 @@ import gestionDeReservas.mapper.RoomMapper;
 import gestionDeReservas.repository.RoomRepository;
 import gestionDeReservas.services.Interface.RoomServiceUI;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
+@Slf4j
 public class RoomService implements RoomServiceUI {
-    
-    @Autowired
-    private RoomRepository roomRepository;
 
-    @Autowired
-    private RoomMapper roomMapper;
+    private final RoomRepository roomRepository;
+    private final RoomMapper roomMapper;
+    private final RoomFactory roomFactory;
 
-    @Autowired
-    private RoomFactory roomFactory;
 
     @Override
     public List<RoomGetDTO> getAllRooms() {
@@ -40,10 +41,12 @@ public class RoomService implements RoomServiceUI {
 
     @Override
     public RoomGetDTO getRoomById(int id) throws Exception{
+        log.info("getting room");
+        
         Room room = roomRepository
         .findById(id)
         .orElseThrow(() -> new NotRoomFoundException("room not found with id" + id)) ;
-
+       
         return roomMapper.toGetDTO(room);
     }
 
@@ -72,7 +75,6 @@ public class RoomService implements RoomServiceUI {
     }
 
     @Override
-    @Transactional
     public void deleteRoom(Integer id) throws Exception {
         roomRepository.delete(roomRepository
         .findById(id)

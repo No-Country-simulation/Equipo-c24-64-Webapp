@@ -9,6 +9,7 @@ import gestionDeReservas.Model.dto.RoomDTO.RoomCreateRequestDTO;
 import gestionDeReservas.Model.dto.RoomDTO.RoomEditRequestDTO;
 import gestionDeReservas.Model.dto.RoomDTO.RoomGetDTO;
 import gestionDeReservas.services.Interface.RoomServiceUI;
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +40,7 @@ public class RoomController {
     }
     
     @PostMapping("")
-    public ResponseEntity<?>  createRoom(@RequestBody RoomCreateRequestDTO roomRequestDTO) throws Exception {
+    public ResponseEntity<?>  createRoom(@Valid @RequestBody RoomCreateRequestDTO roomRequestDTO) throws Exception {
         RoomGetDTO roomCreated = roomService.addRoom(roomRequestDTO);
         return ResponseEntity.ok(roomCreated);
     }
