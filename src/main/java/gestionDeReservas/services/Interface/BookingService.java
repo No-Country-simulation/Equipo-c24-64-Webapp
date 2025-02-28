@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface BookingService {
      void bookingRooms(UserEntity user, BookingRequestDTO bookingRequestDTO) ;
-     List<Room> getEnableRooms(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut);
+     List<Room> getAvailableRooms(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut);
 }
