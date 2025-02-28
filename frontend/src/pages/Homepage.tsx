@@ -11,25 +11,26 @@ import hotels from "../data/hotel";
 import HotelBanner from "../components/homepage/HotelBanner";
 import { motion } from "framer-motion";
 import useScrollAnimation from "@/hooks/useInView";
+import SpaSection from "@/components/spaSection/SpaSection";
+
 const Home: React.FC = () => {
   const { ref, inView } = useScrollAnimation();
   const hasHotels = Array.isArray(hotels) && hotels.length > 0;
-
   return (
     <div className="bg-white text-black min-h-screen ">
       <Header />
       <Hero />
-      {/* <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      ></motion.div> */}
       {/* <SearchBar/> */}
       <section className="pt-12 pb-4 px-4 sm:px-8">
         <RoomListing />
       </section>
       <section className="pb-12 px-4 sm:px-8">
         <ServiceCard />
+      </section>
+      <section className="pb-12 px-4 sm:px-8">
+        <div className="p-12 bg-gradient-to-br from-indigo-50 to-purple-100 rounded-lg">
+          <SpaSection />
+        </div>
       </section>
       <section className="py-12">
         <HotelBanner />

@@ -1,13 +1,14 @@
 import { Routes, Route } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import HomePage from "../pages/Homepage";
 import Dashboard from "../pages/Dashboard.jsx";
 import Rooms from "../pages/Rooms.jsx";
 import Contacto from "../pages/Contacto.jsx";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
-
+import Descuento from "@/pages/Descuento.jsx";
+import Spa from "@/pages/Spa";
 const AppRoutes = () => {
   const location = useLocation();
   useEffect(() => {
@@ -21,6 +22,11 @@ const AppRoutes = () => {
       <Route path="/rooms" element={<Rooms />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/contacto" element={<Contacto />} />
+      <Route path="/spa" element={<Spa />} />
+      <Route
+        path="/descuento-masajes-30/:codigoDescuento"
+        element={<Descuento />}
+      />
     </Routes>
   );
 };
