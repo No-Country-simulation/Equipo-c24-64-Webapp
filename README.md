@@ -15,6 +15,7 @@
    <img src='https://img.shields.io/badge/Spring-6DB33F.svg?style=for-the-badge&logo=Spring&logoColor=white' />
    <img src='https://img.shields.io/badge/Spring_Boot-6DB33F.svg?style=for-the-badge&logo=SpringBoot&logoColor=white' />
    <img src='https://img.shields.io/badge/Spring_Security-6DB33F.svg?style=for-the-badge&logo=SpringSecurity&logoColor=white' />
+   <img src='https://img.shields.io/badge/Spring_Test-6DB33F.svg?style=for-the-badge&logo=Spring&logoColor=white' />
    <img src='https://img.shields.io/badge/PostgreSQL-316192.svg?style=for-the-badge&logo=PostgreSQL&logoColor=white' />
    <a href='https://tudominio.com/swagger-ui/' target='_blank'>
      <img src='https://img.shields.io/badge/Swagger-85EA2D.svg?style=for-the-badge&logo=Swagger&logoColor=black' />
@@ -24,7 +25,7 @@
 ### QA / Testing  
 <p align='left'>
    <img src='https://img.shields.io/badge/Postman-FF6C37.svg?style=for-the-badge&logo=Postman&logoColor=white' />
-   <img src='https://img.shields.io/badge/Spring_Test-6DB33F.svg?style=for-the-badge&logo=Spring&logoColor=white' />
+   
 </p>
 
 ### DevOps  
