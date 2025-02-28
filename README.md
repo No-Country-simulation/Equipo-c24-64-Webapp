@@ -38,13 +38,12 @@
 | Nombre                | Rol         | Linkedin                                                             | Portafolio                                   |
 |-----------------------|-------------|----------------------------------------------------------------------|----------------------------------------------|
 | Mauricio Martin Fontana        | Team Leader |[Linkedin](https://www.linkedin.com/in/mauricio-martin-fontana-a9585a58/)      | [GitHub](https://github.com/peladoo)
-| Jose Alvarez Domínguez              | Front End |                    |[GitHub](https://github.com/)               |
+| Jose Alvarez Domínguez              | Front End   |[Linkedin](https://www.linkedin.com/in/joalvarezdominguez/)   |                    |[GitHub](https://github.com/)               |
 | Enzo Daniel Bertolusso          | Front End   |[Linkedin](https://www.linkedin.com/in/enzobertolusso/)       | [GitHub](https://github.com/enzodb97)  |
 | Juan Gonzalez         | Front End   |[Linkedin](https://www.linkedin.com/in/juan-gonzalez-6278732a3/)       | [GitHub](https://github.com/juan007-play)  |
 | Alan Guillermo Lopez Lopez       | Backend     |               |[GitHub](https://github.com/alanlopez24)                  |
 | Federico Pardo | Backend       |       |[GitHub](https://github.com/federicoPardo999)  
 | Miguel Gabrielli       | Backend       |                      |[GitHub](https://github.com/MAG-dev1) 
 | Juan Carlos Curo inga        | Backend |[Linkedin](https://www.linkedin.com/in/juan-carlos-curo-inga-5457892a4/) |                [GitHub](https://github.com/curojuan10)                    |
-
 
 
