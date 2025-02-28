@@ -32,7 +32,6 @@ public class Room {
     @JoinColumn(name = "type_room_id", nullable = false)
     RoomType roomType;
 
-    // Mapea la otra cara de la relación ManyToMany
     @ManyToMany(mappedBy = "rooms")
     Set<Booking> bookings;
 }
