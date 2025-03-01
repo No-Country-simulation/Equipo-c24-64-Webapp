@@ -32,6 +32,6 @@ public class Room {
     @JoinColumn(name = "type_room_id", nullable = false)
     RoomType roomType;
 
-    @ManyToMany(mappedBy = "rooms")
+    @ManyToMany(mappedBy = "rooms",fetch = FetchType.LAZY)
     Set<Booking> bookings;
 }

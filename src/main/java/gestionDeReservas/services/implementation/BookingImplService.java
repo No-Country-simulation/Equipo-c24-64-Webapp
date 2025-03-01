@@ -4,6 +4,8 @@ import gestionDeReservas.exception.BookingException;
 import gestionDeReservas.exception.DateRangeException;
 import gestionDeReservas.exception.NotRoomFoundException;
 import gestionDeReservas.factory.booking.BookingFactory;
+import gestionDeReservas.mapper.RoomMapper;
+import gestionDeReservas.model.dto.RoomDTO.RoomGetDTO;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
 import gestionDeReservas.model.entity.Booking;
 import gestionDeReservas.model.entity.Room;
@@ -21,7 +23,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
-@Transactional
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -30,6 +31,7 @@ public class BookingImplService implements BookingService {
     IBookingRepository bookingRepository;
     IRoomTypeRepository roomTypeRepository;
     BookingFactory bookingFactory;
+    RoomMapper roomMapper;
 
     @Override
     public void bookingRooms(UserEntity user, BookingRequestDTO bookingRequestDTO) {
@@ -52,10 +54,14 @@ public class BookingImplService implements BookingService {
     }
 
     @Override
-    public List<Room> getAvailableRooms(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {
+    public List<RoomGetDTO> getAvailableRoomsDTO(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {
+        return roomMapper.RoomGetAllDTO(getAvailableRooms(roomTypeId,checkIn,checkOut));
+    }
+
+    private List<Room> getAvailableRooms(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {
         RoomType roomType = findRoomType(roomTypeId);
         return roomType.getRooms().stream()
-                .filter(room -> !isRoomBooked(room.getId(), checkIn, checkOut))
+                .filter(room ->  !isRoomBooked(room.getId(), checkIn, checkOut))
                 .toList();
     }
 
@@ -79,8 +85,9 @@ public class BookingImplService implements BookingService {
     }
 
     private void validateDates(LocalDate checkIn, LocalDate checkOut) {
+        LocalDate currentDate = LocalDate.now();
         LocalDate validDate = checkIn.plusDays(1);
-        if (checkOut.isBefore(validDate))
+        if (checkOut.isBefore(validDate) || checkIn.isBefore(currentDate))
             throw new DateRangeException("The date range is invalid");
     }
 }
