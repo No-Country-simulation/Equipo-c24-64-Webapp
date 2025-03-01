@@ -27,7 +27,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BookingImplService implements BookingService {
-
     IBookingRepository bookingRepository;
     IRoomTypeRepository roomTypeRepository;
     BookingFactory bookingFactory;
