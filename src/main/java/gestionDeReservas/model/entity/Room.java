@@ -19,6 +19,9 @@ public class Room {
     @Column(name = "room_id")
     Integer id;
 
+    @Column(name = "room_number")
+    Integer roomNumber;
+
     @Column(name = "room_name")
     String name;
 

@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface IBookingRepository extends JpaRepository<Booking,Integer> {
@@ -16,4 +17,7 @@ public interface IBookingRepository extends JpaRepository<Booking,Integer> {
     Boolean countOverlappingReservations(@Param("roomId") Integer roomId,
                                          @Param("checkIn") LocalDate checkIn,
                                          @Param("checkOut") LocalDate checkOut);
+
+    @Query("SELECT b FROM Booking WHERE b.user.id == :userId")
+    List<Booking> findByUser(@Param("userId") Integer id);
 }

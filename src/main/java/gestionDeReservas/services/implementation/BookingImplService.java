@@ -4,9 +4,11 @@ import gestionDeReservas.exception.BookingException;
 import gestionDeReservas.exception.DateRangeException;
 import gestionDeReservas.exception.NotRoomFoundException;
 import gestionDeReservas.factory.booking.BookingFactory;
+import gestionDeReservas.mapper.BookingMapper;
 import gestionDeReservas.mapper.RoomMapper;
 import gestionDeReservas.model.dto.RoomDTO.RoomGetDTO;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
+import gestionDeReservas.model.dto.booking.BookingResponseDTO;
 import gestionDeReservas.model.entity.Booking;
 import gestionDeReservas.model.entity.Room;
 import gestionDeReservas.model.entity.RoomType;
@@ -14,7 +16,6 @@ import gestionDeReservas.model.entity.UserEntity;
 import gestionDeReservas.repository.IBookingRepository;
 import gestionDeReservas.repository.IRoomTypeRepository;
 import gestionDeReservas.services.Interface.BookingService;
-import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -31,6 +32,7 @@ public class BookingImplService implements BookingService {
     IRoomTypeRepository roomTypeRepository;
     BookingFactory bookingFactory;
     RoomMapper roomMapper;
+    BookingMapper bookingMapper;
 
     @Override
     public void bookingRooms(UserEntity user, BookingRequestDTO bookingRequestDTO) {
@@ -55,6 +57,18 @@ public class BookingImplService implements BookingService {
     @Override
     public List<RoomGetDTO> getAvailableRoomsDTO(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {
         return roomMapper.RoomGetAllDTO(getAvailableRooms(roomTypeId,checkIn,checkOut));
+    }
+
+    @Override
+    public void delete(Integer bookingId) {
+        bookingRepository.deleteById(bookingId);
+    }
+
+    @Override
+    public List<BookingResponseDTO> getAll(UserEntity user) {
+        List<Booking> bookings = bookingRepository.findByUser(user.getId());
+
+        return bookingMapper.mapBookingsToResponseListDTO(bookings);
     }
 
     private List<Room> getAvailableRooms(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {

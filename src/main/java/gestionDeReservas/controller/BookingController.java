@@ -2,6 +2,7 @@ package gestionDeReservas.controller;
 
 import gestionDeReservas.model.dto.RoomDTO.EnabledRoomsRequestDTO;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
+import gestionDeReservas.model.dto.booking.BookingResponseDTO;
 import gestionDeReservas.model.entity.UserEntity;
 import gestionDeReservas.services.Interface.BookingService;
 import lombok.AccessLevel;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/booking")
@@ -30,6 +33,18 @@ public class BookingController {
     public ResponseEntity<?> saveBooking(@RequestBody EnabledRoomsRequestDTO enabledRoomsRequestDTO){
         return ResponseEntity.ok(bookingService.getAvailableRoomsDTO(enabledRoomsRequestDTO.idRoomType(),
                 enabledRoomsRequestDTO.checkIn(),enabledRoomsRequestDTO.checkOut()));
+
+    }
+
+    @DeleteMapping("/delete/{bookingId}")
+    public ResponseEntity<?> deleteBooking(@PathVariable Integer bookingId){
+        bookingService.delete(bookingId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/get-all")
+    public ResponseEntity<Set<BookingResponseDTO>> getBookings(@AuthenticationPrincipal UserEntity user){
+        return ResponseEntity.ok(bookingService.getAll(user));
 
     }
 }
