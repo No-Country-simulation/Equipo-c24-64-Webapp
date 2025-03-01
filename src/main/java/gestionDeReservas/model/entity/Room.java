@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,5 +37,9 @@ public class Room {
     RoomType roomType;
 
     @ManyToMany(mappedBy = "rooms",fetch = FetchType.LAZY)
-    Set<Booking> bookings;
+    List<Booking> bookings;
+
+    public Integer getRoomTypeId(){
+        return roomType.getId();
+    }
 }

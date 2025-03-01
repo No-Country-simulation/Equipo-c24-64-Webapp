@@ -5,7 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,7 +21,7 @@ public class Booking {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    UserEntity userEntity;
+    UserEntity user;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -29,7 +29,7 @@ public class Booking {
             joinColumns = @JoinColumn(name = "booking_id"),
             inverseJoinColumns = @JoinColumn(name = "room_id")
     )
-    Set<Room> rooms;
+    List<Room> rooms;
 
     @Column(name = "total_price")
     Double totalPrice;
@@ -37,9 +37,17 @@ public class Booking {
     @Column(name = "people_quantity")
     Integer peopleQuantity;
 
+    @Column(name = "rooms_quantity")
+    Integer roomsQuantity;
+
     @Column(name = "check_in")
     LocalDate checkIn;
 
     @Column(name = "check_out")
     LocalDate checkOut;
+
+
+    public Integer  getRoomTypeId(){
+        return rooms.get(0).getRoomTypeId();
+    }
 }

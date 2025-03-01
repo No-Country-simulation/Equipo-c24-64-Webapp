@@ -18,6 +18,6 @@ public interface IBookingRepository extends JpaRepository<Booking,Integer> {
                                          @Param("checkIn") LocalDate checkIn,
                                          @Param("checkOut") LocalDate checkOut);
 
-    @Query("SELECT b FROM Booking WHERE b.user.id == :userId")
+    @Query("SELECT b FROM Booking b WHERE b.user.id = :userId")
     List<Booking> findByUser(@Param("userId") Integer id);
 }

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -36,8 +36,9 @@ public class BookingFactory {
                 .checkOut(bookingRequestDTO.checkOut())
                 .totalPrice(bookingPrice)
                 .peopleQuantity(bookingRequestDTO.peopleQuantity())
-                .rooms(new HashSet<>(rooms))
-                .userEntity(user)
+                .rooms(new ArrayList<>(rooms) {
+                })
+                .user(user)
                 .build();
     }
 

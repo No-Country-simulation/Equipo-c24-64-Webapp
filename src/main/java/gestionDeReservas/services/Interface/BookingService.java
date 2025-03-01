@@ -3,6 +3,7 @@ package gestionDeReservas.services.Interface;
 import gestionDeReservas.model.dto.RoomDTO.RoomGetDTO;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
 import gestionDeReservas.model.dto.booking.BookingResponseDTO;
+import gestionDeReservas.model.dto.booking.EditBookingRequestDTO;
 import gestionDeReservas.model.entity.Room;
 import gestionDeReservas.model.entity.UserEntity;
 
@@ -15,4 +16,5 @@ public interface BookingService {
      List<RoomGetDTO> getAvailableRoomsDTO(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut);
      void delete(Integer bookingId);
      List<BookingResponseDTO> getAll(UserEntity user);
+     void editBooking(EditBookingRequestDTO editBookingRequestDTO);
 }

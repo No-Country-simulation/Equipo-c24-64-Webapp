@@ -9,6 +9,7 @@ import gestionDeReservas.mapper.RoomMapper;
 import gestionDeReservas.model.dto.RoomDTO.RoomGetDTO;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
 import gestionDeReservas.model.dto.booking.BookingResponseDTO;
+import gestionDeReservas.model.dto.booking.EditBookingRequestDTO;
 import gestionDeReservas.model.entity.Booking;
 import gestionDeReservas.model.entity.Room;
 import gestionDeReservas.model.entity.RoomType;
@@ -16,6 +17,8 @@ import gestionDeReservas.model.entity.UserEntity;
 import gestionDeReservas.repository.IBookingRepository;
 import gestionDeReservas.repository.IRoomTypeRepository;
 import gestionDeReservas.services.Interface.BookingService;
+import gestionDeReservas.services.Interface.IUserService;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,12 +27,14 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BookingImplService implements BookingService {
     IBookingRepository bookingRepository;
     IRoomTypeRepository roomTypeRepository;
+    IUserService userService;
     BookingFactory bookingFactory;
     RoomMapper roomMapper;
     BookingMapper bookingMapper;
@@ -67,8 +72,18 @@ public class BookingImplService implements BookingService {
     @Override
     public List<BookingResponseDTO> getAll(UserEntity user) {
         List<Booking> bookings = bookingRepository.findByUser(user.getId());
-
         return bookingMapper.mapBookingsToResponseListDTO(bookings);
+    }
+
+    @Override
+    public void editBooking(EditBookingRequestDTO editBookingRequestDTO) {
+        UserEntity user = userService.getUserFromToken();
+        Booking booking = bookingRepository.findById(editBookingRequestDTO.bookingId())
+                .orElseThrow(() -> new BookingException("no se encontro"));
+        BookingRequestDTO bookingRequest = bookingMapper.mapBookingToBookingRequest(booking,editBookingRequestDTO,user);
+
+        this.bookingRooms(user,bookingRequest);
+        this.delete(booking.getId());
     }
 
     private List<Room> getAvailableRooms(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {
