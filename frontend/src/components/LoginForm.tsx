@@ -30,29 +30,35 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = async (data: ILoginInputs) => {
     try {
-      // Aquí irá la llamada a tu API de login
-      const response = await fetch("http://localhost:8080/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          identifier: data.identifier,
-          password: data.password,
-        }),
-      });
+      const response = await fetch(
+        "https://hotels-1-0.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            //chequear cuando fede haga la actualizacion de la db desplegada a ver si cambio email por identifier, porque actualmente el body toma email y no identifier
+            email: data.identifier,
+            password: data.password,
+          }),
+        }
+      );
+      console.log(response.json);
 
       if (!response.ok) {
         const error = await response.json();
+        console.log(error);
         throw new Error(error.message);
       }
 
-      // Aquí puedes manejar el token de autenticación
-      const { token } = await response.json();
-      localStorage.setItem("token", token);
+      const { token, name, lastname } = await response.json();
+      Object.entries({ token, name: name, lastname: lastname }).forEach(
+        ([key, value]) => sessionStorage.setItem(key, value)
+      );
 
       toast.success("¡Inicio de sesión exitoso!");
-      navigate("/"); // O a donde quieras redirigir después del login
+      navigate("/");
     } catch (error) {
       if (error instanceof Error) {
         toast.error("Error al iniciar sesión", { duration: 3000 });
@@ -82,7 +88,7 @@ const LoginForm: React.FC = () => {
               <div className="mt-1">
                 <input
                   {...register("identifier")}
-                  type="email"
+                  // type="email"
                   autoComplete="username"
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -136,7 +142,7 @@ const LoginForm: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 ${
+                className={`w-full cursor-pointer flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 ${
                   isSubmitting ? "cursor-wait" : ""
                 }`}
               >
@@ -145,7 +151,7 @@ const LoginForm: React.FC = () => {
                     <span className="loader"></span>
                   </>
                 ) : (
-                  "Registrarse"
+                  "Iniciar sesión"
                 )}
               </button>
             </div>

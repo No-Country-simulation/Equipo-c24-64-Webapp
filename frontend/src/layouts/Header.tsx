@@ -2,21 +2,35 @@ import React, { useEffect, useState } from "react";
 import { Menu, X, Heart } from "lucide-react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
+import { logOut } from "@/utils/logOut";
+import { Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [usuario, setUsuario] = useState(true);
-  const usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado"));
+  const [usuario, setUsuario] = useState("");
   useEffect(() => {
-    setUsuario(usuarioLogeado);
-  }, [setUsuario]);
+    const nombre = sessionStorage.getItem("name");
+    const apellido = sessionStorage.getItem("lastname");
 
-  // const { username } = usuario;
+    if (nombre && apellido) {
+      setUsuario(`${nombre} ${apellido}`);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    toast.success("Sesión cerrada correctamente");
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 500);
+  };
+
   return (
     <header
       className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50"
       id="#top"
     >
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
@@ -26,7 +40,7 @@ const Header = () => {
               </span>
             </a>
           </div>
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-4">
             <a
               href="/favorites"
               className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
@@ -34,12 +48,11 @@ const Header = () => {
               <Heart size={20} />
               <span>Favoritos</span>
             </a>
-            {/* Login */}
             {usuario ? (
               <>
                 <FaRegUserCircle size={24} />
-                <a href="/usuario" className="font-semibold ">
-                  {usuario.username}
+                <a href="#" className="font-medium disabled ">
+                  {usuario}
                 </a>
               </>
             ) : (
@@ -53,7 +66,7 @@ const Header = () => {
             <div className="relative">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
+                className="flex cursor-pointer items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
               >
                 <Menu size={20} />
                 <span>Menú</span>
@@ -79,12 +92,23 @@ const Header = () => {
                     Contacto
                   </Link>
                   <div className="border-t border-gray-200 my-2"></div>
-                  <a
-                    href="/register"
-                    className="block px-4 py-2 text-blue-600 hover:bg-gray-100 transition-colors"
-                  >
-                    Registrate
-                  </a>
+                  {usuario ? (
+                    <button
+                      type="button"
+                      title="Deslogearse"
+                      className="px-4 py-2 text-blue-600 w-full flex cursor-pointer hover:bg-gray-100 transition-colors"
+                      onClick={handleLogout}
+                    >
+                      Cerrar sesión
+                    </button>
+                  ) : (
+                    <a
+                      href="/register"
+                      className="block px-4 py-2 text-blue-600 hover:text-blue-700 transition-colors mt-3"
+                    >
+                      Registrate
+                    </a>
+                  )}
                 </div>
               )}
             </div>
@@ -111,37 +135,56 @@ const Header = () => {
               <Heart size={20} />
               <span>Favoritos</span>
             </a>
-            <a
-              href="#inicio"
+            <Link
+              to="/"
               className="block text-gray-700 hover:text-blue-600 transition-colors"
             >
               Inicio
-            </a>
+            </Link>
             <a
               href="#galeria"
               className="block text-gray-700 hover:text-blue-600 transition-colors"
             >
               Galería
             </a>
-            <a
-              href="#contacto"
+            <Link
+              to="/contacto"
               className="block text-gray-700 hover:text-blue-600 transition-colors"
             >
               Contacto
-            </a>
-            <div className="border-t border-gray-200 pt-3">
-              <a
-                href="/login"
-                className="block text-gray-700 hover:text-blue-600 transition-colors"
-              >
-                Iniciá sesión
-              </a>
-              <a
-                href="/register"
-                className="block text-blue-600 hover:text-blue-700 transition-colors mt-3"
-              >
-                Registrate
-              </a>
+            </Link>
+            <div className="border-t border-gray-200 pt-3 flex justify-between items-center py-1">
+              {usuario ? (
+                <div className="flex space-x-2">
+                  <FaRegUserCircle size={24} />
+                  <a href="#" className="font-medium disabled ">
+                    {usuario}
+                  </a>
+                </div>
+              ) : (
+                <a
+                  href="/login"
+                  className="block text-gray-700 hover:text-blue-600 transition-colors"
+                >
+                  Iniciá sesión
+                </a>
+              )}
+              {usuario ? (
+                <button
+                  type="button"
+                  className="text-blue-600"
+                  onClick={handleLogout}
+                >
+                  Cerrar sesión
+                </button>
+              ) : (
+                <a
+                  href="/register"
+                  className="block text-blue-600 hover:text-blue-700 transition-colors"
+                >
+                  Registrate
+                </a>
+              )}
             </div>
           </div>
         </div>

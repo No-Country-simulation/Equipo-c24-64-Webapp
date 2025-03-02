@@ -9,6 +9,8 @@ import Rooms from "../pages/Rooms.jsx";
 import Contacto from "../pages/Contacto.jsx";
 import Descuento from "@/pages/Descuento.jsx";
 import Spa from "@/pages/Spa";
+import Confirmation from "@/pages/Confirmation";
+
 const AppRoutes = () => {
   const location = useLocation();
   useEffect(() => {
@@ -23,6 +25,7 @@ const AppRoutes = () => {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/contacto" element={<Contacto />} />
       <Route path="/spa" element={<Spa />} />
+      <Route path="/confirmation" element={<Confirmation />} />
       <Route
         path="/descuento-masajes-30/:codigoDescuento"
         element={<Descuento />}

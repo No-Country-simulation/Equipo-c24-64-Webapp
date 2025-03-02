@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Users, DollarSign, ChevronLeft, ChevronRight } from "lucide-react";
 import SearchBar from "../homepage/SearchBar";
 import useSearchStore from "@/hooks/useSearchStore";
-import fetchRooms from "../../utils/fetchRooms";
+import fetchRooms from "@/utils/fetchRooms";
 import { motion } from "framer-motion";
 import useScrollAnimation from "@/hooks/useInView.ts";
+import { Link } from "react-router-dom";
 
 const RoomListing: React.FC = () => {
   const { rooms, setRooms, roomType } = useSearchStore();
@@ -66,9 +67,12 @@ const RoomListing: React.FC = () => {
                     </span>
                   </div>
                   <div className="flex items-center text-gray-600">
-                    <span className="inline-block bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">
-                      {room.typeRoom.name}
-                    </span>
+                    <Link
+                      to="/confirmation"
+                      className="inline-block bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm"
+                    >
+                      Reservar
+                    </Link>
                   </div>
                 </div>
                 {/* Por ahora el carrousel de imagenes no hace cambio de imagenes porque en la ddbb no hay ninguna cargada, estoamos mostrando una estatica por ahora */}

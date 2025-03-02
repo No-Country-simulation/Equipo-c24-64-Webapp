@@ -37,9 +37,9 @@ function Footer() {
   return (
     <div className=" bg-gray-100">
       <footer className="bg-gray-900 text-gray-300">
-        <div className="bg-blue-600 py-8">
+        <div className="bg-blue-700 ">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-white">
+            <div className="max-w-4xl mx-auto text-white py-8">
               <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="flex items-center gap-2">
                   <div>
@@ -84,7 +84,7 @@ function Footer() {
               </div>
               {errors.email && (
                 <p
-                  className="text-red-500 text-sm md:ps-5 md:text-center lg:text-end lg:pe-26"
+                  className="text-red-500 drop-shadow-lg font-semibold leading-tight text-sm md:ps-6 md:text-center lg:text-end lg:pe-26"
                   aria-live="polite"
                 >
                   {errors.email.message}

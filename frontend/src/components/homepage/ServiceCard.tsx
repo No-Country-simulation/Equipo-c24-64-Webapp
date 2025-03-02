@@ -16,7 +16,7 @@ const ServiceCards: React.FC<ServiceCardsProps> = ({
     threshold: 0.2,
   });
   return (
-    <div className="max-w-6xl mx-auto p-4">
+    <div className="max-w-6xl mx-auto p-4" id="galeria">
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 auto-rows-auto">
         {services.map((service, index) => {
           return (
