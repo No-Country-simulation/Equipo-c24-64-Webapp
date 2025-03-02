@@ -62,9 +62,7 @@ const ReservationForm = () => {
     <div className="max-w-7xl mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="lg:flex lg:space-x-8">
-          {/* Columna izquierda - Formulario */}
           <div className="lg:w-2/3">
-            {/* Tus Datos */}
             <div className="mb-8">
               <h2 className="text-2xl font-medium text-gray-700 mb-2">
                 Tus Datos
@@ -441,14 +439,14 @@ const ReservationForm = () => {
                 />
                 <div>
                   <h3 className="text-lg font-medium text-gray-800">
-                    HOWARD JOHNSON YERBA BUENA
+                    LUXE HAVEN RECOLETA
                   </h3>
                   <div className="flex text-yellow-400 mb-1">
                     <span>★</span>
                     <span>★</span>
                     <span>★</span>
                     <span>★</span>
-                    <span className="text-gray-300">★</span>
+                    <span>★</span>
                   </div>
                 </div>
               </div>
@@ -462,11 +460,11 @@ const ReservationForm = () => {
                 </div>
                 <div className="flex justify-between mb-2">
                   <span className="text-sm text-gray-700">LLEGADA</span>
-                  <span className="text-sm">Monday, 03 Mar</span>
+                  <span className="text-sm">Lunes, 04 Marzo de 2025</span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span className="text-sm text-gray-700">SALIDA</span>
-                  <span className="text-sm">Tuesday, 04 Mar</span>
+                  <span className="text-sm">Lunes, 04 Marzo de 2025</span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span className="text-sm text-gray-700">

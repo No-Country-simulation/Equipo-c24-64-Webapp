@@ -69,7 +69,7 @@ const RoomListing: React.FC = () => {
                   <div className="flex items-center text-gray-600">
                     <Link
                       to="/confirmation"
-                      className="inline-block bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm"
+                      className="inline-block bg-green-300 text-black font-medium px-3 py-1 rounded-full text-sm"
                     >
                       Reservar
                     </Link>
