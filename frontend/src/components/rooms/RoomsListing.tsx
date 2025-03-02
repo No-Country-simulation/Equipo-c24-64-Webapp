@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Users, DollarSign, ChevronLeft, ChevronRight } from "lucide-react";
 import SearchBar from "../homepage/SearchBar";
 import useSearchStore from "@/hooks/useSearchStore";
 import fetchRooms from "@/utils/fetchRooms";
 import { motion } from "framer-motion";
 import useScrollAnimation from "@/hooks/useInView.ts";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const RoomListing: React.FC = () => {
-  const { rooms, setRooms, roomType } = useSearchStore();
+  const { rooms, setRooms, roomType, setReservation } = useSearchStore();
   const { ref, inView } = useScrollAnimation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchRooms().then(setRooms);
@@ -25,6 +26,24 @@ const RoomListing: React.FC = () => {
       suite: "Suite",
     };
     return typeMap[type] || "";
+  };
+
+  const addReservation = (room) => {
+    const reservationData = {
+      id: room.id,
+      name: room.name,
+      description: room.description,
+      capacity: room.capacity,
+      typeRoom: {
+        name: room.typeRoom.name,
+        description: room.typeRoom.description,
+        capacity: room.typeRoom.capacity,
+        price: room.typeRoom.price,
+      },
+    };
+
+    setReservation(reservationData);
+    navigate("/confirmation");
   };
 
   return (
@@ -67,12 +86,13 @@ const RoomListing: React.FC = () => {
                     </span>
                   </div>
                   <div className="flex items-center text-gray-600">
-                    <Link
-                      to="/confirmation"
-                      className="inline-block bg-green-300 text-black font-medium px-3 py-1 rounded-full text-sm"
+                    <button
+                      type="button"
+                      onClick={() => addReservation(room)}
+                      className="inline-block bg-green-300 cursor-pointer text-black font-medium px-3 py-1 rounded-full text-sm"
                     >
                       Reservar
-                    </Link>
+                    </button>
                   </div>
                 </div>
                 {/* Por ahora el carrousel de imagenes no hace cambio de imagenes porque en la ddbb no hay ninguna cargada, estoamos mostrando una estatica por ahora */}

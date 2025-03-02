@@ -22,7 +22,6 @@ const SearchBar: React.FC = () => {
     setCheckIn,
     setCheckOut,
     setRoomType,
-    setRooms,
     handleGuestsChange,
   } = useSearchStore();
 
@@ -35,15 +34,12 @@ const SearchBar: React.FC = () => {
   const onSubmit = async (data) => {
     const { roomType, checkIn, checkOut } = data;
 
-    // Actualizar el estado global con los criterios de búsqueda
     setRoomType(roomType);
     setCheckIn(checkIn);
     setCheckOut(checkOut);
 
-    // Buscar y filtrar habitaciones según los criterios seleccionados
     await fetchRooms();
   };
-
   return (
     <div className="max-w-6xl mx-auto px-4 mt-8" id="searchBar">
       <div className="text-center mb-6">

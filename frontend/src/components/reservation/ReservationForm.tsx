@@ -2,8 +2,11 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { CreditCard, Check } from "lucide-react";
-
+import { Check } from "lucide-react";
+import useSearchStore from "@/hooks/useSearchStore.tsx";
+import { calculatePrice } from "@/utils/totalPrice";
+import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 const schema = yup.object({
   nombre: yup.string().required("El nombre es requerido"),
   apellido: yup.string().required("El apellido es requerido"),
@@ -16,18 +19,14 @@ const schema = yup.object({
   tipoDocumento: yup.string().required("El tipo de documento es requerido"),
   numeroDocumento: yup
     .string()
-    .min(7, "Mínimo 4 dígitos")
+    .min(4, "Mínimo 4 dígitos")
     .max(8, "Maximo 10 dígitos")
     .required("El dni es requerido"),
   email: yup
     .string()
     .email("Ingrese un email válido")
     .required("El email es requerido"),
-  confirmarEmail: yup
-    .string()
-    .oneOf([yup.ref("email")], "Los emails deben coincidir")
-    .required("Confirmar email es requerido"),
-  peticionesEspeciales: yup.string().max(8, "Maximo 250 caracteres"),
+  peticionesEspeciales: yup.string().max(250, "Maximo 250 caracteres"),
   formaPago: yup.string().required("Seleccione una forma de pago"),
   tipoTarjeta: yup.string().when("formaPago", {
     is: "anticipado",
@@ -42,6 +41,9 @@ const schema = yup.object({
 type FormData = yup.InferType<typeof schema>;
 
 const ReservationForm = () => {
+  const { reservation, checkIn, checkOut } = useSearchStore();
+  const { nightQuantity, totalPrice, subTotalPrice, ivaInDollars } =
+    calculatePrice(checkIn, checkOut, reservation?.typeRoom.price);
   const {
     register,
     handleSubmit,
@@ -54,10 +56,10 @@ const ReservationForm = () => {
   });
 
   const onSubmit = (data: FormData) => {
+    console.log("formulario enviado");
     console.log(data);
-    // Aquí iría la lógica para procesar la reserva
   };
-
+  console.log(errors);
   return (
     <div className="max-w-7xl mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -410,22 +412,6 @@ const ReservationForm = () => {
                   </p>
                 )}
               </div>
-
-              <div className="flex justify-between">
-                <button
-                  type="button"
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
-                >
-                  Modificar reserva
-                </button>
-
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                >
-                  Confirmar reserva
-                </button>
-              </div>
             </div>
           </div>
 
@@ -456,15 +442,15 @@ const ReservationForm = () => {
                   <span className="text-sm font-medium text-gray-700">
                     CANT. DE NOCHES
                   </span>
-                  <span className="text-sm font-medium">1 noche</span>
+                  <span className="text-sm font-medium">{nightQuantity}</span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span className="text-sm text-gray-700">LLEGADA</span>
-                  <span className="text-sm">Lunes, 04 Marzo de 2025</span>
+                  <span className="text-sm">{checkIn}</span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span className="text-sm text-gray-700">SALIDA</span>
-                  <span className="text-sm">Lunes, 04 Marzo de 2025</span>
+                  <span className="text-sm">{checkOut}</span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span className="text-sm text-gray-700">
@@ -473,8 +459,8 @@ const ReservationForm = () => {
                   <span className="text-sm text-red-500">No Reembolsable</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-700"></span>
-                  <span className="text-sm">2 Adultos</span>
+                  <span className="text-sm text-gray-700">Personas</span>
+                  <span className="text-sm">{reservation?.capacity}</span>
                 </div>
               </div>
 
@@ -488,43 +474,31 @@ const ReservationForm = () => {
                   </button>
                 </div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm">Superior King (2 Adultos)</span>
+                  <span className="text-sm">{reservation?.name}</span>
                   <span className="text-sm"></span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span className="text-sm">1 noche</span>
-                  <span className="text-sm">ARS 126.130</span>
+                  <span className="text-sm">
+                    USD {reservation?.typeRoom.price}
+                  </span>
                 </div>
                 <div className="flex justify-between font-medium">
-                  <span className="text-sm">TOTAL HABITACIÓN:</span>
-                  <span className="text-sm">ARS 126.130</span>
-                </div>
-              </div>
-
-              <div className="bg-blue-50 p-2 rounded-md mb-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <div className="bg-blue-500 text-white p-1 rounded-md mr-2">
-                      <CreditCard size={16} />
-                    </div>
-                    <span className="text-sm font-medium text-blue-700">
-                      TAX FREE
-                    </span>
-                  </div>
-                  <a href="#" className="text-blue-500 text-sm">
-                    + Click aquí
-                  </a>
+                  <span className="text-sm font-semibold">
+                    TOTAL HABITACIÓN:
+                  </span>
+                  <span className="text-sm">USD {subTotalPrice}</span>
                 </div>
               </div>
 
               <div className="mb-4">
                 <div className="flex justify-between mb-1">
                   <span className="text-sm text-gray-700">Subtotal:</span>
-                  <span className="text-sm">ARS 126.130</span>
+                  <span className="text-sm">USD {subTotalPrice}</span>
                 </div>
                 <div className="flex justify-between mb-1">
                   <span className="text-sm text-gray-700">Impuestos:</span>
-                  <span className="text-sm">ARS 26.487</span>
+                  <span className="text-sm">USD {ivaInDollars}</span>
                 </div>
                 <div className="flex justify-between mb-1">
                   <span className="text-sm text-gray-700">Tasa reserva:</span>
@@ -534,12 +508,20 @@ const ReservationForm = () => {
 
               <div className="border-t border-gray-200 pt-2">
                 <div className="flex justify-between font-bold">
-                  <span>ARS 152.618</span>
+                  <span>USD {totalPrice}</span>
                   <span></span>
                 </div>
               </div>
             </div>
 
+            <div className="flex justify-between mb-8 mt-5">
+              <button
+                type="submit"
+                className="px-4 py-2 w-full cursor-pointer  bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              >
+                Confirmar reserva
+              </button>
+            </div>
             <div className="border border-gray-200 rounded-md p-4">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center">
@@ -554,7 +536,7 @@ const ReservationForm = () => {
               <p className="text-xs text-gray-600 mb-2">
                 Disponible para extranjeros no residentes
               </p>
-              <a href="#" className="text-blue-500 text-xs">
+              <a href="/contacto" className="text-blue-500 text-xs">
                 + Click aquí
               </a>
             </div>
