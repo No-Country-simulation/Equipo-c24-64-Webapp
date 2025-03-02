@@ -55,11 +55,41 @@ const ReservationForm = () => {
     },
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log("formulario enviado");
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+    const bookingData = {
+      checkIn,
+      checkOut,
+      peopleQuantity: reservation?.capacity,
+      totalPrice,
+      roomId: reservation?.id,
+    };
+
+    try {
+      const response = await fetch("https://hotels-1-0.onrender.com/booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingData),
+        mode: "no-cors",
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al realizar la reserva");
+      }
+
+      const result = await response.json();
+      console.log("Reserva realizada con éxito:", result);
+      alert("Reserva confirmada");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Hubo un error al confirmar la reserva");
+    }
   };
-  console.log(errors);
+  // const onSubmit = (data: FormData) => {
+  //   console.log("formulario enviado");
+  //   console.log(data);
+  // };
   return (
     <div className="max-w-7xl mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
