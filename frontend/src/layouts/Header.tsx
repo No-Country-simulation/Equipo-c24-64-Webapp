@@ -51,9 +51,9 @@ const Header = () => {
             {usuario ? (
               <>
                 <FaRegUserCircle size={24} />
-                <a href="#" className="font-medium disabled ">
+                <Link to="/userProfile" className="font-medium disabled ">
                   {usuario}
-                </a>
+                </Link>
               </>
             ) : (
               <a

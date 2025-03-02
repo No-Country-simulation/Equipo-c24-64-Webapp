@@ -39,7 +39,7 @@ const LoginForm: React.FC = () => {
           },
           body: JSON.stringify({
             //chequear cuando fede haga la actualizacion de la db desplegada a ver si cambio email por identifier, porque actualmente el body toma email y no identifier
-            email: data.identifier,
+            identifier: data.identifier,
             password: data.password,
           }),
         }
@@ -88,7 +88,6 @@ const LoginForm: React.FC = () => {
               <div className="mt-1">
                 <input
                   {...register("identifier")}
-                  // type="email"
                   autoComplete="username"
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />

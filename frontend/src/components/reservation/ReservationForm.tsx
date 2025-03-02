@@ -38,10 +38,24 @@ const schema = yup.object({
     .oneOf([true], "Debe aceptar los términos y condiciones"),
 });
 
+interface IFormInputs {
+  nombre: string;
+  apellido: string;
+  telefono: string;
+  nacionalidad: string;
+  tipoDocumento: string;
+  numeroDocumento: string;
+  email: string;
+  peticionesEspeciales: string;
+  formaPago: string;
+  tipoTarjeta: string;
+}
+
 type FormData = yup.InferType<typeof schema>;
 
 const ReservationForm = () => {
   const { reservation, checkIn, checkOut } = useSearchStore();
+
   const { nightQuantity, totalPrice, subTotalPrice, ivaInDollars } =
     calculatePrice(checkIn, checkOut, reservation?.typeRoom.price);
   const {
@@ -56,40 +70,68 @@ const ReservationForm = () => {
   });
 
   const onSubmit = async (data: FormData) => {
+    //datos para el endpoint 1 (datos de la habitacion)
+
     const bookingData = {
       checkIn,
       checkOut,
       peopleQuantity: reservation?.capacity,
       totalPrice,
-      roomId: reservation?.id,
+      idRoomType: reservation?.id,
+      email: data.email,
+    };
+    //datos para el endpoint 2 (datos del cliente)
+    const formReserva = {
+      nombre: data.nombre,
+      apellido: data.apellido,
+      telefono: data.telefono,
+      numeroDocumento: data.numeroDocumento,
+      email: data.email,
+      peticionesEspeciales: data.peticionesEspeciales,
     };
 
     try {
-      const response = await fetch("https://hotels-1-0.onrender.com/booking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookingData),
-        mode: "no-cors",
-      });
-
-      if (!response.ok) {
+      const responseOne = await fetch(
+        "https://hotels-1-0.onrender.com/api/booking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bookingData),
+        }
+      );
+      if (!responseOne.ok) {
         throw new Error("Error al realizar la reserva");
       }
 
-      const result = await response.json();
-      console.log("Reserva realizada con éxito:", result);
-      alert("Reserva confirmada");
+      const resultOne = await responseOne.json();
+      console.log("Reserva realizada con éxito:", resultOne);
+      toast.success("Reserva confirmada");
+      const responseTwo = await fetch(
+        "https://hotels-1-0.onrender.com/api/endpoint2",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formReserva),
+        }
+      );
+      if (!responseTwo.ok) {
+        throw new Error("Error al enviar el formulario");
+      }
+      const resultTwo = await responseTwo.json();
+      console.log("Formulario enviado con éxito:", resultTwo);
+      toast.success("Reserva confirmada y formulario enviado");
     } catch (error) {
       console.error("Error:", error);
-      alert("Hubo un error al confirmar la reserva");
+      toast.error(
+        "Hubo un error al realizar la reserva o enviar el formulario"
+      );
     }
   };
-  // const onSubmit = (data: FormData) => {
-  //   console.log("formulario enviado");
-  //   console.log(data);
-  // };
+
   return (
     <div className="max-w-7xl mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
