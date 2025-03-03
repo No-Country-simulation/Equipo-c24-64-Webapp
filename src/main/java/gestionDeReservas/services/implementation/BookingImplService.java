@@ -14,7 +14,6 @@ import gestionDeReservas.model.entity.UserEntity;
 import gestionDeReservas.repository.IBookingRepository;
 import gestionDeReservas.repository.IRoomTypeRepository;
 import gestionDeReservas.services.Interface.BookingService;
-import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
