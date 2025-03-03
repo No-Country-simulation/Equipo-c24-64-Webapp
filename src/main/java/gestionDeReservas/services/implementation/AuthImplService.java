@@ -40,10 +40,10 @@ public class AuthImplService implements AuthService {
     }
 
     @Override
-    public AuthResponseDTO register(RegisterRequestDTO userToRegisterDto) {
-        validateRegistration(userToRegisterDto);
+    public AuthResponseDTO register(RegisterRequestDTO userToRegisterDTO) {
+        validateRegistration(userToRegisterDTO);
 
-        UserEntity user = userFactory.buildUser(userToRegisterDto);
+        UserEntity user = userFactory.buildUser(userToRegisterDTO);
 
         userRepository.save(user);
 
@@ -56,9 +56,9 @@ public class AuthImplService implements AuthService {
         jwtService.addToBlacklist(jwt);
     }
 
-    private void validateRegistration(RegisterRequestDTO userToRegisterDto) {
-        if (userRepository.existsByEmailOrUsername(userToRegisterDto.email(),
-        userToRegisterDto.username()))
+    private void validateRegistration(RegisterRequestDTO userToRegisterDTO) {
+        if (userRepository.existsByEmailOrUsername(userToRegisterDTO.email(),
+        userToRegisterDTO.username()))
             throw new RegisterException("the user already exists");
     }
 

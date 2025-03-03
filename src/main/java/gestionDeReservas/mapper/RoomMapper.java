@@ -8,23 +8,28 @@ import gestionDeReservas.model.entity.Room;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoomMapper {
-
 
     @Autowired
     RoomTypeMapper roomTypeMapper;
 
     public RoomGetDTO toGetDTO(Room room){
         return RoomGetDTO
-        .builder()
-        .id(room.getId())
-        .name(room.getName())
-        .description(room.getDescription())
-        .capacity(room.getCapacity())
-        .typeRoom(roomTypeMapper.toGetDTO(room.getRoomType()))
-        .build();
+                .builder()
+                .id(room.getId())
+                .name(room.getName())
+                .description(room.getDescription())
+                .capacity(room.getCapacity())
+                .typeRoom(roomTypeMapper.toGetDTO(room.getRoomType()))
+                .build();
+    }
+
+    public List<RoomGetDTO>RoomGetAllDTO(List<Room> rooms){
+        return rooms.stream().map(this::toGetDTO).toList();
     }
 
 }

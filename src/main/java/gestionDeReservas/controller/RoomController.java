@@ -1,12 +1,11 @@
 package gestionDeReservas.controller;
 
+import gestionDeReservas.model.dto.RoomDTO.RoomEditRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import gestionDeReservas.model.dto.RoomDTO.RoomCreateRequestDTO;
-import gestionDeReservas.model.dto.RoomDTO.RoomEditRequestDTO;
 import gestionDeReservas.model.dto.RoomDTO.RoomGetDTO;
 import gestionDeReservas.services.Interface.RoomServiceUI;
 
@@ -16,9 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
-
-
-
 
 @RestController
 @RequestMapping("/rooms")
@@ -48,11 +44,11 @@ public class RoomController {
         return ResponseEntity.ok(roomService.editRoom(roomEdit));
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?>  deleteRoom(@PathVariable("id") Integer id) throws Exception {
         roomService.deleteRoom(id);
         return ResponseEntity.ok("Room deleted");
-    }   
-    
-}
+    }
 
+}

@@ -14,34 +14,34 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
-
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BookingFactory {
+
     IRoomTypeRepository roomTypeRepository;
 
-    public Booking buildBooking(BookingRequestDTO bookingRequestDTO, UserEntity user,
-                                Room room){
-
+    public Booking buildBooking(BookingRequestDTO bookingRequestDTO, UserEntity user, List<Room> rooms) {
         RoomType roomType = roomTypeRepository.findById(bookingRequestDTO.idRoomType())
-                .orElseThrow(() -> new NotRoomFoundException("no se encontro tipo de habitacion"));
+                .orElseThrow(() -> new NotRoomFoundException("No se encontró el tipo de habitación"));
 
-        Long stayDuration =  calculateHotelStayDuration(bookingRequestDTO.checkIn(),bookingRequestDTO.checkOut());
-        Double bookingPrice = roomType.getPrice() * stayDuration;
+        Long stayDuration = calculateHotelStayDuration(bookingRequestDTO.checkIn(), bookingRequestDTO.checkOut());
+        Double bookingPrice = roomType.getPrice() * stayDuration * rooms.size();
 
         return Booking.builder()
                 .checkIn(bookingRequestDTO.checkIn())
                 .checkOut(bookingRequestDTO.checkOut())
                 .totalPrice(bookingPrice)
                 .peopleQuantity(bookingRequestDTO.peopleQuantity())
-                .room(room)
+                .rooms(new HashSet<>(rooms))
                 .userEntity(user)
                 .build();
     }
 
     private Long calculateHotelStayDuration(LocalDate checkInDate, LocalDate checkOutDate) {
-        return ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+        return ChronoUnit.DAYS.between(checkInDate, checkOutDate) + 1;
     }
 }

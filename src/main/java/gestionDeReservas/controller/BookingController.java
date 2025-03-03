@@ -28,7 +28,7 @@ public class BookingController {
 
     @GetMapping("/enabled-rooms")
     public ResponseEntity<?> saveBooking(@RequestBody EnabledRoomsRequestDTO enabledRoomsRequestDTO){
-        return ResponseEntity.ok(bookingService.getEnableRooms(enabledRoomsRequestDTO.idRoomType(),
+        return ResponseEntity.ok(bookingService.getAvailableRoomsDTO(enabledRoomsRequestDTO.idRoomType(),
                 enabledRoomsRequestDTO.checkIn(),enabledRoomsRequestDTO.checkOut()));
 
     }
