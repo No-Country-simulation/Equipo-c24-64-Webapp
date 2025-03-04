@@ -6,43 +6,29 @@ import gestionDeReservas.model.entity.UserEntity;
 import gestionDeReservas.model.entity.Visitor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class BookingMailFactory {
 
     public BookingMailDTO buildBookingMail(Booking booking) {
         Visitor visitor = booking.getVisitor();
         UserEntity user = booking.getUserEntity();
+        LocalDate currentDate = LocalDate.now();
 
-        BookingMailDTO dto = BookingMailDTO.builder()
-                .bookingQuantityRooms(booking.getPeopleQuantity())
+        return  BookingMailDTO.builder()
+                .bookingQuantityRooms(booking.getRooms().size())
                 .price(booking.getTotalPrice())
                 .priceWithIva(booking.getTotalPriceWithIVA())
                 .name(user == null ? visitor.getName() : user.getName())
                 .lastname(user == null ? visitor.getLastname() : user.getLastname())
                 .email(user == null ? visitor.getEmail() : user.getEmail())
+                .bookingDate(currentDate)
                 .checkIn(booking.getCheckIn())
                 .checkOut(booking.getCheckOut())
+                .peopleQuantity(booking.getPeopleQuantity())
                 .roomsNumber(booking.getRoomNumbers())
+                .specialRequests(booking.getSpecialRequests())
                 .build();
-
-        System.out.println("\n=== DEBUG BookingMailDTO Values ===");
-        System.out.println("Email: " + dto.email());
-        System.out.println("Nombre: " + dto.name());
-        System.out.println("Apellido: " + dto.lastname());
-        System.out.println("Check-in: " + (dto.checkIn() != null ? dto.checkIn() : "null"));
-        System.out.println("Check-out: " + (dto.checkOut() != null ? dto.checkOut() : "null"));
-        System.out.println("Precio: " + (dto.price() != null ? dto.price() : "null"));
-        System.out.println("Precio con IVA: " + (dto.priceWithIva() != null ? dto.priceWithIva() : "null"));
-        System.out.println("Cantidad de habitaciones: " + (dto.bookingQuantityRooms() != null ? dto.bookingQuantityRooms() : "null"));
-
-        if (dto.roomsNumber() != null && !dto.roomsNumber().isEmpty()) {
-            System.out.println("Números de habitación: " + dto.roomsNumber());
-        } else {
-            System.out.println("Números de habitación: null o vacío");
-        }
-
-        System.out.println("===================================\n");
-
-        return dto;
     }
 }

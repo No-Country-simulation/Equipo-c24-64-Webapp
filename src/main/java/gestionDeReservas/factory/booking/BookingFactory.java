@@ -37,6 +37,7 @@ public class BookingFactory {
                 .peopleQuantity(bookingRequestDTO.peopleQuantity())
                 .rooms(new HashSet<>(rooms))
                 .userEntity(user)
+                .specialRequests(bookingRequestDTO.specialRequests())
                 .build();
     }
 
@@ -56,6 +57,7 @@ public class BookingFactory {
                 .peopleQuantity(bookingRequestDTO.peopleQuantity())
                 .rooms(new HashSet<>(rooms))
                 .visitor(visitor)
+                .specialRequests(bookingRequestDTO.specialRequests())
                 .build();
     }
 

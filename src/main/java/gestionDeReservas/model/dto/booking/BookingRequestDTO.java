@@ -18,5 +18,7 @@ public record BookingRequestDTO (
         @Min(1)
         Integer peopleQuantity,
         @Min(1)
-        Integer roomsQuantity
+        Integer roomsQuantity,
+
+        String specialRequests
 ) {}

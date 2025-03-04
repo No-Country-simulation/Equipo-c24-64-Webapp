@@ -52,6 +52,9 @@ public class Booking {
     @Column(name = "check_out")
     LocalDate checkOut;
 
+    @Column(name = "special_requests")
+    String specialRequests;
+
     public List<Integer> getRoomNumbers() {
         return rooms.stream()
                 .map(Room::getRoomNumber)

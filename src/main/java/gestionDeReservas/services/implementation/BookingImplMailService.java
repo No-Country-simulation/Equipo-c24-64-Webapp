@@ -40,9 +40,14 @@ public class BookingImplMailService implements BookingMailService {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String checkIn = bookingMail.checkIn().format(dateFormatter);
         String checkOut = bookingMail.checkOut().format(dateFormatter);
+        String bookingDate = bookingMail.bookingDate().format(dateFormatter);
+
+        String specialRequests = bookingMail.specialRequests() != null && !bookingMail.specialRequests().isBlank()
+                ? bookingMail.specialRequests()
+                : "No se han indicado solicitudes especiales.";
 
         String price = String.format("$%.2f", bookingMail.price());
-        String priceWithIva = String.format("€%.2f", bookingMail.priceWithIva());
+        String priceWithIva = String.format("$%.2f", bookingMail.priceWithIva());
 
         String rooms = bookingMail.roomsNumber().stream()
                 .map(String::valueOf)
@@ -58,6 +63,16 @@ public class BookingImplMailService implements BookingMailService {
                 table { width: 100%%; border-collapse: collapse; margin: 25px 0; }
                 th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
                 th { background-color: #155dfc; color: white; }
+                .room-numbers { font-weight: bold; color: #155dfc; }
+                .special-requests {
+                    white-space: pre-wrap;
+                    color: #444;
+                    font-style: italic;
+                    padding: 8px;
+                    background-color: #f8f9fa;
+                    border-radius: 4px;
+                    margin: 5px 0;
+                }
                 .button {
                     background: #155dfc;\s
                     color: white;\s
@@ -70,30 +85,37 @@ public class BookingImplMailService implements BookingMailService {
         </head>
         <body>
             <div class="container">
-                <h1 style="color: #4f39f6;">Hola %s %s, ¡Su reserva fue confirmada!</h1>
-               \s
+                <h1 style="color: #155dfc;">Hola %s %s, ¡Su reserva fue confirmada!</h1>
+                
                 <table>
+                    <tr><th>Fecha de la reserva:</th><td>%s</td></tr>                
                     <tr><th>Check-in:</th><td>%s</td></tr>
                     <tr><th>Check-out:</th><td>%s</td></tr>
                     <tr><th>Precio base:</th><td>%s</td></tr>
                     <tr><th>Precio con IVA:</th><td>%s</td></tr>
-                    <tr><th>Habitaciones reservadas:</th><td>%s</td></tr>
+                    <tr><th>cantidad de personas:</th><td>%s</td></tr>
+                    <tr><th>Cantidad de habitaciones:</th><td>%d</td></tr>
+                    <tr><th>Números de habitación:</th><td><span class="room-numbers">%s</span></td></tr>
+                    <tr><th>Solicitudes especiales:</th><td><div class="special-requests">%s</div></td></tr>
                 </table>
-                           \s
+                
                 <p style="margin-top: 30px; color: #666;">
                     Gracias por tu reserva. ¡Esperamos que disfrutes tu estancia!
                 </p>
             </div>
         </body>
         </html>
-       \s""",
+        """,
                 bookingMail.name(),
                 bookingMail.lastname(),
+                bookingDate,
                 checkIn,
                 checkOut,
                 price,
                 priceWithIva,
+                bookingMail.peopleQuantity(),
                 bookingMail.bookingQuantityRooms(),
-                rooms);
+                rooms,
+                specialRequests);
     }
 }
