@@ -23,7 +23,7 @@ public class UserFactory {
                 .name(registerRequestDTO.name())
                 .lastname(registerRequestDTO.lastname())
                 .address(registerRequestDTO.address())
-                .numberPhone(registerRequestDTO.phoneNumber())
+                .phoneNumber(registerRequestDTO.phoneNumber())
                 .dni(registerRequestDTO.dni())
                 .password(passwordEncoder.encode(registerRequestDTO.password()))
                 .role(Role.CUSTOMER)

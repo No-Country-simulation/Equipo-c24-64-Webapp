@@ -2,6 +2,7 @@ package gestionDeReservas.controller;
 
 import gestionDeReservas.model.dto.RoomDTO.EnabledRoomsRequestDTO;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
+import gestionDeReservas.model.dto.booking.VisitorBookingRequestDTO;
 import gestionDeReservas.model.entity.UserEntity;
 import gestionDeReservas.services.Interface.BookingService;
 import lombok.AccessLevel;
@@ -20,9 +21,8 @@ public class BookingController {
     BookingService bookingService;
 
     @PostMapping
-    public ResponseEntity<?> saveBooking(@AuthenticationPrincipal UserEntity user,
-                                         @RequestBody BookingRequestDTO bookingRequestDTO){
-        bookingService.bookingRooms(user,bookingRequestDTO);
+    public ResponseEntity<?> saveBooking(@RequestBody BookingRequestDTO bookingRequestDTO){
+        bookingService.bookingRooms(bookingRequestDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -30,6 +30,5 @@ public class BookingController {
     public ResponseEntity<?> saveBooking(@RequestBody EnabledRoomsRequestDTO enabledRoomsRequestDTO){
         return ResponseEntity.ok(bookingService.getAvailableRoomsDTO(enabledRoomsRequestDTO.idRoomType(),
                 enabledRoomsRequestDTO.checkIn(),enabledRoomsRequestDTO.checkOut()));
-
     }
 }

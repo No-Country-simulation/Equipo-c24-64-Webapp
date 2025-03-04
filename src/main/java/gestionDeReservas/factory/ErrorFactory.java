@@ -15,6 +15,7 @@ public class ErrorFactory {
     public static final String BAD_REQUEST = "Bad Request";
     public static final String SERVER_ERROR = "internal_server_error";
     public static final String DATE_RANGE_EXCEPTION = "range of the dates are invalid";
+    public static final String DUPLICATE_EMAIL = "EMAIL ALREADY REGISTER";
 
 
     public static ApiError buildError(String error, String message, int status){

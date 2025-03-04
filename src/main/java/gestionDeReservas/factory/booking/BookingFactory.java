@@ -2,10 +2,7 @@ package gestionDeReservas.factory.booking;
 
 import gestionDeReservas.exception.NotRoomFoundException;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
-import gestionDeReservas.model.entity.Booking;
-import gestionDeReservas.model.entity.Room;
-import gestionDeReservas.model.entity.RoomType;
-import gestionDeReservas.model.entity.UserEntity;
+import gestionDeReservas.model.entity.*;
 import gestionDeReservas.repository.IRoomTypeRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,23 +18,44 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BookingFactory {
-
     IRoomTypeRepository roomTypeRepository;
+    Double IVA = 0.21;
 
     public Booking buildBooking(BookingRequestDTO bookingRequestDTO, UserEntity user, List<Room> rooms) {
         RoomType roomType = roomTypeRepository.findById(bookingRequestDTO.idRoomType())
-                .orElseThrow(() -> new NotRoomFoundException("No se encontró el tipo de habitación"));
+                .orElseThrow(() -> new NotRoomFoundException("typeRoom not founded"));
 
         Long stayDuration = calculateHotelStayDuration(bookingRequestDTO.checkIn(), bookingRequestDTO.checkOut());
         Double bookingPrice = roomType.getPrice() * stayDuration * rooms.size();
+        Double bookingPriceWithIVA = bookingPrice + (bookingPrice*IVA);
 
         return Booking.builder()
                 .checkIn(bookingRequestDTO.checkIn())
                 .checkOut(bookingRequestDTO.checkOut())
                 .totalPrice(bookingPrice)
+                .totalPriceWithIVA(bookingPriceWithIVA)
                 .peopleQuantity(bookingRequestDTO.peopleQuantity())
                 .rooms(new HashSet<>(rooms))
                 .userEntity(user)
+                .build();
+    }
+
+    public Booking buildVisitorBooking(BookingRequestDTO bookingRequestDTO, Visitor visitor, List<Room> rooms) {
+        RoomType roomType = roomTypeRepository.findById(bookingRequestDTO.idRoomType())
+                .orElseThrow(() -> new NotRoomFoundException("typeRoom not founded"));
+
+        Long stayDuration = calculateHotelStayDuration(bookingRequestDTO.checkIn(), bookingRequestDTO.checkOut());
+        Double bookingPrice = roomType.getPrice() * stayDuration * rooms.size();
+        Double bookingPriceWithIVA = bookingPrice + (bookingPrice*IVA);
+
+        return Booking.builder()
+                .checkIn(bookingRequestDTO.checkIn())
+                .checkOut(bookingRequestDTO.checkOut())
+                .totalPrice(bookingPrice)
+                .totalPriceWithIVA(bookingPriceWithIVA)
+                .peopleQuantity(bookingRequestDTO.peopleQuantity())
+                .rooms(new HashSet<>(rooms))
+                .visitor(visitor)
                 .build();
     }
 

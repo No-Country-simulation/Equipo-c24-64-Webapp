@@ -31,6 +31,7 @@ public class RoomFactory {
         return Room
                 .builder()
                 .name(roomToCreate.name())
+                .roomNumber(roomToCreate.roomNumber())
                 .description(roomToCreate.description())
                 .capacity(roomType.getCapacity())
                 .roomType(roomType)

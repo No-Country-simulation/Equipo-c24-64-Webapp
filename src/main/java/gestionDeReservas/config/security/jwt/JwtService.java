@@ -23,7 +23,7 @@ import java.util.function.Function;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class JwtService {
-     static final String SECRET_KEY = "fHjqZ9LwR3vC7nKy2tXsD4mW8bN6pVeAxJ5cGhUz1rM0dFBoOQlIuEeYmPiS";
+     static final String JWT_SECRET_KEY = System.getenv("JWT_SECRET_KEY");
      final Map<String, Date> blacklist = new HashMap<>();
      ScheduledExecutorService scheduler;
 
@@ -42,7 +42,7 @@ public class JwtService {
     }
 
     private Key getKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(JWT_SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

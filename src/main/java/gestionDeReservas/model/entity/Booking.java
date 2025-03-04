@@ -5,7 +5,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -23,6 +25,10 @@ public class Booking {
     @JoinColumn(name = "user_id")
     UserEntity userEntity;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "visitor_id")
+    Visitor visitor;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "booking_room",
@@ -34,6 +40,9 @@ public class Booking {
     @Column(name = "total_price")
     Double totalPrice;
 
+    @Column(name = "total_price_IVA")
+    Double totalPriceWithIVA;
+
     @Column(name = "people_quantity")
     Integer peopleQuantity;
 
@@ -42,4 +51,11 @@ public class Booking {
 
     @Column(name = "check_out")
     LocalDate checkOut;
+
+    public List<Integer> getRoomNumbers() {
+        return rooms.stream()
+                .map(Room::getRoomNumber)
+                .sorted()
+                .collect(Collectors.toList());
+    }
 }

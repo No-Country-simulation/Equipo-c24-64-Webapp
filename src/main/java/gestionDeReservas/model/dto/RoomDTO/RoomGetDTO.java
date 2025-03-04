@@ -6,6 +6,7 @@ import lombok.Builder;
 @Builder
 public record RoomGetDTO(
     Integer id,
+    Integer roomNumber,
     String name,
     String description,
     Integer capacity,

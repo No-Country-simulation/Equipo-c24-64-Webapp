@@ -7,7 +7,8 @@ import lombok.experimental.FieldDefaults;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,6 +19,9 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "room_id")
     Integer id;
+
+    @Column(name = "room_number")
+    Integer roomNumber;
 
     @Column(name = "room_name")
     String name;
@@ -32,6 +36,7 @@ public class Room {
     @JoinColumn(name = "type_room_id", nullable = false)
     RoomType roomType;
 
-    @ManyToMany(mappedBy = "rooms",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "rooms")
     Set<Booking> bookings;
+
 }

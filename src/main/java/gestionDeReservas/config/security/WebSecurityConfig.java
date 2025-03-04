@@ -81,8 +81,8 @@ public class WebSecurityConfig {
     private void configureCustomerEndPoints(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authRequest) {
         authRequest.requestMatchers(HttpMethod.GET, "/saludo/hola-cliente").hasRole(CUSTOMER)
                 .requestMatchers(HttpMethod.POST,"/booking").permitAll()
-                .requestMatchers(HttpMethod.GET,"/booking/enabled-rooms").permitAll();
-
+                .requestMatchers(HttpMethod.GET,"/booking/enabled-rooms").permitAll()
+                .requestMatchers(HttpMethod.POST,"/visitor").permitAll();
     }
 
     private void configureReceptionistsEndpoint(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authRequest) {

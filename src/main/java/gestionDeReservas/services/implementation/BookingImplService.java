@@ -1,18 +1,18 @@
 package gestionDeReservas.services.implementation;
 
-import gestionDeReservas.exception.BookingException;
-import gestionDeReservas.exception.DateRangeException;
-import gestionDeReservas.exception.NotRoomFoundException;
+import gestionDeReservas.exception.*;
 import gestionDeReservas.factory.booking.BookingFactory;
+import gestionDeReservas.factory.booking.BookingMailFactory;
 import gestionDeReservas.mapper.RoomMapper;
 import gestionDeReservas.model.dto.RoomDTO.RoomGetDTO;
+import gestionDeReservas.model.dto.booking.BookingMailDTO;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
-import gestionDeReservas.model.entity.Booking;
-import gestionDeReservas.model.entity.Room;
-import gestionDeReservas.model.entity.RoomType;
-import gestionDeReservas.model.entity.UserEntity;
+import gestionDeReservas.model.entity.*;
 import gestionDeReservas.repository.IBookingRepository;
 import gestionDeReservas.repository.IRoomTypeRepository;
+import gestionDeReservas.repository.IUserRepository;
+import gestionDeReservas.repository.IVisitorRepository;
+import gestionDeReservas.services.Interface.BookingMailService;
 import gestionDeReservas.services.Interface.BookingService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +28,21 @@ import java.util.List;
 public class BookingImplService implements BookingService {
     IBookingRepository bookingRepository;
     IRoomTypeRepository roomTypeRepository;
+    IVisitorRepository visitorRepository;
+    IUserRepository userRepository;
+    BookingMailService bookingMailService;
+    BookingMailFactory bookingMailFactory;
     BookingFactory bookingFactory;
     RoomMapper roomMapper;
 
     @Override
-    public void bookingRooms(UserEntity user, BookingRequestDTO bookingRequestDTO) {
+    public void bookingRooms(BookingRequestDTO bookingRequestDTO) {
+        String email = bookingRequestDTO.email();
+        Visitor visitor = visitorRepository.findByEmail(email).orElse(null);
+        UserEntity user = userRepository.findByEmail(email).orElse(null);
+
+        validateGuest(visitor,user);
+
         RoomType roomType = findRoomType(bookingRequestDTO.idRoomType());
         LocalDate checkIn = bookingRequestDTO.checkIn();
         LocalDate checkOut = bookingRequestDTO.checkOut();
@@ -47,13 +57,33 @@ public class BookingImplService implements BookingService {
 
         List<Room> bookingRooms = availableRooms.subList(0, roomsRequested);
 
-        Booking booking = bookingFactory.buildBooking(bookingRequestDTO, user, bookingRooms);
+        Booking booking = getBooking(bookingRequestDTO,user,visitor,bookingRooms);
+
         bookingRepository.save(booking);
+
+        CreateBookingEmail(booking);
+    }
+
+    private void CreateBookingEmail(Booking booking) {
+        BookingMailDTO bookingMail = bookingMailFactory.buildBookingMail(booking);
+        bookingMailService.sendBookingMail(bookingMail);
     }
 
     @Override
     public List<RoomGetDTO> getAvailableRoomsDTO(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {
         return roomMapper.RoomGetAllDTO(getAvailableRooms(roomTypeId,checkIn,checkOut));
+    }
+
+    private Booking getBooking(BookingRequestDTO bookingRequestDTO,UserEntity user, Visitor visitor, List<Room> bookingRooms) {
+        if(user == null)
+            return bookingFactory.buildVisitorBooking(bookingRequestDTO,visitor,bookingRooms);
+
+        return bookingFactory.buildBooking(bookingRequestDTO, user, bookingRooms);
+    }
+
+    private void validateGuest(Visitor visitor, UserEntity user) {
+        if(visitor == null && user == null)
+            throw new NotFoundException("guest not found");
     }
 
     private List<Room> getAvailableRooms(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {

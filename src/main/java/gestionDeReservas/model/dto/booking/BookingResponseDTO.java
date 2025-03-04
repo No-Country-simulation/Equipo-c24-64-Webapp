@@ -10,5 +10,4 @@ public record BookingResponseDTO(
         LocalDate checkIn,
         LocalDate checkOut
 
-)
-{}
+){}

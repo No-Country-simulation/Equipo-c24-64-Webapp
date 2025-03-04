@@ -12,7 +12,7 @@ public record RegisterRequestDTO(
         String username,
         @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d).{8,}$",
                 message = "The password must be at least 8 characters, a capital letter and a number")
-        @NotBlank(message = "campo password es obligatorio")
+        @NotBlank(message = "the password can not be empty")
         String password,
         @NotBlank
         String name,

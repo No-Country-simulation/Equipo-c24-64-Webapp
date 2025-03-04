@@ -34,14 +34,14 @@ public class UserEntity implements UserDetails {
     Set<Booking> bookings;
 
     String username;
-    String email;
     String password;
+    String address;
     String name;
     String lastname;
-    String address;
+    String email;
+    @Column(name = "phone_number")
+    String phoneNumber;
     String dni;
-    @Column(name = "number_phone")
-    String numberPhone;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

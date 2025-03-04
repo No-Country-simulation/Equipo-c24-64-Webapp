@@ -21,6 +21,7 @@ public class RoomMapper {
         return RoomGetDTO
                 .builder()
                 .id(room.getId())
+                .roomNumber(room.getRoomNumber())
                 .name(room.getName())
                 .description(room.getDescription())
                 .capacity(room.getCapacity())
@@ -31,5 +32,4 @@ public class RoomMapper {
     public List<RoomGetDTO>RoomGetAllDTO(List<Room> rooms){
         return rooms.stream().map(this::toGetDTO).toList();
     }
-
 }
