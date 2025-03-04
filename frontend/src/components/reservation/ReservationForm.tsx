@@ -54,10 +54,10 @@ interface IFormInputs {
 type FormData = yup.InferType<typeof schema>;
 
 const ReservationForm = () => {
-  const { reservation, checkIn, checkOut } = useSearchStore();
-
+  const { reservation, checkIn, checkOut, guests } = useSearchStore();
   const { nightQuantity, totalPrice, subTotalPrice, ivaInDollars } =
     calculatePrice(checkIn, checkOut, reservation?.typeRoom.price);
+
   const {
     register,
     handleSubmit,
@@ -68,24 +68,25 @@ const ReservationForm = () => {
       formaPago: "tarjeta",
     },
   });
-
+  const roomsQuantity = guests.rooms;
   const onSubmit = async (data: FormData) => {
     //datos para el endpoint 1 (datos de la habitacion)
-
     const bookingData = {
       checkIn,
       checkOut,
       peopleQuantity: reservation?.capacity,
-      totalPrice,
       idRoomType: reservation?.id,
       email: data.email,
+      roomsQuantity: roomsQuantity,
+      // peticionesEspeciales: data.peticionesEspeciales,
     };
+
     //datos para el endpoint 2 (datos del cliente)
     const formReserva = {
-      nombre: data.nombre,
-      apellido: data.apellido,
-      telefono: data.telefono,
-      numeroDocumento: data.numeroDocumento,
+      name: data.nombre,
+      lastname: data.apellido,
+      phoneNumber: data.telefono,
+      dni: data.numeroDocumento,
       email: data.email,
       peticionesEspeciales: data.peticionesEspeciales,
     };
@@ -109,7 +110,7 @@ const ReservationForm = () => {
       console.log("Reserva realizada con éxito:", resultOne);
       toast.success("Reserva confirmada");
       const responseTwo = await fetch(
-        "https://hotels-1-0.onrender.com/api/endpoint2",
+        "https://hotels-1-0.onrender.com/api/visitor",
         {
           method: "POST",
           headers: {
@@ -532,7 +533,10 @@ const ReservationForm = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-700">Personas</span>
-                  <span className="text-sm">{reservation?.capacity}</span>
+                  <span className="text-sm">
+                    {guests.adults} Adultos -{" "}
+                    {guests.children > 0 ? <>{guests.children} Niño/s</> : ""}
+                  </span>
                 </div>
               </div>
 

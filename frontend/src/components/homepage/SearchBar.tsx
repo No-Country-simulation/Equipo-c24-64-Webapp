@@ -37,7 +37,7 @@ const SearchBar: React.FC = () => {
     setRoomType(roomType);
     setCheckIn(checkIn);
     setCheckOut(checkOut);
-
+  
     await fetchRooms();
   };
   return (

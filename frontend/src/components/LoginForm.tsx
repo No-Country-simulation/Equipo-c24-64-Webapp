@@ -38,17 +38,14 @@ const LoginForm: React.FC = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            //chequear cuando fede haga la actualizacion de la db desplegada a ver si cambio email por identifier, porque actualmente el body toma email y no identifier
             identifier: data.identifier,
             password: data.password,
           }),
         }
       );
-      console.log(response.json);
 
       if (!response.ok) {
         const error = await response.json();
-        console.log(error);
         throw new Error(error.message);
       }
 

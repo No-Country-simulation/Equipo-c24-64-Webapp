@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-
+import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 interface INewsletterForm {
   email: string;
 }
@@ -13,6 +14,7 @@ function Footer() {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<INewsletterForm>();
+
   const onSubmit = async (data: INewsletterForm) => {
     try {
       const response = await fetch("#", {
@@ -20,22 +22,24 @@ function Footer() {
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data.email),
       });
       console.log(response);
 
       if (response.ok) {
-        alert("¡Te has suscrito con éxito!");
+        toast.success("¡Te has suscrito con éxito!");
         reset();
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.log("Error", error.message);
+        toast.error("Intentalo de nuevo más tarde");
       }
     }
   };
   return (
     <div className=" bg-gray-100">
+      <Toaster position="top-center" reverseOrder={false} />
+
       <footer className="bg-gray-900 text-gray-300">
         <div className="bg-blue-700 ">
           <div className="container mx-auto px-4">

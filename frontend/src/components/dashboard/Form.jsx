@@ -49,7 +49,6 @@ const Form = () => {
       formData.habitacion
     );
     setGuests([...guests, newGuest]);
-    console.log("nuevo huesped", newGuest);
 
     setRooms(
       rooms.map((room) =>
