@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import { questions, Question } from "../../data/FAQ";
 import useInView from "@/hooks/useInView";

@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "@/layouts/Header";
 import Footer from "@/layouts/Footer";
 import RoomsListing from "@/components/rooms/RoomsListing.tsx";

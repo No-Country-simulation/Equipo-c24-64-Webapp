@@ -6,7 +6,6 @@ const fetchRooms = async () => {
 
     const response = await fetch(`https://hotels-1-0.onrender.com/api/rooms`);
     const data = await response.json();
-
     let filteredRooms = data;
 
     if (roomType) {

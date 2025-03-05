@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";

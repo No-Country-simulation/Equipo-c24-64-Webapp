@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -6,7 +5,7 @@ import { Check } from "lucide-react";
 import useSearchStore from "@/hooks/useSearchStore.tsx";
 import { calculatePrice } from "@/utils/totalPrice";
 import toast from "react-hot-toast";
-import { Toaster } from "react-hot-toast";
+// import { Toaster } from "react-hot-toast";
 const schema = yup.object({
   nombre: yup.string().required("El nombre es requerido"),
   apellido: yup.string().required("El apellido es requerido"),
@@ -38,25 +37,12 @@ const schema = yup.object({
     .oneOf([true], "Debe aceptar los términos y condiciones"),
 });
 
-interface IFormInputs {
-  nombre: string;
-  apellido: string;
-  telefono: string;
-  nacionalidad: string;
-  tipoDocumento: string;
-  numeroDocumento: string;
-  email: string;
-  peticionesEspeciales: string;
-  formaPago: string;
-  tipoTarjeta: string;
-}
-
 type FormData = yup.InferType<typeof schema>;
 
 const ReservationForm = () => {
   const { reservation, checkIn, checkOut, guests } = useSearchStore();
   const { nightQuantity, totalPrice, subTotalPrice, ivaInDollars } =
-    calculatePrice(checkIn, checkOut, reservation?.typeRoom.price);
+    calculatePrice(checkIn, checkOut, reservation?.typeRoom.price ?? 0);
 
   const {
     register,
@@ -69,8 +55,9 @@ const ReservationForm = () => {
     },
   });
   const roomsQuantity = guests.rooms;
+
   const onSubmit = async (data: FormData) => {
-    //datos para el endpoint 1 (datos de la habitacion)
+    console.log(data);
     const bookingData = {
       checkIn,
       checkOut,
@@ -78,17 +65,15 @@ const ReservationForm = () => {
       idRoomType: reservation?.id,
       email: data.email,
       roomsQuantity: roomsQuantity,
-      // peticionesEspeciales: data.peticionesEspeciales,
+      specialRequests: data.peticionesEspeciales,
     };
 
-    //datos para el endpoint 2 (datos del cliente)
     const formReserva = {
       name: data.nombre,
       lastname: data.apellido,
       phoneNumber: data.telefono,
       dni: data.numeroDocumento,
       email: data.email,
-      peticionesEspeciales: data.peticionesEspeciales,
     };
 
     try {
@@ -106,8 +91,8 @@ const ReservationForm = () => {
         throw new Error("Error al realizar la reserva");
       }
 
-      const resultOne = await responseOne.json();
-      console.log("Reserva realizada con éxito:", resultOne);
+      // const resultOne = await responseOne.json();
+      // console.log("Reserva realizada con éxito:", resultOne);
       toast.success("Reserva confirmada");
       const responseTwo = await fetch(
         "https://hotels-1-0.onrender.com/api/visitor",
@@ -122,11 +107,11 @@ const ReservationForm = () => {
       if (!responseTwo.ok) {
         throw new Error("Error al enviar el formulario");
       }
-      const resultTwo = await responseTwo.json();
-      console.log("Formulario enviado con éxito:", resultTwo);
-      toast.success("Reserva confirmada y formulario enviado");
+      // const resultTwo = await responseTwo.json();
+      // console.log("Formulario enviado con éxito:", resultTwo);
+      toast.success("Reserva confirmada y formulario enviado con exito!");
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
       toast.error(
         "Hubo un error al realizar la reserva o enviar el formulario"
       );

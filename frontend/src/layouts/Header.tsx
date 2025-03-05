@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X, Heart } from "lucide-react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { logOut } from "@/utils/logOut";
 import { Toaster } from "react-hot-toast";
 import { toast } from "react-hot-toast";
 const Header = () => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Users, DollarSign, ChevronLeft, ChevronRight } from "lucide-react";
 import SearchBar from "../homepage/SearchBar";
 import useSearchStore from "@/hooks/useSearchStore";
@@ -28,7 +28,7 @@ const RoomListing: React.FC = () => {
     return typeMap[type] || "";
   };
 
-  const addReservation = (room) => {
+  const addReservation = (room: any) => {
     const reservationData = {
       id: room.id,
       name: room.name,

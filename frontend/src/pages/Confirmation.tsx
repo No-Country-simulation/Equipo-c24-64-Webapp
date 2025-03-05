@@ -1,4 +1,3 @@
-import React from "react";
 import ReservationForm from "@/components/reservation/ReservationForm";
 import Header from "@/layouts/Header";
 import Footer from "@/layouts/Footer";

@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import CodigoQr from "@/components/codigoQr/CodigoQr";
 import Header from "@/layouts/Header";

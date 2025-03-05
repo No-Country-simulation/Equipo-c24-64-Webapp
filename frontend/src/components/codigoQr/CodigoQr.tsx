@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { Gift, Clock, MapPin, Calendar, Info, CheckCircle } from "lucide-react";
 

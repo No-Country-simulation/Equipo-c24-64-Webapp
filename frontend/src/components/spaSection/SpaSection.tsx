@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-// import CodigoQr from "@/components/codigoQr/CodigoQr";
+import { useState } from "react";
 import { spaSlides } from "@/data/SpaBanner";
 import reseñasData from "@/data/Reseñas";
 import { Link } from "react-router-dom";
 import {
   Sparkles,
-  Waves,
   Heart,
   Users,
   Star,

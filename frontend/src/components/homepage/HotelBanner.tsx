@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { hotelSlides } from "@/data/HotelBanner";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { FaWifi, FaSwimmingPool, FaUtensils } from "react-icons/fa";
@@ -98,7 +98,7 @@ function HotelBanner() {
               ))}
             </div>
           </div>
-          <div
+          <motion.div
             ref={ref}
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
@@ -161,7 +161,7 @@ function HotelBanner() {
             >
               <ChevronRight className="w-6 h-6 text-white" />
             </button>
-          </div>
+          </motion.div>
         </div>
       </div>
     </motion.div>

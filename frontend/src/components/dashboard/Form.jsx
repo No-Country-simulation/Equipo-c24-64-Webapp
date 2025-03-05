@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ROOM_TYPES, ROOM_STATUS } from "@/types.js";
+import { ROOM_STATUS } from "@/types.js";
 import roomsData from "@/data/rooms.js";
-import User from "@/models/user.js";
 import "./form.css";
 
 const schema = Yup.object().shape({

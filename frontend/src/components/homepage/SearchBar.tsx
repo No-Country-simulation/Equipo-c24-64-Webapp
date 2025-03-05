@@ -1,4 +1,3 @@
-import React from "react";
 import { Users, ChevronDown, Search } from "lucide-react";
 import { useForm } from "react-hook-form";
 import useSearchStore from "@/hooks/useSearchStore.tsx";
@@ -31,13 +30,13 @@ const SearchBar: React.FC = () => {
     formState: { errors, isSubmitting },
   } = useForm<SearchForm>();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     const { roomType, checkIn, checkOut } = data;
 
     setRoomType(roomType);
     setCheckIn(checkIn);
     setCheckOut(checkOut);
-  
+
     await fetchRooms();
   };
   return (

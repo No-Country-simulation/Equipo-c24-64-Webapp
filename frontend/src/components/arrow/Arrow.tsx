@@ -1,7 +1,6 @@
-import React from "react";
 import "./arrow.css";
 
-function Arrow() {
+const Arrow: React.FC = () => {
   return (
     <a
       href="#top"
@@ -19,6 +18,6 @@ function Arrow() {
       </svg>
     </a>
   );
-}
+};
 
 export default Arrow;

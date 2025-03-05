@@ -118,7 +118,6 @@ export const BackgroundBeams: React.FC<BackgroundBeamsProps> = React.memo(
                 <stop offset="100%" stopColor="#AE48FF" stopOpacity="0"></stop>
               </motion.linearGradient>
             ))}
-
             <radialGradient
               id="paint0_radial_242_278"
               cx="0"
