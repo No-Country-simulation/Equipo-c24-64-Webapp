@@ -13,7 +13,6 @@ import gestionDeReservas.model.dto.TypeRoomDTO.EditRoomTypeDTO;
 import gestionDeReservas.model.dto.TypeRoomDTO.RoomTypeGetDTO;
 import gestionDeReservas.model.entity.Image;
 import gestionDeReservas.model.entity.RoomType;
-import gestionDeReservas.exception.RoomTypeNotFoundException;
 import gestionDeReservas.factory.TypeRoomFactory;
 import gestionDeReservas.mapper.RoomTypeMapper;
 import gestionDeReservas.repository.IRoomTypeRepository;
@@ -55,7 +54,7 @@ public class RoomTypeService implements TypeRoomServiceUI {
     public void deleteTypeRoom(Integer id) throws Exception {
         RoomType room = roomTypeRepository
         .findById(id)
-        .orElseThrow(() -> new RoomTypeNotFoundException("Room type not found"));
+        .orElseThrow(() -> new NotFoundException("Room type not found"));
         roomTypeRepository.deleteById(id);
     }
 
@@ -65,7 +64,7 @@ public class RoomTypeService implements TypeRoomServiceUI {
         Integer id = roomType.id();
         RoomType room = roomTypeRepository
         .findById(id)
-        .orElseThrow(() -> new RoomTypeNotFoundException("Room type not found"));
+        .orElseThrow(() -> new NotFoundException("Room type not found"));
 
         room.setName(roomType.name());
         room.setDescription(roomType.description());
@@ -80,7 +79,7 @@ public class RoomTypeService implements TypeRoomServiceUI {
     public RoomType findById(Integer typeid){
         return roomTypeRepository
         .findById(typeid)
-        .orElseThrow(() -> new RoomTypeNotFoundException("room type not found in database"));
+        .orElseThrow(() -> new NotFoundException("room type not found in database"));
     }
 
     @Override

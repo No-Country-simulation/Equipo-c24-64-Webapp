@@ -109,7 +109,7 @@ public class BookingImplService implements BookingService {
 
     private RoomType findRoomType(Integer idRoomType) {
         return roomTypeRepository.findById(idRoomType)
-                .orElseThrow(() -> new NotRoomFoundException("Room type not found"));
+                .orElseThrow(() -> new NotFoundException("Room type not found"));
     }
 
     private void validateDates(LocalDate checkIn, LocalDate checkOut) {

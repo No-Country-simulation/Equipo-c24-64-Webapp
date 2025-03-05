@@ -1,6 +1,6 @@
 package gestionDeReservas.model.entity;
 
-import gestionDeReservas.model.enums.Role;
+import gestionDeReservas.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

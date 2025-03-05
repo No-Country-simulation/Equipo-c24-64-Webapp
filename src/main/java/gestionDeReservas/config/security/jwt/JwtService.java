@@ -23,7 +23,7 @@ import java.util.function.Function;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class JwtService {
-     static final String JWT_SECRET_KEY = System.getenv("JWT_SECRET_KEY");
+     static final String JWT_SECRET_KEY = "fHjqZ9LwR3vC7nKy2tXsD4mW8bN6pVeAxJ5cGhUz1rM0dFBoOQlIuEeYmPiS";
      final Map<String, Date> blacklist = new HashMap<>();
      ScheduledExecutorService scheduler;
 

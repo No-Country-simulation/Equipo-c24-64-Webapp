@@ -1,4 +1,4 @@
-package gestionDeReservas.model.enums;
+package gestionDeReservas.enums;
 
 public enum UserStatus {
     ENABLED,
