@@ -57,7 +57,6 @@ const ReservationForm = () => {
   const roomsQuantity = guests.rooms;
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
     const bookingData = {
       checkIn,
       checkOut,
@@ -77,23 +76,6 @@ const ReservationForm = () => {
     };
 
     try {
-      const responseOne = await fetch(
-        "https://hotels-1-0.onrender.com/api/booking",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(bookingData),
-        }
-      );
-      if (!responseOne.ok) {
-        throw new Error("Error al realizar la reserva");
-      }
-
-      // const resultOne = await responseOne.json();
-      // console.log("Reserva realizada con éxito:", resultOne);
-      toast.success("Reserva confirmada");
       const responseTwo = await fetch(
         "https://hotels-1-0.onrender.com/api/visitor",
         {
@@ -105,16 +87,43 @@ const ReservationForm = () => {
         }
       );
       if (!responseTwo.ok) {
-        throw new Error("Error al enviar el formulario");
+        const error = await responseTwo.json();
+
+        if (error.error && error.message.includes("Email Already Registered")) {
+          toast.error(
+            "Usuario ya registrado ! Inicia sesión para completar tu reserva"
+          );
+        }
+      } else {
+        toast.success("Formulario enviado con exito!");
       }
-      // const resultTwo = await responseTwo.json();
-      // console.log("Formulario enviado con éxito:", resultTwo);
-      toast.success("Reserva confirmada y formulario enviado con exito!");
-    } catch (error) {
-      // console.error("Error:", error);
-      toast.error(
-        "Hubo un error al realizar la reserva o enviar el formulario"
+
+      const responseOne = await fetch(
+        "https://hotels-1-0.onrender.com/api/booking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bookingData),
+        }
       );
+      if (!responseOne.ok) {
+        const error = await responseOne.json();
+
+        if (
+          error.status === 400 &&
+          error.message.includes(
+            "There are not enough rooms available for booking"
+          )
+        ) {
+          toast.error("Casi ! Esa habitación ya está reservada");
+        }
+      } else {
+        toast.success("Reserva confirmada y formulario enviado con exito!");
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 

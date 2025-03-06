@@ -75,6 +75,21 @@ const RegisterForm = () => {
 
       if (!response.ok) {
         const error = await response.json();
+
+        if (
+          response.status === 400 &&
+          error.message &&
+          error.message.includes("User already exists")
+        ) {
+          toast.error("Usuario ya registrado");
+        } else if (
+          response.status === 500 &&
+          error.message &&
+          error.message.includes("internal_server_error")
+        ) {
+          toast.error("Error al registrar usuario. Intentalo más tarde");
+        }
+
         throw new Error(error.message);
       }
 
@@ -82,7 +97,7 @@ const RegisterForm = () => {
       navigate("/login");
     } catch (error) {
       if (error instanceof Error) {
-        toast.error("Error al registrar usuario", { duration: 3000 });
+        console.log("Error al registrar usuario", { duration: 3000 });
       }
     }
   };

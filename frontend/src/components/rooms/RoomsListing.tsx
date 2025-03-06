@@ -1,21 +1,14 @@
-import { useEffect } from "react";
 import { Users, DollarSign, ChevronLeft, ChevronRight } from "lucide-react";
 import SearchBar from "../homepage/SearchBar";
 import useSearchStore from "@/hooks/useSearchStore";
-import fetchRooms from "@/utils/fetchRooms";
 import { motion } from "framer-motion";
 import useScrollAnimation from "@/hooks/useInView.ts";
 import { useNavigate } from "react-router-dom";
 
 const RoomListing: React.FC = () => {
-  const { rooms, setRooms, roomType, setReservation } = useSearchStore();
+  const { rooms, roomType, setReservation } = useSearchStore();
   const { ref, inView } = useScrollAnimation();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchRooms().then(setRooms);
-  }, [setRooms]);
-
   const getRoomTypeName = (type: string) => {
     const typeMap: Record<string, string> = {
       single: "Habitación Single",

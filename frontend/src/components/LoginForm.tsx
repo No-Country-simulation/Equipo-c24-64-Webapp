@@ -46,20 +46,30 @@ const LoginForm: React.FC = () => {
 
       if (!response.ok) {
         const error = await response.json();
+
+        if (
+          error.error &&
+          error.error.includes("authentication.BadCredentialsException")
+        ) {
+          toast.error("Las credenciales no coinciden");
+        } else if (error.error && error.error.includes("eption")) {
+          toast.error("Intentalo más tarde");
+        } else {
+          toast.error("Error interno del servidor, intenta más tarde");
+        }
+
         throw new Error(error.message);
       }
 
       const { token, name, lastname } = await response.json();
-      Object.entries({ token, name: name, lastname: lastname }).forEach(
-        ([key, value]) => sessionStorage.setItem(key, value)
+      Object.entries({ token, name, lastname }).forEach(([key, value]) =>
+        sessionStorage.setItem(key, value)
       );
 
       toast.success("¡Inicio de sesión exitoso!");
       navigate("/");
     } catch (error) {
-      if (error instanceof Error) {
-        toast.error("Error al iniciar sesión", { duration: 3000 });
-      }
+      console.log(error);
     }
   };
 
