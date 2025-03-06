@@ -1,7 +1,7 @@
 import { Users, ChevronDown, Search } from "lucide-react";
 import { useForm } from "react-hook-form";
 import useSearchStore from "@/hooks/useSearchStore.tsx";
-import fetchRooms from "@/utils/fetchRooms";
+import fetchRooms from "@/services/fetchRooms";
 import "./home.css";
 
 interface SearchForm {
@@ -37,7 +37,7 @@ const SearchBar: React.FC = () => {
     setCheckIn(checkIn);
     setCheckOut(checkOut);
 
-    await fetchRooms();
+    await fetchRooms("rooms");
   };
   return (
     <div className="max-w-6xl mx-auto px-4 mt-8" id="searchBar">

@@ -2,7 +2,7 @@ import { Facebook, Instagram, Twitter } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import { Toaster } from "react-hot-toast";
+
 interface INewsletterForm {
   email: string;
 }
@@ -37,8 +37,6 @@ function Footer() {
   };
   return (
     <div className=" bg-gray-100">
-      <Toaster position="top-center" reverseOrder={false} />
-
       <footer className="bg-gray-900 text-gray-300">
         <div className="bg-blue-700 ">
           <div className="container mx-auto px-4">

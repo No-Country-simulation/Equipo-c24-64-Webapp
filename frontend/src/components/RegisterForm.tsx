@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import fetchRegister from "@/services/fetchRegister";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 import { BackgroundBeams } from "@/styles/bgLogin/BackgroundBeams";
@@ -60,45 +61,14 @@ const RegisterForm = () => {
     resolver: yupResolver(schema),
   });
 
+  const url = "auth/register";
   const onSubmit = async (data: IFormInputs) => {
-    try {
-      const response = await fetch(
-        "https://hotels-1-0.onrender.com/api/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      if (!response.ok) {
-        const error = await response.json();
-
-        if (
-          response.status === 400 &&
-          error.message &&
-          error.message.includes("User already exists")
-        ) {
-          toast.error("Usuario ya registrado");
-        } else if (
-          response.status === 500 &&
-          error.message &&
-          error.message.includes("internal_server_error")
-        ) {
-          toast.error("Error al registrar usuario. Intentalo más tarde");
-        }
-
-        throw new Error(error.message);
-      }
-
-      toast.success("Registro exitoso!");
+    const registro = await fetchRegister(url, data);
+    if (registro.success) {
+      toast.success("Registro exitoso");
       navigate("/login");
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log("Error al registrar usuario", { duration: 3000 });
-      }
+    } else {
+      toast.error(registro.errorMessage);
     }
   };
 

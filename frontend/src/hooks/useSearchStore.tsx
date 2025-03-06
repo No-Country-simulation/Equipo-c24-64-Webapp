@@ -1,11 +1,24 @@
 import { create } from "zustand";
 
+export interface Room {
+  id: string;
+  name: string;
+  description: string;
+  capacity: number;
+  typeRoom: {
+    name: string;
+    description: string;
+    capacity: number;
+    price: number;
+  };
+}
+
 interface SearchState {
   isGuestsOpen: boolean;
   checkIn: string;
   checkOut: string;
   roomType: string;
-  rooms: string[];
+  rooms: Room[];
   reservation: {
     id: string;
     name: string;
@@ -26,7 +39,7 @@ interface SearchState {
   setIsGuestsOpen: (state: boolean) => void;
   setCheckIn: (date: string) => void;
   setCheckOut: (date: string) => void;
-  setRooms: (rooms: string[]) => void;
+  setRooms: (rooms: Room[]) => void;
   setRoomType: (roomType: string) => void;
   setGuests: (guests: {
     adults: number;

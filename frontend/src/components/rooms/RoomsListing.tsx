@@ -1,6 +1,6 @@
 import { Users, DollarSign, ChevronLeft, ChevronRight } from "lucide-react";
 import SearchBar from "../homepage/SearchBar";
-import useSearchStore from "@/hooks/useSearchStore";
+import useSearchStore, { Room } from "@/hooks/useSearchStore";
 import { motion } from "framer-motion";
 import useScrollAnimation from "@/hooks/useInView.ts";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ const RoomListing: React.FC = () => {
     return typeMap[type] || "";
   };
 
-  const addReservation = (room: any) => {
+  const addReservation = (room: Room) => {
     const reservationData = {
       id: room.id,
       name: room.name,
@@ -69,7 +69,7 @@ const RoomListing: React.FC = () => {
                   </h3>
                   <div className="flex items-center text-gray-600">
                     <DollarSign className="w-4 h-4 mr-2" />
-                    <span>${room.typeRoom.price} / noche</span>
+                    <span>${room.typeRoom?.price} / noche</span>
                   </div>
                   <div className="flex items-center text-gray-600">
                     <Users className="w-4 h-4 mr-2" />

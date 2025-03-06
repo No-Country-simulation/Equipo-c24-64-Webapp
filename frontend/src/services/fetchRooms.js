@@ -1,10 +1,10 @@
 import useSearchStore from "@/hooks/useSearchStore";
+const API_HOST = import.meta.env.VITE_API_HOST;
 
-const fetchRooms = async () => {
+const fetchRooms = async (url) => {
+  const { roomType } = useSearchStore.getState();
   try {
-    const { roomType } = useSearchStore.getState();
-
-    const response = await fetch(`https://hotels-1-0.onrender.com/api/rooms`);
+    const response = await fetch(`${API_HOST}/api/${url}`);
     const data = await response.json();
     let filteredRooms = data;
 
