@@ -40,14 +40,14 @@ const SearchBar: React.FC = () => {
     await fetchRooms("rooms");
   };
   return (
-    <div className="max-w-6xl mx-auto px-4 mt-8" id="searchBar">
+    <div className="max-w-6xl mx-auto px-4 mt-8 " id="searchBar">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold mb-2">
           Ahorrá hasta un 45% en tu próxima estadía de hotel
         </h2>
         <h3 className="text-xl mb-2">Encontrá tu habitación ideal</h3>
       </div>
-      <div className="bg-white rounded-lg shadow-lg py-4 px-3">
+      <div className="bg-white rounded-lg shadow-xl py-4 px-3">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
             <div className="relative">

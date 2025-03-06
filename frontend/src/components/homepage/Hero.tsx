@@ -1,13 +1,22 @@
 import { motion } from "framer-motion";
-
+import bannerHero from "@/assets/bannerHero.mp4";
 const Hero: React.FC = () => {
   return (
     <section
       className="relative w-full h-screen flex items-center justify-center bg-cover bg-center hero-bg"
       id="hero"
-      style={{ backgroundImage: "url('/images/hero-bg.webp')" }}
     >
-      <div className="absolute inset-0 bg-opacity-50"></div>
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        autoPlay
+        muted
+        loop
+      >
+        <source src={bannerHero} type="video/mp4" />
+        <source src={bannerHero} type="video/webm" />
+      </video>
+      <div className="absolute bottom-0 left-0 w-full h-72 full bg-gradient-to-b from-transparent to-gray-50 z-10"></div>
+
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -17,7 +26,7 @@ const Hero: React.FC = () => {
         <h1 className="text-6xl font-bold mb-4 inter ">
           Bienvenido a Luxe Haven
         </h1>
-        <p className="text-2xl mb-6">
+        <p className="text-2xl mb-6 font-medium">
           Encuentra las mejores habitaciones al mejor precio
         </p>
         <motion.a
