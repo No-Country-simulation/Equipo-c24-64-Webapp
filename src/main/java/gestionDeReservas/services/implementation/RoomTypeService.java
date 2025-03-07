@@ -3,7 +3,10 @@ package gestionDeReservas.services.implementation;
 import java.util.List;
 
 import gestionDeReservas.exception.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import gestionDeReservas.services.Interface.RoomTypeServiceUI;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,31 +19,24 @@ import gestionDeReservas.model.entity.RoomType;
 import gestionDeReservas.factory.TypeRoomFactory;
 import gestionDeReservas.mapper.RoomTypeMapper;
 import gestionDeReservas.repository.IRoomTypeRepository;
-import gestionDeReservas.services.Interface.TypeRoomServiceUI;
 import jakarta.transaction.Transactional;
 
 @Service
-public class RoomTypeService implements TypeRoomServiceUI {
-
-    @Autowired
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+public class RoomTypeService implements RoomTypeServiceUI {
     private IRoomTypeRepository roomTypeRepository;
-
-    @Autowired
     private RoomTypeMapper roomTypeMapper;
-
-    @Autowired
     private TypeRoomFactory typeRoomFactory;
 
     @Override
     public List<RoomTypeGetDTO> getAllTypesRooms() {
-        return roomTypeRepository.findAll().stream().map((e) -> {
-            return roomTypeMapper.toGetDTO(e);
-        }).toList();
+        return roomTypeRepository.findAll().stream().map(roomTypeMapper::toGetDTO).toList();
     }
 
     @Override
-    public RoomType getTypeById(Integer id) throws Exception {
-        return findById(id);
+    public RoomType getTypeById(Integer id) {
+        return findRoomTypeById(id);
     }
 
     @Override
@@ -75,8 +71,7 @@ public class RoomTypeService implements TypeRoomServiceUI {
         return roomTypeMapper.toGetDTO(room);
     }
 
-
-    public RoomType findById(Integer typeid){
+    public RoomType findRoomTypeById(Integer typeid){
         return roomTypeRepository
         .findById(typeid)
         .orElseThrow(() -> new NotFoundException("room type not found in database"));
@@ -84,7 +79,7 @@ public class RoomTypeService implements TypeRoomServiceUI {
 
     @Override
     public RoomTypeGetDTO uploadRoomTypeImages(int id, List<MultipartFile> files) throws Exception {
-        RoomType roomType = findById(id);
+        RoomType roomType = findRoomTypeById(id);
         if (files == null || files.isEmpty()) {
             throw new NotFoundException("files not found");
         }
@@ -97,11 +92,10 @@ public class RoomTypeService implements TypeRoomServiceUI {
     @Override
     @Transactional
     public void removeRoomImage(int roomId, int imageId) throws Exception{
-        RoomType room = findById(roomId);
+        RoomType room = findRoomTypeById(roomId);
         Image image = typeRoomFactory.getImageService().getImageByPublicId(imageId);
         room.getImages().remove(image);
         typeRoomFactory.getImageService().removeImageFromCloundinary(image);
         roomTypeRepository.save(room);
     }
-
 }

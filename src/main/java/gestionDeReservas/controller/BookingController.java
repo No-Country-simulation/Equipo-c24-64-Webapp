@@ -21,13 +21,13 @@ public class BookingController {
     BookingService bookingService;
 
     @PostMapping
-    public ResponseEntity<?> saveBooking(@RequestBody BookingRequestDTO bookingRequestDTO){
+    public ResponseEntity<?> saveBooking(@RequestBody BookingRequestDTO bookingRequestDTO) throws Exception {
         bookingService.bookingRooms(bookingRequestDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/enabled-rooms")
-    public ResponseEntity<?> saveBooking(@RequestBody EnabledRoomsRequestDTO enabledRoomsRequestDTO){
+    public ResponseEntity<?> saveBooking(@RequestBody EnabledRoomsRequestDTO enabledRoomsRequestDTO) throws Exception{
         return ResponseEntity.ok(bookingService.getAvailableRoomsDTO(enabledRoomsRequestDTO.idRoomType(),
                 enabledRoomsRequestDTO.checkIn(),enabledRoomsRequestDTO.checkOut()));
     }

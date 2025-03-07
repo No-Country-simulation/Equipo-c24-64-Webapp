@@ -9,11 +9,11 @@ import gestionDeReservas.model.dto.booking.BookingMailDTO;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
 import gestionDeReservas.model.entity.*;
 import gestionDeReservas.repository.IBookingRepository;
-import gestionDeReservas.repository.IRoomTypeRepository;
 import gestionDeReservas.repository.IUserRepository;
 import gestionDeReservas.repository.IVisitorRepository;
 import gestionDeReservas.services.Interface.BookingMailService;
 import gestionDeReservas.services.Interface.BookingService;
+import gestionDeReservas.services.Interface.RoomTypeServiceUI;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -26,8 +26,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BookingImplService implements BookingService {
+    RoomTypeServiceUI roomTypeService;
     IBookingRepository bookingRepository;
-    IRoomTypeRepository roomTypeRepository;
     IVisitorRepository visitorRepository;
     IUserRepository userRepository;
     BookingMailService bookingMailService;
@@ -36,14 +36,14 @@ public class BookingImplService implements BookingService {
     RoomMapper roomMapper;
 
     @Override
-    public void bookingRooms(BookingRequestDTO bookingRequestDTO) {
+    public void bookingRooms(BookingRequestDTO bookingRequestDTO) throws Exception {
         String email = bookingRequestDTO.email();
         Visitor visitor = visitorRepository.findByEmail(email).orElse(null);
         UserEntity user = userRepository.findByEmail(email).orElse(null);
 
         validateGuest(visitor,user);
 
-        RoomType roomType = findRoomType(bookingRequestDTO.idRoomType());
+        RoomType roomType = getRoomType(bookingRequestDTO.idRoomType());
         LocalDate checkIn = bookingRequestDTO.checkIn();
         LocalDate checkOut = bookingRequestDTO.checkOut();
 
@@ -64,14 +64,25 @@ public class BookingImplService implements BookingService {
         CreateBookingEmail(booking);
     }
 
+    @Override
+    public List<RoomGetDTO> getAvailableRoomsDTO(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) throws Exception {
+        return roomMapper.RoomGetAllDTO(getAvailableRooms(roomTypeId,checkIn,checkOut));
+    }
+
+    private List<Room> getAvailableRooms(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) throws Exception {
+        RoomType roomType = getRoomType(roomTypeId);
+        return roomType.getRooms().stream()
+                .filter(room ->  !isRoomBooked(room.getId(), checkIn, checkOut))
+                .toList();
+    }
+
+    private RoomType getRoomType(Integer roomTypeId) throws Exception {
+        return roomTypeService.getTypeById(roomTypeId);
+    }
+
     private void CreateBookingEmail(Booking booking) {
         BookingMailDTO bookingMail = bookingMailFactory.buildBookingMail(booking);
         bookingMailService.sendBookingMail(bookingMail);
-    }
-
-    @Override
-    public List<RoomGetDTO> getAvailableRoomsDTO(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {
-        return roomMapper.RoomGetAllDTO(getAvailableRooms(roomTypeId,checkIn,checkOut));
     }
 
     private Booking getBooking(BookingRequestDTO bookingRequestDTO,UserEntity user, Visitor visitor, List<Room> bookingRooms) {
@@ -86,13 +97,6 @@ public class BookingImplService implements BookingService {
             throw new NotFoundException("guest not found");
     }
 
-    private List<Room> getAvailableRooms(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {
-        RoomType roomType = findRoomType(roomTypeId);
-        return roomType.getRooms().stream()
-                .filter(room ->  !isRoomBooked(room.getId(), checkIn, checkOut))
-                .toList();
-    }
-
     private void validateQuantityRequestedRooms(List<Room> availableRooms, int roomsRequested) {
         if (availableRooms.size() < roomsRequested)
             throw new BookingException("There are not enough rooms available for booking");
@@ -105,11 +109,6 @@ public class BookingImplService implements BookingService {
 
     private boolean isRoomBooked(Integer roomId, LocalDate checkIn, LocalDate checkOut) {
         return bookingRepository.countOverlappingReservations(roomId, checkIn, checkOut);
-    }
-
-    private RoomType findRoomType(Integer idRoomType) {
-        return roomTypeRepository.findById(idRoomType)
-                .orElseThrow(() -> new NotFoundException("Room type not found"));
     }
 
     private void validateDates(LocalDate checkIn, LocalDate checkOut) {

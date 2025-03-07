@@ -10,6 +10,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface BookingService {
-     void bookingRooms(BookingRequestDTO bookingRequestDTO) ;
-     List<RoomGetDTO> getAvailableRoomsDTO(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut);
+     void bookingRooms(BookingRequestDTO bookingRequestDTO) throws Exception;
+     List<RoomGetDTO> getAvailableRoomsDTO(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) throws Exception;
 }

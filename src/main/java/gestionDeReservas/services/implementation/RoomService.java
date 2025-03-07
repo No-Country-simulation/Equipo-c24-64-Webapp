@@ -39,10 +39,7 @@ public class RoomService implements RoomServiceUI {
 
     @Override
     public RoomGetDTO getRoomById(int id) throws Exception{
-        Room room = IRoomRepository
-        .findById(id)
-        .orElseThrow(() -> new NotFoundException("room not found with id" + id)) ;
-
+        Room room = getRoom(id);
         return roomMapper.toGetDTO(room);
     }
 
@@ -55,9 +52,7 @@ public class RoomService implements RoomServiceUI {
 
     @Override
     public RoomGetDTO editRoom(RoomEditRequestDTO roomEditRequestDTO) throws Exception {
-        Room room = IRoomRepository
-        .findById(roomEditRequestDTO.id())
-        .orElseThrow(() -> new NotFoundException("room not found with id" + roomEditRequestDTO.id())) ;
+        Room room = getRoom(roomEditRequestDTO.id());
         
         room.setName(roomEditRequestDTO.name());
         room.setDescription(roomEditRequestDTO.description());
@@ -65,7 +60,7 @@ public class RoomService implements RoomServiceUI {
         if (roomEditRequestDTO.typeRoomID() != null) {
             room.setRoomType(roomFactory
             .getTypeRoomService()
-            .findById(roomEditRequestDTO.typeRoomID()));
+            .findRoomTypeById(roomEditRequestDTO.typeRoomID()));
         }
         return roomMapper.toGetDTO(IRoomRepository.save(room));
     }
@@ -78,4 +73,9 @@ public class RoomService implements RoomServiceUI {
         .orElseThrow(() -> new NotFoundException("room not found with id" + id)));
     }
 
+    private Room getRoom(Integer roomId){
+        return  IRoomRepository
+                .findById(roomId)
+                .orElseThrow(() -> new NotFoundException("room not found with id" + roomId)) ;
+    }
 }

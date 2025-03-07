@@ -50,10 +50,10 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         ApiError error = ErrorFactory.buildError(Error.DATE_RANGE_EXCEPTION.toString(), e.getMessage(), 400);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
+
     @ExceptionHandler(VisitorEmailException.class)
     protected ResponseEntity<?> handleDuplicatedEmailException(VisitorEmailException e){
         ApiError error = ErrorFactory.buildError(Error.VISITOR_EMAIL_EXCEPTION.toString(),e.getMessage(), 400);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
-
 }
