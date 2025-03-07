@@ -67,6 +67,12 @@ const Home: React.FC = () => {
             <p>No hay ofertas disponibles en este momento.</p>
           )}
         </div>
+        <div>
+          <audio controls>
+            <source src="ruta-de-tu-musica.mp3" type="audio/mp3" />
+            Tu navegador no soporta la etiqueta de audio.
+          </audio>
+        </div>
       </section>
       <Footer />
     </div>

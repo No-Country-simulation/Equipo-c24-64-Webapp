@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
+import { useRef } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Check } from "lucide-react";
 import useSearchStore from "@/hooks/useSearchStore.tsx";
 import { calculatePrice } from "@/utils/totalPrice";
 import toast from "react-hot-toast";
-// import { Toaster } from "react-hot-toast";
+import sonidoConfirmacion from "@/assets/confirmFormSound.mp3";
 const schema = yup.object({
   nombre: yup.string().required("El nombre es requerido"),
   apellido: yup.string().required("El apellido es requerido"),
@@ -43,11 +44,10 @@ const ReservationForm = () => {
   const { reservation, checkIn, checkOut, guests } = useSearchStore();
   const { nightQuantity, totalPrice, subTotalPrice, ivaInDollars } =
     calculatePrice(checkIn, checkOut, reservation?.typeRoom.price ?? 0);
-
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -55,6 +55,7 @@ const ReservationForm = () => {
     },
   });
   const roomsQuantity = guests.rooms;
+  const audioRef = useRef(null);
 
   const onSubmit = async (data: FormData) => {
     const bookingData = {
@@ -94,10 +95,7 @@ const ReservationForm = () => {
             "Usuario ya registrado ! Inicia sesión para completar tu reserva"
           );
         }
-      } else {
-        toast.success("Formulario enviado con exito!");
       }
-
       const responseOne = await fetch(
         "https://hotels-1-0.onrender.com/api/booking",
         {
@@ -121,6 +119,9 @@ const ReservationForm = () => {
         }
       } else {
         toast.success("Reserva confirmada y formulario enviado con exito!");
+        setTimeout(() => {
+          audioRef.current.play();
+        }, 600);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -129,6 +130,12 @@ const ReservationForm = () => {
 
   return (
     <div className="max-w-7xl mx-auto">
+      <audio ref={audioRef} src={sonidoConfirmacion} preload="auto" />
+      {isSubmitting && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black/50 bg-opacity-25 flex items-center justify-center z-50">
+          <span className="loaderBooking"></span>
+        </div>
+      )}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="lg:flex lg:space-x-8">
           <div className="lg:w-2/3">
@@ -587,7 +594,7 @@ const ReservationForm = () => {
             <div className="flex justify-between mb-8 mt-5">
               <button
                 type="submit"
-                className="px-4 py-2 w-full cursor-pointer  bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                className="px-4 py-2 w-full cursor-pointer bg-blue-500 text-white rounded-md hover:bg-blue-600"
               >
                 Confirmar reserva
               </button>
