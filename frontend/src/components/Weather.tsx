@@ -148,7 +148,7 @@ const Weather: React.FC = () => {
               {CITY}
             </h2>
             <h3 className="text-md font-medium text-center text-white mb-6">
-              Conoce el clima en {CITY} para el día de tu llegada y prepara tu
+              Conocé el clima en {CITY} para el día de tu llegada y prepara tu
               viaje con anticipación.
             </h3>
 

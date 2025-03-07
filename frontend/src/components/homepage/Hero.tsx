@@ -27,7 +27,7 @@ const Hero: React.FC = () => {
           Bienvenido a Luxe Haven
         </h1>
         <p className="text-2xl mb-6 font-medium">
-          Encuentra las mejores habitaciones al mejor precio
+          Encontrá las mejores habitaciones al mejor precio
         </p>
         <motion.a
           whileHover={{ scale: 1.1 }}

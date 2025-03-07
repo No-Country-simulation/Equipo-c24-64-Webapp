@@ -20,7 +20,6 @@ const RoomListing: React.FC = () => {
     };
     return typeMap[type] || "";
   };
-
   const addReservation = (room: Room) => {
     const reservationData = {
       id: room.id,
@@ -38,7 +37,6 @@ const RoomListing: React.FC = () => {
     setReservation(reservationData);
     navigate("/confirmation");
   };
-
   return (
     <div className="p-4">
       <motion.div
@@ -90,16 +88,23 @@ const RoomListing: React.FC = () => {
                 </div>
                 {/* Por ahora el carrousel de imagenes no hace cambio de imagenes porque en la ddbb no hay ninguna cargada, estoamos mostrando una estatica por ahora */}
                 <div className="relative w-full max-w-lg mx-auto flex items-center ">
-                  <button className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md z-10">
-                    <ChevronLeft className="w-5 h-5 text-gray-700" />
+                  <button
+                    title="Imagen Siguiente"
+                    className="absolute cursor-pointer left-0 top-1/2 transform -translate-y-1/2 bg-[rgba(169,169,169,0.5)] p-0.5 rounded-full shadow-md z-10 flex flex-col justify-center items-center"
+                  >
+                    <ChevronLeft className="w-5 h-5 text-gray-200" />
                   </button>
                   <img
                     src="https://media-cdn.tripadvisor.com/media/photo-s/12/33/02/0b/habitacion-doble-twin.jpg"
                     alt="prueba"
                     className="rounded-lg w-full"
                   />
-                  <button className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md z-10">
-                    <ChevronRight className="w-5 h-5 text-gray-700" />
+                  <button
+                    title="Imagen Anterior"
+                    className="absolute cursor-pointer right-0 top-1/2 transform -translate-y-1/2 bg-[rgba(169,169,169,0.5)] p-0.5 rounded-full shadow-md z-10 flex flex-col justify-center items-center"
+                  >
+                    {" "}
+                    <ChevronRight className="w-5 h-5 text-gray-200" />
                   </button>
                 </div>
                 <div className="col-span-full text-center mt-6">
@@ -110,17 +115,11 @@ const RoomListing: React.FC = () => {
           </div>
         </>
       ) : (
-        <div className="text-center py-12">
-          <h2 className="text-2xl font-bold text-gray-700 mb-4">
+        <div className="text-center py-10">
+          <h2 className="text-2xl font-bold text-gray-700">
             No hay habitaciones disponibles
           </h2>
           <p className="text-gray-500 max-w-md mx-auto">
-            {roomType
-              ? `No se encontraron habitaciones de tipo ${getRoomTypeName(
-                  roomType
-                )}.`
-              : "No se encontraron habitaciones disponibles en este momento."}
-            <br />
             Por favor, intenta con diferentes criterios de búsqueda.
           </p>
         </div>

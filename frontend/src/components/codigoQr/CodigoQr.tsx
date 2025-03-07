@@ -29,12 +29,6 @@ const CodigoQr: React.FC<CodigoQr> = () => {
       return Math.random().toString(36).substr(2, 6).toUpperCase();
     };
     setDiscountCode(generateDiscountCode());
-
-    const interval = setInterval(() => {
-      setDaysLeft((prev) => (prev > 1 ? prev - 1 : 7));
-    }, 86400000);
-
-    return () => clearInterval(interval);
   }, []);
 
   return (

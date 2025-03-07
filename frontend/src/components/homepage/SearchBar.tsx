@@ -217,7 +217,7 @@ const SearchBar: React.FC = () => {
           <button
             disabled={isSubmitting}
             type="submit"
-            className={`w-full mt-4 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 ${
+            className={`w-full mt-4 bg-blue-600 cursor-pointer text-white py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 ${
               isSubmitting ? "cursor-wait" : ""
             }`}
           >

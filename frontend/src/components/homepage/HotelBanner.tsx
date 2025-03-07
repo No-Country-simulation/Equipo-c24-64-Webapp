@@ -78,7 +78,7 @@ function HotelBanner() {
                 Nuestras mejores comodidades
               </h1>
               <p className="text-slate-400 text-lg mb-8">
-                Reserva hoy, disfrutá mañana con nuestra experiencia premium
+                Reservá hoy, disfrutá mañana con nuestra experiencia premium
               </p>
             </div>
 
