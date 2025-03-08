@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import fetchRegister from "@/services/fetchRegister";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
-import { BackgroundBeams } from "@/styles/bgLogin/BackgroundBeams";
+import { BackgroundBeams } from "@/assets/styles/bgLogin/BackgroundBeams";
 
 interface IFormInputs {
   name: string;

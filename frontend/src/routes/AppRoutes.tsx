@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
@@ -10,7 +10,8 @@ import Contacto from "../pages/Contacto.js";
 import Descuento from "@/pages/Descuento.jsx";
 import Spa from "@/pages/Spa";
 import Confirmation from "@/pages/Confirmation";
-
+import Error from "@/pages/Error";
+// import UserProfile from "@/pages/UserProfile";
 const AppRoutes = () => {
   const location = useLocation();
   useEffect(() => {
@@ -26,6 +27,10 @@ const AppRoutes = () => {
       <Route path="/contacto" element={<Contacto />} />
       <Route path="/spa" element={<Spa />} />
       <Route path="/confirmation" element={<Confirmation />} />
+      {/* <Route path="/userProfile" element={<UserProfile />} /> */}
+      <Route path="/error" element={<Error />} />
+      <Route path="*" element={<Navigate to="/error" replace />} />
+
       <Route
         path="/descuento-masajes-30/:codigoDescuento"
         element={<Descuento />}

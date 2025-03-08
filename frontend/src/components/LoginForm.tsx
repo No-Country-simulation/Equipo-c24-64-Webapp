@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { BackgroundBeams } from "@/styles/bgLogin/BackgroundBeams";
+import { BackgroundBeams } from "@/assets/styles/bgLogin/BackgroundBeams";
 import fetchLogin from "@/services/fetchLogin";
 import toast from "react-hot-toast";
 

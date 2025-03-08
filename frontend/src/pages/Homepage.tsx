@@ -7,15 +7,10 @@ import RoomListing from "@/components/rooms/RoomsListing";
 import FAQ from "../components/homepage/FAQ";
 import Weather from "../components/Weather";
 import HotelCard from "../components/homepage/HotelCard";
-import hotels from "../data/hotel";
 import HotelBanner from "../components/homepage/HotelBanner";
-import { motion } from "framer-motion";
-import useScrollAnimation from "@/hooks/useInView";
 import SpaSection from "@/components/spaSection/SpaSection";
 
 const Home: React.FC = () => {
-  const { ref, inView } = useScrollAnimation();
-  const hasHotels = Array.isArray(hotels) && hotels.length > 0;
   return (
     <div className="bg-white text-black min-h-screen ">
       <Header />
@@ -42,12 +37,6 @@ const Home: React.FC = () => {
       {/* Sección de Ofertas de Hoteles */}
       <section className="py-12" id="ofertas">
         <HotelCard />
-        <div>
-          {/*<audio controls>
-            <source src="ruta-de-tu-musica.mp3" type="audio/mp3" />
-            Tu navegador no soporta la etiqueta de audio.
-          </audio>*/}
-        </div>
       </section>
       <Footer />
     </div>
