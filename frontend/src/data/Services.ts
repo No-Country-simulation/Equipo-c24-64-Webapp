@@ -13,22 +13,22 @@ export interface ServiceCard {
     {
       title: "Comedor",
       image: "https://i.postimg.cc/MKmJrN1r/close-up-shiny-glassware-standing-dinner-plate.jpg",
-      link: "/dining",
+      link: "#",
     },
     {
       title: "Sala de reuniones",
       image: "https://i.postimg.cc/8PSV4Nf6/business-concept-with-copy-space-office-desk-table-with-pen-focus-analysis-chart-computer-notebook-c.jpg",
-      link: "/conferences",
+      link: "#",
     },
     {
       title: "Instalaciones",
       image: "https://i.postimg.cc/Rhcxmbyh/gym-5364404-640.jpg",
-      link: "/facilities",
+      link: "#",
     },
     {
       title: "Paquete de boda",
       image: "https://i.postimg.cc/sxFCtRnb/rings-877934-640.jpg",
-      link: "/wedding",
+      link: "#",
     },
   ];
   
