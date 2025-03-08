@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 interface INewsletterForm {
   email: string;
 }
+
 function Footer() {
   const {
     register,
@@ -16,18 +17,25 @@ function Footer() {
 
   const onSubmit = async (data: INewsletterForm) => {
     try {
-      const response = await fetch("#", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(data.email),
-      });
-      console.log(response);
+      // Configuración para web3forms
+      const formData = new FormData();
+      formData.append("email", data.email);
+      formData.append("access_key", "8563bba6-aa5b-4520-b8d7-bebaaf8b13ae"); 
+      formData.append("subject", "Nueva suscripción a newsletter");
+      formData.append("from_name", "Luxe Haven Newsletter");
 
-      if (response.ok) {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
         toast.success("¡Te has suscrito con éxito!");
         reset();
+      } else {
+        toast.error("Hubo un problema al procesar tu solicitud.");
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -35,10 +43,11 @@ function Footer() {
       }
     }
   };
+
   return (
-    <div className=" bg-gray-100">
+    <div className="bg-gray-100">
       <footer className="bg-gray-900 text-gray-300">
-        <div className="bg-blue-700 ">
+        <div className="bg-blue-700">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-white py-8">
               <div className="flex flex-col md:flex-row items-center justify-between gap-6">

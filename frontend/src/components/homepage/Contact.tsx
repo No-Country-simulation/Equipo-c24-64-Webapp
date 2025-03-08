@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -21,17 +22,63 @@ const schema = yup.object().shape({
     .required("El mensaje es requerido"),
 });
 
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
 const Contact: React.FC = () => {
+  const [submitStatus, setSubmitStatus] = useState<string>(""); // "success", "error", or ""
+  const [submitMessage, setSubmitMessage] = useState<string>("");
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+    reset
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
-
-  const onSubmit = (data: any) => {
-    console.log("Mensaje enviado", data);
+  
+  const onSubmit = async (data: FormData) => {
+    setSubmitMessage("Enviando...");
+    setSubmitStatus("");
+    
+    // Crear FormData para web3forms
+    const formData = new FormData();
+    formData.append("access_key", "8563bba6-aa5b-4520-b8d7-bebaaf8b13ae");
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("message", data.message);
+    
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      
+      const responseData = await response.json();
+      
+      if (responseData.success) {
+        setSubmitMessage("¡Mensaje enviado con éxito!");
+        setSubmitStatus("success");
+        reset(); // Limpiar el formulario
+        
+        // Redireccionar a la página principal después de 3 segundos
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 3000);
+      } else {
+        console.log("Error", responseData);
+        setSubmitMessage(responseData.message || "Ha ocurrido un error. Por favor, inténtelo de nuevo.");
+        setSubmitStatus("error");
+      }
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+      setSubmitMessage("Error de conexión. Por favor, inténtelo más tarde.");
+      setSubmitStatus("error");
+    }
   };
 
   return (
@@ -99,6 +146,46 @@ const Contact: React.FC = () => {
           Enviar Mensaje
         </button>
       </motion.form>
+      
+      {/* Tooltip para mostrar el resultado del envío */}
+      {submitMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className={`mt-4 p-3 rounded-md text-center ${
+            submitStatus === "success" 
+              ? "bg-green-100 text-green-800 border border-green-300" 
+              : submitStatus === "error"
+              ? "bg-red-100 text-red-800 border border-red-300"
+              : "bg-blue-100 text-blue-800 border border-blue-300"
+          }`}
+        >
+          {submitStatus === "success" && (
+            <div className="flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              <span>{submitMessage}</span>
+            </div>
+          )}
+          
+          {submitStatus === "error" && (
+            <div className="flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <span>{submitMessage}</span>
+            </div>
+          )}
+          
+          {!submitStatus && <span>{submitMessage}</span>}
+          
+          {submitStatus === "success" && (
+            <p className="text-sm mt-2">Redirigiendo a la página principal...</p>
+          )}
+        </motion.div>
+      )}
     </section>
   );
 };
