@@ -162,7 +162,7 @@ const HotelOffers = () => {
         
         <div className="flex flex-wrap gap-6 justify-center">
           {hasHotels ? (
-            hotelsWithDeals.map((hotel, index) => (
+            hotelsWithDeals.map((hotel, index ) => (
               <motion.a
                 href={hotel.link}
                 key={hotel.id}
