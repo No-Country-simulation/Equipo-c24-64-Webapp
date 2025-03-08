@@ -41,37 +41,12 @@ const Home: React.FC = () => {
       <FAQ />
       {/* Sección de Ofertas de Hoteles */}
       <section className="py-12" id="ofertas">
-        <h2 className="text-2xl font-bold text-center mb-6">
-          Ofertas de hoteles imperdibles
-        </h2>
-        <div className="flex flex-wrap gap-6 justify-center">
-          {hasHotels ? (
-            hotels.map((hotel) => (
-              <motion.a
-                ref={ref}
-                initial={{ opacity: 0, y: 100 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 1 }}
-                href={hotel.link}
-                key={hotel.id}
-              >
-                <HotelCard
-                  image={hotel.image}
-                  title={hotel.title}
-                  location={hotel.location}
-                  price={hotel.price}
-                />
-              </motion.a>
-            ))
-          ) : (
-            <p>No hay ofertas disponibles en este momento.</p>
-          )}
-        </div>
+        <HotelCard />
         <div>
-          <audio controls>
+          {/*<audio controls>
             <source src="ruta-de-tu-musica.mp3" type="audio/mp3" />
             Tu navegador no soporta la etiqueta de audio.
-          </audio>
+          </audio>*/}
         </div>
       </section>
       <Footer />
