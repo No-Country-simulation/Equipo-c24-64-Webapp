@@ -1,8 +1,8 @@
 package gestionDeReservas.factory.auth;
 
+import gestionDeReservas.enums.Role;
 import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
 import gestionDeReservas.model.entity.User;
-import gestionDeReservas.model.enums.Role;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

@@ -1,11 +1,11 @@
 package gestionDeReservas.services.implementation;
 
+import gestionDeReservas.exception.BadRequestException;
 import gestionDeReservas.model.dto.auth.AuthResponseDTO;
 import gestionDeReservas.model.dto.auth.LoginRequestDTO;
 import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
 import gestionDeReservas.model.entity.User;
 import gestionDeReservas.config.security.jwt.JwtService;
-import gestionDeReservas.exception.LoginException;
 import gestionDeReservas.exception.RegisterException;
 import gestionDeReservas.factory.auth.AuthResponseDTOFactory;
 import gestionDeReservas.factory.auth.UserFactory;
@@ -64,6 +64,6 @@ public class AuthImplService implements AuthService {
 
     private User findUser(LoginRequestDTO loginRequestDTO) {
         return userRepository.findByUsernameOrEmail(loginRequestDTO.identifier())
-                .orElseThrow(() -> new LoginException("user Not exists"));
+                .orElseThrow(() -> new BadRequestException("user Not exists"));
     }
 }

@@ -1,6 +1,5 @@
 package gestionDeReservas.services.implementation;
 
-import gestionDeReservas.exception.DuplicateVisitorException;
 import gestionDeReservas.model.dto.visitor.VisitorRequestDTO;
 import gestionDeReservas.model.entity.Visitor;
 import gestionDeReservas.repository.IVisitorRepository;
@@ -18,17 +17,17 @@ public class VisitorImplService implements VisitorService {
 
     @Override
     public void createVisitor(VisitorRequestDTO visitorRequestDTO) {
-        if (visitorRepository.existsByEmail(visitorRequestDTO.email())) {
-            throw new DuplicateVisitorException("Email Already Registered");
-        }
-        Visitor visitor = Visitor.builder()
-                .name(visitorRequestDTO.name())
-                .email(visitorRequestDTO.email())
-                .dni(visitorRequestDTO.dni())
-                .phoneNumber(visitorRequestDTO.phoneNumber())
-                .lastname(visitorRequestDTO.lastname())
-                .build();
+        if (!visitorRepository.existsByEmail(visitorRequestDTO.email())) {
+            Visitor visitor = Visitor.builder()
+                    .name(visitorRequestDTO.name())
+                    .email(visitorRequestDTO.email())
+                    .dni(visitorRequestDTO.dni())
+                    .phoneNumber(visitorRequestDTO.phoneNumber())
+                    .lastname(visitorRequestDTO.lastname())
+                    .build();
 
-        visitorRepository.save(visitor);
+            visitorRepository.save(visitor);
+        }
+
     }
 }

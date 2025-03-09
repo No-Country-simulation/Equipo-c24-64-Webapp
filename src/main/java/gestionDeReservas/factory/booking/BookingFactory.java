@@ -1,6 +1,6 @@
 package gestionDeReservas.factory.booking;
 
-import gestionDeReservas.exception.NotRoomFoundException;
+import gestionDeReservas.exception.NotFoundException;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
 import gestionDeReservas.model.entity.*;
 import gestionDeReservas.repository.IRoomTypeRepository;
@@ -23,7 +23,7 @@ public class BookingFactory {
 
     public Booking buildBooking(BookingRequestDTO bookingRequestDTO, User user, List<Room> rooms) {
         RoomType roomType = roomTypeRepository.findById(bookingRequestDTO.idRoomType())
-                .orElseThrow(() -> new NotRoomFoundException("typeRoom not founded"));
+                .orElseThrow(() -> new NotFoundException("typeRoom not founded"));
 
         Long stayDuration = calculateHotelStayDuration(bookingRequestDTO.checkIn(), bookingRequestDTO.checkOut());
         Double bookingPrice = roomType.getPrice() * stayDuration * rooms.size();
@@ -44,7 +44,7 @@ public class BookingFactory {
 
     public Booking buildVisitorBooking(BookingRequestDTO bookingRequestDTO, Visitor visitor, List<Room> rooms) {
         RoomType roomType = roomTypeRepository.findById(bookingRequestDTO.idRoomType())
-                .orElseThrow(() -> new NotRoomFoundException("typeRoom not founded"));
+                .orElseThrow(() -> new NotFoundException("typeRoom not founded"));
 
         Long stayDuration = calculateHotelStayDuration(bookingRequestDTO.checkIn(), bookingRequestDTO.checkOut());
         Double bookingPrice = roomType.getPrice() * stayDuration * rooms.size();

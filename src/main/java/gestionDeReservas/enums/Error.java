@@ -1,0 +1,10 @@
+package gestionDeReservas.enums;
+
+public enum Error {
+    INTERNAL_SERVER_ERROR,
+    REGISTER_EXCEPTION,
+    BAD_REQUEST_EXCEPTION,
+    NOT_FOUND_EXCEPTION,
+    DATE_RANGE_EXCEPTION,
+    BOOKING_EXCEPTION
+}

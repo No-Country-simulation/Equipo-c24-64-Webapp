@@ -1,5 +1,6 @@
 package gestionDeReservas.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -46,12 +47,15 @@ public class Booking {
     @Column(name = "people_quantity")
     Integer peopleQuantity;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @Column(name = "booking_date")
     LocalDate bookingDate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @Column(name = "check_in")
     LocalDate checkIn;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @Column(name = "check_out")
     LocalDate checkOut;
 

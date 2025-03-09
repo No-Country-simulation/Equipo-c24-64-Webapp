@@ -1,5 +1,6 @@
 package gestionDeReservas.exception;
 
+import gestionDeReservas.enums.Error;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -16,62 +17,37 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ApiError> handlerException(Exception e){
-        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.SERVER_ERROR, 500);
+        ApiError error = ErrorFactory.buildError(Error.INTERNAL_SERVER_ERROR.toString(), e.getMessage(), 500);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
 
     @ExceptionHandler(RegisterException.class)
     protected ResponseEntity<ApiError> handleRegisterException(RegisterException e){
-        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.USER_EXISTS, 400);
+        ApiError error = ErrorFactory.buildError(Error.REGISTER_EXCEPTION.toString(),e.getMessage(), 400);
         return ResponseEntity.status(error.getStatus()).body(error);
-    }
-
-    @ExceptionHandler(LoginException.class)
-    protected ResponseEntity<ApiError> handlerLoginException(LoginException e) {
-        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.LOGIN_ERROR, 400);
-        return ResponseEntity.status(error.getStatus()).body(error);
-
     }
 
     @ExceptionHandler(BookingException.class)
-    protected ResponseEntity<ApiError> handlerBadRequestException(BookingException e) {
-        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.RESERVATION_FAILED, 400);
+    protected ResponseEntity<ApiError> handlerBookingException(BookingException e) {
+        ApiError error = ErrorFactory.buildError(Error.BOOKING_EXCEPTION.toString(), e.getMessage(), 400);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
 
     @ExceptionHandler(BadRequestException.class)
     protected ResponseEntity<ApiError> handlerBadRequestException(BadRequestException e) {
-        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.BAD_REQUEST, 400);
+        ApiError error = ErrorFactory.buildError(Error.BAD_REQUEST_EXCEPTION.toString(), e.getMessage(), 400);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    protected ResponseEntity<ApiError> handlerUserNotFoundExceptionException(UserNotFoundException e){
-        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.USER_NOT_FOUND, 404);
-        return ResponseEntity.status(error.getStatus()).body(error);
-    }
-
-    @ExceptionHandler(NotRoomFoundException.class)
-    protected ResponseEntity<?> NotRoomFoundException(NotRoomFoundException e){
-        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.ROOM_NOT_FOUND, 404);
-        return ResponseEntity.status(error.getStatus()).body(error);
-    }
-
-    @ExceptionHandler(RoomTypeNotFoundException.class)
-    protected ResponseEntity<?> RoomTypeNotFoundException(RoomTypeNotFoundException e){
-        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.ROOM_NOT_FOUND, 404);
+    @ExceptionHandler(NotFoundException.class)
+    protected ResponseEntity<ApiError> handlerNotFoundException(NotFoundException e){
+        ApiError error = ErrorFactory.buildError(Error.NOT_FOUND_EXCEPTION.toString(), e.getMessage(), 404);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
 
     @ExceptionHandler(DateRangeException.class)
-    protected ResponseEntity<?> RoomTypeNotFoundException(DateRangeException e){
-        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.DATE_RANGE_EXCEPTION, 400);
+    protected ResponseEntity<?> handleDateRangeException(DateRangeException e){
+        ApiError error = ErrorFactory.buildError(Error.DATE_RANGE_EXCEPTION.toString(), e.getMessage(), 400);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
-    @ExceptionHandler(DuplicateVisitorException.class)
-    protected ResponseEntity<?> DuplicatedEmailException(DuplicateVisitorException e){
-        ApiError error = ErrorFactory.buildError(e.getClass().toString(), ErrorFactory.DUPLICATE_EMAIL, 400);
-        return ResponseEntity.status(error.getStatus()).body(error);
-    }
-
 }

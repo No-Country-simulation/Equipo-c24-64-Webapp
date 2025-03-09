@@ -1,5 +1,6 @@
 package gestionDeReservas.controller;
 
+import gestionDeReservas.services.Interface.RoomTypeServiceUI;
 import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import gestionDeReservas.model.dto.TypeRoomDTO.CreateTypeRoomDTO;
 import gestionDeReservas.model.dto.TypeRoomDTO.EditRoomTypeDTO;
 import gestionDeReservas.model.dto.TypeRoomDTO.RoomTypeGetDTO;
-import gestionDeReservas.services.Interface.TypeRoomServiceUI;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/typeRoom")
 public class RoomTypeController {
     @Autowired
-    private TypeRoomServiceUI roomService;
+    private RoomTypeServiceUI roomService;
 
     @GetMapping("")
     public ResponseEntity<?> getAll() {

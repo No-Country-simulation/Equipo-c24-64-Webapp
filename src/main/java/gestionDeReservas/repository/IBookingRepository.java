@@ -18,6 +18,9 @@ public interface IBookingRepository extends JpaRepository<Booking,Integer> {
                                          @Param("checkIn") LocalDate checkIn,
                                          @Param("checkOut") LocalDate checkOut);
 
-    @Query("SELECT b FROM Booking b WHERE b.user.email = :email OR b.visitor.email = :email")
+    @Query("SELECT b FROM Booking b " +
+            "LEFT JOIN b.user u " +
+            "LEFT JOIN b.visitor v " +
+            "WHERE u.email = :email OR v.email = :email")
     List<Booking> findBookingsFromUser(@Param("email") String email);
 }

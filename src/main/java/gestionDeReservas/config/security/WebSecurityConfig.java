@@ -2,7 +2,7 @@ package gestionDeReservas.config.security;
 
 import gestionDeReservas.config.security.jwt.JwtAuthenticationFilter;
 
-import gestionDeReservas.model.enums.Role;
+import gestionDeReservas.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,6 +63,7 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/saludo/funciona").permitAll()
 
                 .requestMatchers(HttpMethod.GET, "/rooms").permitAll()
+                .requestMatchers(HttpMethod.GET, "/rooms/{id}").permitAll()
                 .requestMatchers(HttpMethod.POST, "/rooms").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/rooms/**").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/rooms").permitAll()
@@ -79,7 +80,7 @@ public class WebSecurityConfig {
 
 
     private void configureCustomerEndPoints(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authRequest) {
-        authRequest.requestMatchers(HttpMethod.GET, "/saludo/hola-cliente").hasRole(CUSTOMER)
+        authRequest
                 .requestMatchers(HttpMethod.POST,"/booking").permitAll()
                 .requestMatchers(HttpMethod.GET,"/booking/enabled-rooms").permitAll()
                 .requestMatchers(HttpMethod.GET,"/booking/user").hasRole(CUSTOMER)

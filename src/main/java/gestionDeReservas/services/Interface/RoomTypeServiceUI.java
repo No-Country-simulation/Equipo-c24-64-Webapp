@@ -10,7 +10,7 @@ import gestionDeReservas.model.dto.TypeRoomDTO.EditRoomTypeDTO;
 import gestionDeReservas.model.dto.TypeRoomDTO.RoomTypeGetDTO;
 import gestionDeReservas.model.entity.RoomType;
 
-public interface TypeRoomServiceUI {
+public interface RoomTypeServiceUI {
 
     RoomTypeGetDTO createTypeRoom(CreateTypeRoomDTO roomTOCreate,List<MultipartFile> files ) throws Exception;
     void deleteTypeRoom(Integer id) throws Exception;

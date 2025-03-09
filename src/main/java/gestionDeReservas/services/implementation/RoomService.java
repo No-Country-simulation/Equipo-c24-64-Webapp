@@ -2,6 +2,7 @@ package gestionDeReservas.services.implementation;
 
 import java.util.List;
 
+import gestionDeReservas.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,6 @@ import gestionDeReservas.model.dto.RoomDTO.RoomCreateRequestDTO;
 import gestionDeReservas.model.dto.RoomDTO.RoomEditRequestDTO;
 import gestionDeReservas.model.dto.RoomDTO.RoomGetDTO;
 import gestionDeReservas.model.entity.Room;
-import gestionDeReservas.exception.NotRoomFoundException;
 import gestionDeReservas.factory.RoomFactory;
 import gestionDeReservas.mapper.RoomMapper;
 import gestionDeReservas.repository.IRoomRepository;
@@ -39,10 +39,7 @@ public class RoomService implements RoomServiceUI {
 
     @Override
     public RoomGetDTO getRoomById(int id) throws Exception{
-        Room room = IRoomRepository
-        .findById(id)
-        .orElseThrow(() -> new NotRoomFoundException("room not found with id" + id)) ;
-
+        Room room = getRoom(id);
         return roomMapper.toGetDTO(room);
     }
 
@@ -55,9 +52,7 @@ public class RoomService implements RoomServiceUI {
 
     @Override
     public RoomGetDTO editRoom(RoomEditRequestDTO roomEditRequestDTO) throws Exception {
-        Room room = IRoomRepository
-        .findById(roomEditRequestDTO.id())
-        .orElseThrow(() -> new NotRoomFoundException("room not found with id" + roomEditRequestDTO.id())) ;
+        Room room = getRoom(roomEditRequestDTO.id());
         
         room.setName(roomEditRequestDTO.name());
         room.setDescription(roomEditRequestDTO.description());
@@ -65,7 +60,7 @@ public class RoomService implements RoomServiceUI {
         if (roomEditRequestDTO.typeRoomID() != null) {
             room.setRoomType(roomFactory
             .getTypeRoomService()
-            .findById(roomEditRequestDTO.typeRoomID()));
+            .findRoomTypeById(roomEditRequestDTO.typeRoomID()));
         }
         return roomMapper.toGetDTO(IRoomRepository.save(room));
     }
@@ -75,7 +70,12 @@ public class RoomService implements RoomServiceUI {
     public void deleteRoom(Integer id) throws Exception {
         IRoomRepository.delete(IRoomRepository
         .findById(id)
-        .orElseThrow(() -> new NotRoomFoundException("room not found with id" + id)));
+        .orElseThrow(() -> new NotFoundException("room not found with id" + id)));
     }
 
+    private Room getRoom(Integer roomId){
+        return  IRoomRepository
+                .findById(roomId)
+                .orElseThrow(() -> new NotFoundException("room not found with id" + roomId)) ;
+    }
 }
