@@ -3,10 +3,12 @@ package gestionDeReservas.services.implementation;
 import gestionDeReservas.exception.*;
 import gestionDeReservas.factory.booking.BookingFactory;
 import gestionDeReservas.factory.booking.BookingMailFactory;
+import gestionDeReservas.mapper.BookingMapper;
 import gestionDeReservas.mapper.RoomMapper;
 import gestionDeReservas.model.dto.RoomDTO.RoomGetDTO;
 import gestionDeReservas.model.dto.booking.BookingMailDTO;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
+import gestionDeReservas.model.dto.booking.BookingResponseDTO;
 import gestionDeReservas.model.entity.*;
 import gestionDeReservas.repository.IBookingRepository;
 import gestionDeReservas.repository.IRoomTypeRepository;
@@ -33,13 +35,14 @@ public class BookingImplService implements BookingService {
     BookingMailService bookingMailService;
     BookingMailFactory bookingMailFactory;
     BookingFactory bookingFactory;
+    BookingMapper bookingMapper;
     RoomMapper roomMapper;
 
     @Override
     public void bookingRooms(BookingRequestDTO bookingRequestDTO) {
         String email = bookingRequestDTO.email();
         Visitor visitor = visitorRepository.findByEmail(email).orElse(null);
-        UserEntity user = userRepository.findByEmail(email).orElse(null);
+        User user = userRepository.findByEmail(email).orElse(null);
 
         validateGuest(visitor,user);
 
@@ -74,14 +77,19 @@ public class BookingImplService implements BookingService {
         return roomMapper.RoomGetAllDTO(getAvailableRooms(roomTypeId,checkIn,checkOut));
     }
 
-    private Booking getBooking(BookingRequestDTO bookingRequestDTO,UserEntity user, Visitor visitor, List<Room> bookingRooms) {
+    @Override
+    public List<BookingResponseDTO> getBookingsFromuser(String email) {
+        return  bookingMapper.BookingGetAllDTO(bookingRepository.findBookingsFromUser(email));
+    }
+
+    private Booking getBooking(BookingRequestDTO bookingRequestDTO, User user, Visitor visitor, List<Room> bookingRooms) {
         if(user == null)
             return bookingFactory.buildVisitorBooking(bookingRequestDTO,visitor,bookingRooms);
 
         return bookingFactory.buildBooking(bookingRequestDTO, user, bookingRooms);
     }
 
-    private void validateGuest(Visitor visitor, UserEntity user) {
+    private void validateGuest(Visitor visitor, User user) {
         if(visitor == null && user == null)
             throw new NotFoundException("guest not found");
     }

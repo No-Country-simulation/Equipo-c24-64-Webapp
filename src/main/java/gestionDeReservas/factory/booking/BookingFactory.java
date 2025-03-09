@@ -21,7 +21,7 @@ public class BookingFactory {
     IRoomTypeRepository roomTypeRepository;
     Double IVA = 0.21;
 
-    public Booking buildBooking(BookingRequestDTO bookingRequestDTO, UserEntity user, List<Room> rooms) {
+    public Booking buildBooking(BookingRequestDTO bookingRequestDTO, User user, List<Room> rooms) {
         RoomType roomType = roomTypeRepository.findById(bookingRequestDTO.idRoomType())
                 .orElseThrow(() -> new NotRoomFoundException("typeRoom not founded"));
 
@@ -30,13 +30,14 @@ public class BookingFactory {
         Double bookingPriceWithIVA = bookingPrice + (bookingPrice*IVA);
 
         return Booking.builder()
+                .bookingDate(LocalDate.now())
                 .checkIn(bookingRequestDTO.checkIn())
                 .checkOut(bookingRequestDTO.checkOut())
                 .totalPrice(bookingPrice)
                 .totalPriceWithIVA(bookingPriceWithIVA)
                 .peopleQuantity(bookingRequestDTO.peopleQuantity())
                 .rooms(new HashSet<>(rooms))
-                .userEntity(user)
+                .user(user)
                 .specialRequests(bookingRequestDTO.specialRequests())
                 .build();
     }
@@ -50,6 +51,7 @@ public class BookingFactory {
         Double bookingPriceWithIVA = bookingPrice + (bookingPrice*IVA);
 
         return Booking.builder()
+                .bookingDate(LocalDate.now())
                 .checkIn(bookingRequestDTO.checkIn())
                 .checkOut(bookingRequestDTO.checkOut())
                 .totalPrice(bookingPrice)

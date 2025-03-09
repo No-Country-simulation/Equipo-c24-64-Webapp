@@ -3,11 +3,14 @@ package gestionDeReservas.model.dto.booking;
 import lombok.Builder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Builder
 public record BookingResponseDTO(
-        Double BookingPrice,
+        LocalDate bookingDate,
         LocalDate checkIn,
-        LocalDate checkOut
-
-){}
+        LocalDate checkOut,
+        Double priceWithIva,
+        Integer roomsQuantity,
+        List<Integer> roomsNumber) {
+}

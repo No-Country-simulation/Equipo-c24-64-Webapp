@@ -82,6 +82,7 @@ public class WebSecurityConfig {
         authRequest.requestMatchers(HttpMethod.GET, "/saludo/hola-cliente").hasRole(CUSTOMER)
                 .requestMatchers(HttpMethod.POST,"/booking").permitAll()
                 .requestMatchers(HttpMethod.GET,"/booking/enabled-rooms").permitAll()
+                .requestMatchers(HttpMethod.GET,"/booking/user").hasRole(CUSTOMER)
                 .requestMatchers(HttpMethod.POST,"/visitor").permitAll();
     }
 

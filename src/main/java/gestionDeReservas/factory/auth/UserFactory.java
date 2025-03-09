@@ -1,7 +1,7 @@
 package gestionDeReservas.factory.auth;
 
 import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
-import gestionDeReservas.model.entity.UserEntity;
+import gestionDeReservas.model.entity.User;
 import gestionDeReservas.model.enums.Role;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 public class UserFactory {
     PasswordEncoder passwordEncoder;
 
-    public UserEntity buildUser(RegisterRequestDTO registerRequestDTO){
-        return UserEntity
+    public User buildUser(RegisterRequestDTO registerRequestDTO){
+        return User
                 .builder()
                 .username(registerRequestDTO.username())
                 .email(registerRequestDTO.email())

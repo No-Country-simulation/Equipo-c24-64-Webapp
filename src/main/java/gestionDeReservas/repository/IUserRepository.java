@@ -1,6 +1,6 @@
 package gestionDeReservas.repository;
 
-import gestionDeReservas.model.entity.UserEntity;
+import gestionDeReservas.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface IUserRepository extends JpaRepository<UserEntity,Integer> {
-    @Query("SELECT u FROM UserEntity u WHERE u.username = :identifier" +
+public interface IUserRepository extends JpaRepository<User,Integer> {
+    @Query("SELECT u FROM User u WHERE u.username = :identifier" +
             " OR u.email = :identifier")
-    Optional<UserEntity> findByUsernameOrEmail(@Param("identifier") String identifier);
+    Optional<User> findByUsernameOrEmail(@Param("identifier") String identifier);
     Boolean existsByEmailOrUsername(String email, String username);
-    Optional<UserEntity> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

@@ -2,7 +2,7 @@ package gestionDeReservas.factory.booking;
 
 import gestionDeReservas.model.dto.booking.BookingMailDTO;
 import gestionDeReservas.model.entity.Booking;
-import gestionDeReservas.model.entity.UserEntity;
+import gestionDeReservas.model.entity.User;
 import gestionDeReservas.model.entity.Visitor;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,7 @@ public class BookingMailFactory {
 
     public BookingMailDTO buildBookingMail(Booking booking) {
         Visitor visitor = booking.getVisitor();
-        UserEntity user = booking.getUserEntity();
+        User user = booking.getUser();
         LocalDate currentDate = LocalDate.now();
 
         return  BookingMailDTO.builder()

@@ -22,7 +22,7 @@ import java.util.Set;
         @UniqueConstraint(columnNames = "email"),
         @UniqueConstraint(columnNames = "username")
 })
-public class UserEntity implements UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
@@ -30,7 +30,7 @@ public class UserEntity implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     Role role;
 
-    @OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     Set<Booking> bookings;
 
     String username;

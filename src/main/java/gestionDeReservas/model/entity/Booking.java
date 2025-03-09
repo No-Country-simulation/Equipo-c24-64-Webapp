@@ -23,7 +23,7 @@ public class Booking {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    UserEntity userEntity;
+    User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "visitor_id")
@@ -45,6 +45,9 @@ public class Booking {
 
     @Column(name = "people_quantity")
     Integer peopleQuantity;
+
+    @Column(name = "booking_date")
+    LocalDate bookingDate;
 
     @Column(name = "check_in")
     LocalDate checkIn;

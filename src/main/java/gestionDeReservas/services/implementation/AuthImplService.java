@@ -3,7 +3,7 @@ package gestionDeReservas.services.implementation;
 import gestionDeReservas.model.dto.auth.AuthResponseDTO;
 import gestionDeReservas.model.dto.auth.LoginRequestDTO;
 import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
-import gestionDeReservas.model.entity.UserEntity;
+import gestionDeReservas.model.entity.User;
 import gestionDeReservas.config.security.jwt.JwtService;
 import gestionDeReservas.exception.LoginException;
 import gestionDeReservas.exception.RegisterException;
@@ -34,7 +34,7 @@ public class AuthImplService implements AuthService {
                 new UsernamePasswordAuthenticationToken(loginRequestDTO.identifier(),
                         loginRequestDTO.password()));
 
-        UserEntity user = findUser(loginRequestDTO);
+        User user = findUser(loginRequestDTO);
 
         return authResponseFactory.buildResponseAuthDTO(user);
     }
@@ -43,7 +43,7 @@ public class AuthImplService implements AuthService {
     public AuthResponseDTO register(RegisterRequestDTO userToRegisterDTO) {
         validateRegistration(userToRegisterDTO);
 
-        UserEntity user = userFactory.buildUser(userToRegisterDTO);
+        User user = userFactory.buildUser(userToRegisterDTO);
 
         userRepository.save(user);
 
@@ -62,7 +62,7 @@ public class AuthImplService implements AuthService {
             throw new RegisterException("the user already exists");
     }
 
-    private UserEntity findUser(LoginRequestDTO loginRequestDTO) {
+    private User findUser(LoginRequestDTO loginRequestDTO) {
         return userRepository.findByUsernameOrEmail(loginRequestDTO.identifier())
                 .orElseThrow(() -> new LoginException("user Not exists"));
     }

@@ -1,7 +1,7 @@
 package gestionDeReservas.factory.auth;
 
 import gestionDeReservas.model.dto.auth.AuthResponseDTO;
-import gestionDeReservas.model.entity.UserEntity;
+import gestionDeReservas.model.entity.User;
 import gestionDeReservas.model.enums.Role;
 import gestionDeReservas.config.security.jwt.JwtService;
 import lombok.AccessLevel;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class AuthResponseDTOFactory {
     JwtService jwtService;
 
-    public AuthResponseDTO buildResponseAuthDTO(UserEntity user){
+    public AuthResponseDTO buildResponseAuthDTO(User user){
         return AuthResponseDTO
                 .builder()
                 .email(user.getEmail())

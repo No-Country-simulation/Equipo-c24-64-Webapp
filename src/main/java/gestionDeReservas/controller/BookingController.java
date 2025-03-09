@@ -2,8 +2,7 @@ package gestionDeReservas.controller;
 
 import gestionDeReservas.model.dto.RoomDTO.EnabledRoomsRequestDTO;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
-import gestionDeReservas.model.dto.booking.VisitorBookingRequestDTO;
-import gestionDeReservas.model.entity.UserEntity;
+import gestionDeReservas.model.entity.User;
 import gestionDeReservas.services.Interface.BookingService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +23,11 @@ public class BookingController {
     public ResponseEntity<?> saveBooking(@RequestBody BookingRequestDTO bookingRequestDTO){
         bookingService.bookingRooms(bookingRequestDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/user")
+    public  ResponseEntity<?> getBookingsFromUser(@AuthenticationPrincipal User user){
+        return ResponseEntity.ok(bookingService.getBookingsFromuser(user.getEmail()));
     }
 
     @GetMapping("/enabled-rooms")
