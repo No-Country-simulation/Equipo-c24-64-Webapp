@@ -80,7 +80,7 @@ public class WebSecurityConfig {
 
 
     private void configureCustomerEndPoints(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authRequest) {
-        authRequest.requestMatchers(HttpMethod.GET, "/saludo/hola-cliente").hasRole(CUSTOMER)
+        authRequest
                 .requestMatchers(HttpMethod.POST,"/booking").permitAll()
                 .requestMatchers(HttpMethod.GET,"/booking/enabled-rooms").permitAll()
                 .requestMatchers(HttpMethod.POST,"/visitor").permitAll();

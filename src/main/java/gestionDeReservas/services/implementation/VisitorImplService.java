@@ -1,6 +1,5 @@
 package gestionDeReservas.services.implementation;
 
-import gestionDeReservas.exception.VisitorEmailException;
 import gestionDeReservas.model.dto.visitor.VisitorRequestDTO;
 import gestionDeReservas.model.entity.Visitor;
 import gestionDeReservas.repository.IVisitorRepository;

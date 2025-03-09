@@ -21,11 +21,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 @Service
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class JwtService {
-     static final String JWT_SECRET_KEY = "fHjqZ9LwR3vC7nKy2tXsD4mW8bN6pVeAxJ5cGhUz1rM0dFBoOQlIuEeYmPiS";
-     final Map<String, Date> blacklist = new HashMap<>();
-     ScheduledExecutorService scheduler;
+     private static final String JWT_SECRET_KEY =System.getenv("JWT_SECRET_KEY");
+     private final Map<String, Date> blacklist = new HashMap<>();
 
     public String getToken(UserDetails user) {
         return getToken(new HashMap<>(), user);
@@ -103,7 +101,7 @@ public class JwtService {
 
     @PostConstruct
     public void scheduleTokenCleanup() {
-        scheduler = Executors.newScheduledThreadPool(1);
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this::cleanExpiredTokens, 0, 1, TimeUnit.DAYS);
     }
 }

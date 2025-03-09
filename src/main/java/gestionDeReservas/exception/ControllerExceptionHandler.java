@@ -40,7 +40,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    protected ResponseEntity<ApiError> handlerNotFoundExceptionException(NotFoundException e){
+    protected ResponseEntity<ApiError> handlerNotFoundException(NotFoundException e){
         ApiError error = ErrorFactory.buildError(Error.NOT_FOUND_EXCEPTION.toString(), e.getMessage(), 404);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
@@ -48,12 +48,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DateRangeException.class)
     protected ResponseEntity<?> handleDateRangeException(DateRangeException e){
         ApiError error = ErrorFactory.buildError(Error.DATE_RANGE_EXCEPTION.toString(), e.getMessage(), 400);
-        return ResponseEntity.status(error.getStatus()).body(error);
-    }
-
-    @ExceptionHandler(VisitorEmailException.class)
-    protected ResponseEntity<?> handleDuplicatedEmailException(VisitorEmailException e){
-        ApiError error = ErrorFactory.buildError(Error.VISITOR_EMAIL_EXCEPTION.toString(),e.getMessage(), 400);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
 }
