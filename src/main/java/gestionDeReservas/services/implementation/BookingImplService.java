@@ -67,11 +67,6 @@ public class BookingImplService implements BookingService {
         CreateBookingEmail(booking);
     }
 
-    private void CreateBookingEmail(Booking booking) {
-        BookingMailDTO bookingMail = bookingMailFactory.buildBookingMail(booking);
-        bookingMailService.sendBookingMail(bookingMail);
-    }
-
     @Override
     public List<RoomGetDTO> getAvailableRoomsDTO(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {
         return roomMapper.RoomGetAllDTO(getAvailableRooms(roomTypeId,checkIn,checkOut));
@@ -82,6 +77,11 @@ public class BookingImplService implements BookingService {
         return  bookingMapper.BookingGetAllDTO(bookingRepository.findBookingsFromUser(email));
     }
 
+    private void CreateBookingEmail(Booking booking) {
+        BookingMailDTO bookingMail = bookingMailFactory.buildBookingMail(booking);
+        bookingMailService.sendBookingMail(bookingMail);
+    }
+
     private Booking getBooking(BookingRequestDTO bookingRequestDTO, User user, Visitor visitor, List<Room> bookingRooms) {
         if(user == null)
             return bookingFactory.buildVisitorBooking(bookingRequestDTO,visitor,bookingRooms);
@@ -90,7 +90,7 @@ public class BookingImplService implements BookingService {
     }
 
     private void validateGuest(Visitor visitor, User user) {
-        if(visitor == null && user == null)
+        if (visitor == null && user == null)
             throw new NotFoundException("guest not found");
     }
 

@@ -63,14 +63,33 @@ public class AuthController {
     }
 
     @PutMapping("/edition")
-    public ResponseEntity<?> editUser(@AuthenticationPrincipal User user,
-                                      @RequestBody EditUserRequestDTO editUser){
+    @Operation(summary = "el usuario edita sus datos", description = "el usuario puede editar todos sus datos,menos los mails  y username" +
+            "en caso de que ya existan en la base de datos")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully Logout"),
+            @ApiResponse(responseCode = "403", description = "Invalid or missing token"),
+            @ApiResponse(responseCode = "400", description = "si editas email o username, con un nombre ya utilizado.")
+    })
+    public ResponseEntity<?> editUser(
+            @Parameter(description = "JWT token in 'Bearer {token}' format", required = true)
+            @RequestHeader("Authorization")
+            @AuthenticationPrincipal User user,
+            @RequestBody EditUserRequestDTO editUser
+    ){
         authService.edit(user.getEmail(),editUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/data")
-    public ResponseEntity<UserResponseDTO> getUserData(@AuthenticationPrincipal User user){
+    @Operation(summary = "get  data from user", description = "obtener datos del usuario logueado, como username, email,name,etc...")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "data obtenida exitosamente"),
+            @ApiResponse(responseCode = "403", description = "Invalid or missing token")
+    })
+    public ResponseEntity<UserResponseDTO> getUserData(
+            @Parameter(description = "JWT token in 'Bearer {token}' format", required = true)
+            @RequestHeader("Authorization")
+            @AuthenticationPrincipal User user){
         return ResponseEntity.ok(authService.getData(user));
     }
 }

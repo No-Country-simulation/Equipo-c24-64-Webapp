@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(
-                title = "API de ejemplo",
+                title = "API de Reservas de Habitaciones",
                 version = "1.0.0",
                 description = "Documentación de la API",
                 contact = @Contact(
-                        name = "Messi",
-                        email = "LionelMessi10@email.com"
+                        name = "Federico Pardo",
+                        email = "pardofede04@email.com"
                 ),
                 license = @License(name = "Licencia")
         )
