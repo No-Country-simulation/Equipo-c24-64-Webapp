@@ -13,7 +13,7 @@ public class BookingMapper {
                 .bookingDate(booking.getBookingDate())
                 .checkIn(booking.getCheckIn())
                 .checkOut(booking.getCheckOut())
-                .priceWithIva(booking.getTotalPriceWithIVA())
+                .totalPrice(booking.getTotalPriceWithIVA())
                 .roomsNumber(booking.getRoomNumbers())
                 .roomsQuantity(booking.getRoomNumbers().size())
                 .build();
