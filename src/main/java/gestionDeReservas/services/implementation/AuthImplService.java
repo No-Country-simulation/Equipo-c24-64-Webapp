@@ -1,9 +1,9 @@
 package gestionDeReservas.services.implementation;
 
 import gestionDeReservas.exception.BadRequestException;
-import gestionDeReservas.model.dto.auth.AuthResponseDTO;
-import gestionDeReservas.model.dto.auth.LoginRequestDTO;
-import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
+import gestionDeReservas.exception.NotFoundException;
+import gestionDeReservas.mapper.UserMapper;
+import gestionDeReservas.model.dto.auth.*;
 import gestionDeReservas.model.entity.User;
 import gestionDeReservas.config.security.jwt.JwtService;
 import gestionDeReservas.exception.RegisterException;
@@ -14,8 +14,10 @@ import gestionDeReservas.services.Interface.AuthService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,6 +29,8 @@ public class AuthImplService implements AuthService {
     AuthenticationManager authenticationManager;
     AuthResponseDTOFactory authResponseFactory;
     JwtService jwtService;
+    PasswordEncoder passwordEncoder;
+    UserMapper userMapper;
 
     @Override
     public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
@@ -54,6 +58,37 @@ public class AuthImplService implements AuthService {
     public void logout(String token) {
         String jwt = token.substring(7);
         jwtService.addToBlacklist(jwt);
+    }
+
+    @Override
+    public void edit(String email, EditUserRequestDTO editUser) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("user with email: "+email +" not founded"));
+
+        validateNewUsernameAndEmail(editUser);
+
+        user.setEmail(editUser.email() != null ? editUser.email() : user.getEmail());
+        user.setUsername(editUser.username() != null ? editUser.username() : user.getUsername());
+        user.setPassword(editUser.password() != null ? passwordEncoder.encode(editUser.password()) :
+                passwordEncoder.encode(user.getPassword()));
+        user.setName(editUser.name() != null ? editUser.name() : user.getName());
+        user.setLastname(editUser.lastname() != null ? editUser.lastname() : user.getLastname());
+        user.setAddress(editUser.address() != null ? editUser.address() : user.getAddress());
+        user.setPhoneNumber(editUser.phoneNumber() != null ? editUser.phoneNumber() : user.getPhoneNumber());
+        user.setDni(editUser.dni() != null ? editUser.dni() : user.getDni());
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public UserResponseDTO getData(User user) {
+        return userMapper.toGetDTO(user);
+    }
+
+    private void validateNewUsernameAndEmail(EditUserRequestDTO editUser) {
+        if(userRepository.existsByEmailOrUsername(editUser.email(), editUser.username())){
+            throw new BadRequestException("email or username already exists");
+        }
     }
 
     private void validateRegistration(RegisterRequestDTO userToRegisterDTO) {

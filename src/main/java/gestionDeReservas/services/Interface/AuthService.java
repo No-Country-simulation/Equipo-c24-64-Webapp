@@ -1,11 +1,13 @@
 package gestionDeReservas.services.Interface;
 
-import gestionDeReservas.model.dto.auth.AuthResponseDTO;
-import gestionDeReservas.model.dto.auth.LoginRequestDTO;
-import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
+import gestionDeReservas.model.dto.auth.*;
+import gestionDeReservas.model.entity.User;
+import org.springframework.http.ResponseEntity;
 
 public interface AuthService {
     AuthResponseDTO login (LoginRequestDTO loginRequestDTO);
     AuthResponseDTO register(RegisterRequestDTO registerRequestDTO);
-     void logout( String token);
+    void logout( String token);
+    void edit(String email, EditUserRequestDTO editUser);
+    UserResponseDTO getData(User user);
 }

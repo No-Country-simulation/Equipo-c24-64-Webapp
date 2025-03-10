@@ -84,6 +84,9 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST,"/booking").permitAll()
                 .requestMatchers(HttpMethod.GET,"/booking/enabled-rooms").permitAll()
                 .requestMatchers(HttpMethod.GET,"/booking/user").hasRole(CUSTOMER)
+                .requestMatchers(HttpMethod.PUT,"/auth/edition").hasRole(CUSTOMER)
+                .requestMatchers(HttpMethod.GET,"/auth/data").hasRole(CUSTOMER)
+
                 .requestMatchers(HttpMethod.POST,"/visitor").permitAll();
     }
 

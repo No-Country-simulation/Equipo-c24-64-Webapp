@@ -10,7 +10,7 @@ public record BookingResponseDTO(
         LocalDate bookingDate,
         LocalDate checkIn,
         LocalDate checkOut,
-        Double priceWithIva,
+        Double totalPrice,
         Integer roomsQuantity,
         List<Integer> roomsNumber) {
 }

@@ -1,7 +1,10 @@
 package gestionDeReservas.controller;
 
+import gestionDeReservas.model.dto.auth.EditUserRequestDTO;
 import gestionDeReservas.model.dto.auth.LoginRequestDTO;
 import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
+import gestionDeReservas.model.dto.auth.UserResponseDTO;
+import gestionDeReservas.model.entity.User;
 import gestionDeReservas.services.Interface.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -56,5 +60,17 @@ public class AuthController {
     ) {
         authService.logout(token);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/edition")
+    public ResponseEntity<?> editUser(@AuthenticationPrincipal User user,
+                                      @RequestBody EditUserRequestDTO editUser){
+        authService.edit(user.getEmail(),editUser);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/data")
+    public ResponseEntity<UserResponseDTO> getUserData(@AuthenticationPrincipal User user){
+        return ResponseEntity.ok(authService.getData(user));
     }
 }
