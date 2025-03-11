@@ -17,6 +17,7 @@ const SearchBar: React.FC = () => {
     checkOut,
     roomType,
     guests,
+
     setIsGuestsOpen,
     setCheckIn,
     setCheckOut,
@@ -32,12 +33,10 @@ const SearchBar: React.FC = () => {
 
   const onSubmit = async (data: any) => {
     const { roomType, checkIn, checkOut } = data;
-
     setRoomType(roomType);
     setCheckIn(checkIn);
     setCheckOut(checkOut);
-
-    await fetchRooms("rooms");
+    await fetchRooms("rooms", roomType);
   };
   return (
     <div className="max-w-6xl mx-auto px-4 mt-8 " id="searchBar">
