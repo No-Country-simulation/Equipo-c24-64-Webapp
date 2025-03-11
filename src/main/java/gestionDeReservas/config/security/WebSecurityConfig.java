@@ -60,8 +60,6 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST,"/auth/register").permitAll()
                 .requestMatchers(HttpMethod.GET, "/saludo/hola-todos").permitAll()
                 .requestMatchers(HttpMethod.GET, "/saludo/hola-fede").permitAll()
-                .requestMatchers(HttpMethod.GET, "/saludo/funciona").permitAll()
-
                 .requestMatchers(HttpMethod.GET, "/rooms").permitAll()
                 .requestMatchers(HttpMethod.GET, "/rooms/{id}").permitAll()
                 .requestMatchers(HttpMethod.POST, "/rooms").permitAll()
@@ -82,10 +80,9 @@ public class WebSecurityConfig {
     private void configureCustomerEndPoints(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authRequest) {
         authRequest
                 .requestMatchers(HttpMethod.POST,"/booking").permitAll()
-                .requestMatchers(HttpMethod.GET,"/booking/enabled-rooms").permitAll()
+                .requestMatchers(HttpMethod.GET,"/booking/available-rooms").permitAll()
                 .requestMatchers(HttpMethod.GET,"/booking/user").hasRole(CUSTOMER)
                 .requestMatchers(HttpMethod.PUT,"/auth/edition").hasRole(CUSTOMER)
-                .requestMatchers(HttpMethod.GET,"/auth/data").hasRole(CUSTOMER)
 
                 .requestMatchers(HttpMethod.POST,"/visitor").permitAll();
     }

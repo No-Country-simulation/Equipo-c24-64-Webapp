@@ -41,7 +41,6 @@ public class BookingController {
     })
     public  ResponseEntity<?> getBookingsFromUser(
             @Parameter(description = "JWT token in 'Bearer {token}' format", required = true)
-            @RequestHeader("Authorization")
             @AuthenticationPrincipal User user){
         return ResponseEntity.ok(bookingService.getBookingsFromuser(user.getEmail()));
     }

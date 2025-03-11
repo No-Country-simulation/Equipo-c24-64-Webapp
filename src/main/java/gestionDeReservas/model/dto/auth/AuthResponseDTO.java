@@ -9,5 +9,7 @@ public record AuthResponseDTO(
         String token,
         Role role,
         String name,
-        String lastname) {
+        String lastname,
+        String address,
+        String phoneNumber) {
 }

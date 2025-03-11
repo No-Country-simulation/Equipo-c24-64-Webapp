@@ -3,7 +3,6 @@ package gestionDeReservas.controller;
 import gestionDeReservas.model.dto.auth.EditUserRequestDTO;
 import gestionDeReservas.model.dto.auth.LoginRequestDTO;
 import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
-import gestionDeReservas.model.dto.auth.UserResponseDTO;
 import gestionDeReservas.model.entity.User;
 import gestionDeReservas.services.Interface.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -72,24 +71,10 @@ public class AuthController {
     })
     public ResponseEntity<?> editUser(
             @Parameter(description = "JWT token in 'Bearer {token}' format", required = true)
-            @RequestHeader("Authorization")
             @AuthenticationPrincipal User user,
             @RequestBody EditUserRequestDTO editUser
     ){
         authService.edit(user.getEmail(),editUser);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/data")
-    @Operation(summary = "get  data from user", description = "obtener datos del usuario logueado, como username, email,name,etc...")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "data obtenida exitosamente"),
-            @ApiResponse(responseCode = "403", description = "Invalid or missing token")
-    })
-    public ResponseEntity<UserResponseDTO> getUserData(
-            @Parameter(description = "JWT token in 'Bearer {token}' format", required = true)
-            @RequestHeader("Authorization")
-            @AuthenticationPrincipal User user){
-        return ResponseEntity.ok(authService.getData(user));
     }
 }

@@ -2,7 +2,6 @@ package gestionDeReservas.services.implementation;
 
 import gestionDeReservas.exception.BadRequestException;
 import gestionDeReservas.exception.NotFoundException;
-import gestionDeReservas.mapper.UserMapper;
 import gestionDeReservas.model.dto.auth.*;
 import gestionDeReservas.model.entity.User;
 import gestionDeReservas.config.security.jwt.JwtService;
@@ -14,7 +13,6 @@ import gestionDeReservas.services.Interface.AuthService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +28,6 @@ public class AuthImplService implements AuthService {
     AuthResponseDTOFactory authResponseFactory;
     JwtService jwtService;
     PasswordEncoder passwordEncoder;
-    UserMapper userMapper;
 
     @Override
     public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
@@ -78,11 +75,6 @@ public class AuthImplService implements AuthService {
         user.setDni(editUser.dni() != null ? editUser.dni() : user.getDni());
 
         userRepository.save(user);
-    }
-
-    @Override
-    public UserResponseDTO getData(User user) {
-        return userMapper.toGetDTO(user);
     }
 
     private void validateNewUsernameAndEmail(EditUserRequestDTO editUser) {

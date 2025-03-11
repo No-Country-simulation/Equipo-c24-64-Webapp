@@ -24,6 +24,8 @@ public class AuthResponseDTOFactory {
                 .role(Role.CUSTOMER)
                 .token(jwtService.getToken(user))
                 .username(user.getUsername())
+                .address(user.getAddress())
+                .phoneNumber(user.getPhoneNumber())
                 .build();
     }
 }
