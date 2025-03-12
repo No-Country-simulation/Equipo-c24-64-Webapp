@@ -76,7 +76,7 @@ public class RoomService implements RoomServiceUI {
     }
 
     @Override
-    @Scheduled(fixedRate = 30000) // cambiar tiempo
+    @Scheduled(cron = "0 0 8 * * *", zone = "America/Argentina/Buenos_Aires")
     public void checkStatusRooms() {
         List<Room> rooms = IRoomRepository.findAll();
         LocalDate currentDate = LocalDate.now();
