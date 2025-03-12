@@ -1,5 +1,6 @@
 package gestionDeReservas.model.entity;
 
+import gestionDeReservas.enums.RoomStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -20,6 +21,9 @@ public class Room {
     @Column(name = "room_id")
     Integer id;
 
+    @Enumerated(value = EnumType.STRING)
+    RoomStatus roomStatus;
+
     @Column(name = "room_number")
     Integer roomNumber;
 
@@ -38,5 +42,4 @@ public class Room {
 
     @ManyToMany(mappedBy = "rooms")
     Set<Booking> bookings;
-
 }

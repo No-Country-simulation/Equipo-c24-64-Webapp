@@ -1,9 +1,12 @@
 package gestionDeReservas.services.implementation;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import gestionDeReservas.enums.RoomStatus;
 import gestionDeReservas.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import gestionDeReservas.model.dto.RoomDTO.RoomCreateRequestDTO;
@@ -47,7 +50,6 @@ public class RoomService implements RoomServiceUI {
     public RoomGetDTO  addRoom(RoomCreateRequestDTO roomCreateRequestDTO) throws Exception {
         Room room = roomFactory.buildRoom(roomCreateRequestDTO);
         return roomMapper.toGetDTO(IRoomRepository.save(room));
-         
     }
 
     @Override
@@ -71,6 +73,28 @@ public class RoomService implements RoomServiceUI {
         IRoomRepository.delete(IRoomRepository
         .findById(id)
         .orElseThrow(() -> new NotFoundException("room not found with id" + id)));
+    }
+
+    @Override
+    @Scheduled(fixedRate = 30000) // cambiar tiempo
+    public void checkStatusRooms() {
+        List<Room> rooms = IRoomRepository.findAll();
+        LocalDate currentDate = LocalDate.now();
+
+        rooms.forEach(room -> {
+                    RoomStatus newStatus = roomNotIsAvailable(currentDate, room.getId())
+                            ? RoomStatus.UNAVAILABLE
+                            : RoomStatus.AVAILABLE;
+
+                    if (room.getRoomStatus() != newStatus) {
+                        room.setRoomStatus(newStatus);
+                        IRoomRepository.save(room);
+                    }
+                });
+    }
+
+    private boolean roomNotIsAvailable(LocalDate currentDate, Integer roomId) {
+        return IRoomRepository.notIsAvailable(currentDate,roomId);
     }
 
     private Room getRoom(Integer roomId){

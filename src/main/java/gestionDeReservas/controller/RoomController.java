@@ -23,7 +23,7 @@ public class RoomController {
     @Autowired
     private RoomServiceUI roomService;
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(roomService.getAllRooms());
     }
@@ -33,13 +33,13 @@ public class RoomController {
         return  ResponseEntity.ok(roomService.getRoomById(id));
     }
     
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<?>  createRoom(@RequestBody RoomCreateRequestDTO roomRequestDTO) throws Exception {
         RoomGetDTO roomCreated = roomService.addRoom(roomRequestDTO);
         return ResponseEntity.ok(roomCreated);
     }
 
-    @PutMapping("")
+    @PutMapping
     public ResponseEntity<?>  editRoom(@RequestBody RoomEditRequestDTO roomEdit) throws Exception {
         return ResponseEntity.ok(roomService.editRoom(roomEdit));
     }

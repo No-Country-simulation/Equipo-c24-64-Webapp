@@ -12,4 +12,5 @@ public interface RoomServiceUI {
     RoomGetDTO  addRoom(RoomCreateRequestDTO roomCreateRequestDTO) throws Exception;
     RoomGetDTO editRoom(RoomEditRequestDTO roomEditRequestDTO) throws Exception;
     void deleteRoom(Integer id) throws Exception;
+    void checkStatusRooms();
 }

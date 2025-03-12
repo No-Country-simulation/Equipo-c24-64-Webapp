@@ -20,6 +20,7 @@ public class RoomMapper {
     public RoomGetDTO toGetDTO(Room room){
         return RoomGetDTO
                 .builder()
+                .roomStatus(room.getRoomStatus())
                 .id(room.getId())
                 .roomNumber(room.getRoomNumber())
                 .name(room.getName())

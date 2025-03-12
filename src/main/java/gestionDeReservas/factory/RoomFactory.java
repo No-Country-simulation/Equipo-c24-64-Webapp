@@ -1,5 +1,6 @@
 package gestionDeReservas.factory;
 
+import gestionDeReservas.enums.RoomStatus;
 import gestionDeReservas.services.implementation.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,7 @@ public class RoomFactory {
         return Room
                 .builder()
                 .name(roomToCreate.name())
+                .roomStatus(RoomStatus.AVAILABLE)
                 .roomNumber(roomToCreate.roomNumber())
                 .description(roomToCreate.description())
                 .capacity(roomType.getCapacity())
