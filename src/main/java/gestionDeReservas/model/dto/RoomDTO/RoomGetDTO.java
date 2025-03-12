@@ -12,5 +12,4 @@ public record RoomGetDTO(
     Integer capacity,
     RoomTypeGetDTO typeRoom
 ) {
-    
 }
