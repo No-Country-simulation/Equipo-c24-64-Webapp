@@ -22,7 +22,7 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-     private static final String JWT_SECRET_KEY =System.getenv("JWT_SECRET_KEY");
+     private static final String JWT_SECRET_KEY = System.getenv("JWT_SECRET_KEY");
      private final Map<String, Date> blacklist = new HashMap<>();
 
     public String getToken(UserDetails user) {

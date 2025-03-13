@@ -2,7 +2,7 @@ package gestionDeReservas.enums;
 
 public enum Role {
     CUSTOMER,
-    ADMIN;
+    RECEPCIONIST;
 
     public static Role getRole(String rol) {
         return Role.valueOf(rol.toUpperCase());

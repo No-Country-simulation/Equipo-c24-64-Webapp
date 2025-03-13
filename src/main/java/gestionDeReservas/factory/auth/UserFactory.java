@@ -28,7 +28,7 @@ public class UserFactory {
                 .phoneNumber(registerRequestDTO.phoneNumber())
                 .dni(registerRequestDTO.dni())
                 .password(passwordEncoder.encode(registerRequestDTO.password()))
-                .role(upperName.equals("ADMIN") ? Role.ADMIN : Role.CUSTOMER)
+                .role(upperName.equals("ADMIN") ? Role.RECEPCIONIST : Role.CUSTOMER)
                 .build();
     }
 }
