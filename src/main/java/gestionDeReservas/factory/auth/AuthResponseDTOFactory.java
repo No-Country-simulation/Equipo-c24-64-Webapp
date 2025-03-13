@@ -21,7 +21,7 @@ public class AuthResponseDTOFactory {
                 .email(user.getEmail())
                 .name(user.getName())
                 .lastname(user.getLastname())
-                .role(Role.CUSTOMER)
+                .role(user.getRole())
                 .token(jwtService.getToken(user))
                 .username(user.getUsername())
                 .address(user.getAddress())
