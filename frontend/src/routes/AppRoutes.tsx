@@ -11,7 +11,9 @@ import Descuento from "@/pages/Descuento.jsx";
 import Spa from "@/pages/Spa";
 import Confirmation from "@/pages/Confirmation";
 import Error from "@/pages/Error";
-// import UserProfile from "@/pages/UserProfile";
+import UserProfile from "@/pages/UserProfile";
+import ProtectedRoute from "./ProtectedRoute";
+
 const AppRoutes = () => {
   const location = useLocation();
   useEffect(() => {
@@ -23,18 +25,19 @@ const AppRoutes = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/rooms" element={<Rooms />} />
-      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/contacto" element={<Contacto />} />
       <Route path="/spa" element={<Spa />} />
       <Route path="/confirmation" element={<Confirmation />} />
-      {/* <Route path="/userProfile" element={<UserProfile />} /> */}
-      <Route path="/error" element={<Error />} />
-      <Route path="*" element={<Navigate to="/error" replace />} />
-
+      <Route path="/userProfile" element={<UserProfile />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Route>
       <Route
         path="/descuento-masajes-30/:codigoDescuento"
         element={<Descuento />}
       />
+      <Route path="/error" element={<Error />} />
+      <Route path="*" element={<Navigate to="/error" replace />} />
     </Routes>
   );
 };

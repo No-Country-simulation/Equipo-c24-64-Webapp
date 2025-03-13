@@ -17,7 +17,7 @@ const fetchRooms = async (url, roomType) => {
       };
       const targetCapacity = capacityMap[roomType];
 
-      if (targetCapacity) {
+      if (targetCapacity !== undefined) {
         filteredRooms = data.filter((room) => room.capacity === targetCapacity);
       }
     }

@@ -1,7 +1,5 @@
-//Gabo dice que va a crear un endpoint para poder enviarme el historial de reservas del usuario logeado.
-
 function UserProfile() {
-  return <div>UserProfile</div>;
+  return <div></div>;
 }
 
 export default UserProfile;
