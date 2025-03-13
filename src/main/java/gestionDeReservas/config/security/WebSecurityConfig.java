@@ -32,7 +32,7 @@ public class WebSecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
     private final static String CUSTOMER = Role.CUSTOMER.toString();
-    private final static String RECEPTIONIST = Role.RECEPTIONIST.toString();
+    private final static String ADMIN = Role.ADMIN.toString();
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {

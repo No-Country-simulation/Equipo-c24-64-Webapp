@@ -16,6 +16,8 @@ public class UserFactory {
     PasswordEncoder passwordEncoder;
 
     public User buildUser(RegisterRequestDTO registerRequestDTO){
+        String username = registerRequestDTO.username();
+        String upperName = username.toUpperCase();
         return User
                 .builder()
                 .username(registerRequestDTO.username())
@@ -26,7 +28,7 @@ public class UserFactory {
                 .phoneNumber(registerRequestDTO.phoneNumber())
                 .dni(registerRequestDTO.dni())
                 .password(passwordEncoder.encode(registerRequestDTO.password()))
-                .role(Role.CUSTOMER)
+                .role(upperName.equals("ADMIN") ? Role.ADMIN : Role.CUSTOMER)
                 .build();
     }
 }
