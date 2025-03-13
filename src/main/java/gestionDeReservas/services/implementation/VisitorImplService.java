@@ -30,4 +30,9 @@ public class VisitorImplService implements VisitorService {
         }
 
     }
+
+    @Override
+    public Visitor getVisitorByEmail(String email) {
+        return visitorRepository.findByEmail(email).orElse(null);
+    }
 }

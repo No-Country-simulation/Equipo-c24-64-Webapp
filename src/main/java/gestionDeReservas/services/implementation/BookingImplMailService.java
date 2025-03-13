@@ -23,7 +23,7 @@ public class BookingImplMailService implements BookingMailService {
     @Override
     public void sendBookingMail(BookingMailDTO bookingMail) {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
-        String subject = "succefuly booking";
+        String subject = "successfully booking";
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             helper.setTo(bookingMail.email());
@@ -86,9 +86,8 @@ public class BookingImplMailService implements BookingMailService {
         <body>
             <div class="container">
                 <h1 style="color: #155dfc;">Hola %s %s, ¡Su reserva fue confirmada!</h1>
-                
                 <table>
-                    <tr><th>Fecha de la reserva:</th><td>%s</td></tr>                
+                    <tr><th>Fecha de la reserva:</th><td>%s</td></tr>               \s
                     <tr><th>Check-in:</th><td>%s</td></tr>
                     <tr><th>Check-out:</th><td>%s</td></tr>
                     <tr><th>Precio base:</th><td>%s</td></tr>
@@ -98,14 +97,14 @@ public class BookingImplMailService implements BookingMailService {
                     <tr><th>Números de habitación:</th><td><span class="room-numbers">%s</span></td></tr>
                     <tr><th>Solicitudes especiales:</th><td><div class="special-requests">%s</div></td></tr>
                 </table>
-                
+               \s
                 <p style="margin-top: 30px; color: #666;">
                     Gracias por tu reserva. ¡Esperamos que disfrutes tu estancia!
                 </p>
             </div>
         </body>
         </html>
-        """,
+       \s""",
                 bookingMail.name(),
                 bookingMail.lastname(),
                 bookingDate,

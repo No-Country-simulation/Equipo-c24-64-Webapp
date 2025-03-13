@@ -1,6 +1,10 @@
 package gestionDeReservas.controller;
 
+import gestionDeReservas.model.dto.RoomDTO.EnabledRoomsRequestDTO;
 import gestionDeReservas.model.dto.RoomDTO.RoomEditRequestDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,4 +55,13 @@ public class RoomController {
         return ResponseEntity.ok("Room deleted");
     }
 
+    @GetMapping("/available-rooms")
+    @Operation(summary = "get available rooms", description = "obtener habitaciones disponibles para reservar, en un rango de fechas (check-in y check-out)")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "se obtiene con exito las habitaciones disponibles"),
+    })
+    public ResponseEntity<?> getAvailableRooms(@RequestBody EnabledRoomsRequestDTO enabledRoomsRequestDTO) throws Exception{
+        return ResponseEntity.ok(roomService.getAvailableRoomsDTO(enabledRoomsRequestDTO.idRoomType(),
+                enabledRoomsRequestDTO.checkIn(),enabledRoomsRequestDTO.checkOut()));
+    }
 }

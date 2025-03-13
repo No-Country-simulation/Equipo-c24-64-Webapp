@@ -27,7 +27,7 @@ public class RoomFactory {
     public Room buildRoom(RoomCreateRequestDTO roomToCreate){
 
         Integer typeid = roomToCreate.typeRoomID();
-        RoomType roomType = TypeRoomService.findRoomTypeById(typeid);
+        RoomType roomType = TypeRoomService.getRoomTypeById(typeid);
 
         return Room
                 .builder()

@@ -10,7 +10,6 @@ import java.time.LocalDate;
 
 @Component
 public class BookingMailFactory {
-
     public BookingMailDTO buildBookingMail(Booking booking) {
         Visitor visitor = booking.getVisitor();
         User user = booking.getUser();

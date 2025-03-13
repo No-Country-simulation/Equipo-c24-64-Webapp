@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import gestionDeReservas.model.dto.CloudinaryDTO.CloudinaryResponseDTO;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import com.cloudinary.Cloudinary;
@@ -13,13 +16,10 @@ import com.cloudinary.utils.ObjectUtils;
 import gestionDeReservas.services.Interface.CloudinaryServiceUI;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class CloudinaryService implements CloudinaryServiceUI{
-
-    private Cloudinary cloudinary;
-
-    public CloudinaryService(Cloudinary cloudinary){
-        this.cloudinary = cloudinary;
-    }
+    Cloudinary cloudinary;
 
     @Override
     public List<CloudinaryResponseDTO> uploadFiles(List<byte[]> bytes) {

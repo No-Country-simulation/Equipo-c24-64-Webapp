@@ -2,7 +2,9 @@ package gestionDeReservas.controller;
 
 import gestionDeReservas.services.Interface.RoomTypeServiceUI;
 import jakarta.annotation.Nullable;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,21 +19,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/typeRoom")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class RoomTypeController {
-    @Autowired
-    private RoomTypeServiceUI roomService;
+    RoomTypeServiceUI roomService;
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(roomService.getAllTypesRooms());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?>  getTypeRoomById(@PathVariable Integer id) throws Exception{
-        return  ResponseEntity.ok(roomService.getTypeById(id));
+        return  ResponseEntity.ok(roomService.getRoomTypeById(id));
     }
     
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<?>  createTypeRoom(@RequestPart("roomType") CreateTypeRoomDTO roomRequestDTO, @RequestPart @Nullable List<MultipartFile> files) throws Exception{
         RoomTypeGetDTO roomTypeCreated = roomService.createTypeRoom(roomRequestDTO,files);
         return ResponseEntity.ok(roomTypeCreated);
@@ -48,8 +51,7 @@ public class RoomTypeController {
         return ResponseEntity.ok("Image deleted");
     }
 
-
-    @PutMapping("")
+    @PutMapping
     public ResponseEntity<?> editTypeRoom(@RequestBody EditRoomTypeDTO entity)  throws Exception{
         return ResponseEntity.ok(roomService.editTypeRoom(entity));
     }
@@ -58,6 +60,5 @@ public class RoomTypeController {
     public ResponseEntity<?>  deleteTypeRoom(@PathVariable("id") Integer id) throws Exception {
         roomService.deleteTypeRoom(id);
         return ResponseEntity.ok("Room deleted");
-    }   
-    
+    }
 }

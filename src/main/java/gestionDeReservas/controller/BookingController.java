@@ -45,13 +45,4 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getBookingsFromuser(user.getEmail()));
     }
 
-    @GetMapping("/available-rooms")
-    @Operation(summary = "get available rooms", description = "obtener habitaciones disponibles para reservar, en un rango de fechas (check-in y check-out)")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "se obtiene con exito las habitaciones disponibles"),
-    })
-    public ResponseEntity<?> getAvailableRooms(@RequestBody EnabledRoomsRequestDTO enabledRoomsRequestDTO) throws Exception{
-        return ResponseEntity.ok(bookingService.getAvailableRoomsDTO(enabledRoomsRequestDTO.idRoomType(),
-                enabledRoomsRequestDTO.checkIn(),enabledRoomsRequestDTO.checkOut()));
-    }
 }

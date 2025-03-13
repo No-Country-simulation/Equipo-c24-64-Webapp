@@ -8,6 +8,7 @@ import gestionDeReservas.config.security.jwt.JwtService;
 import gestionDeReservas.exception.RegisterException;
 import gestionDeReservas.factory.auth.AuthResponseDTOFactory;
 import gestionDeReservas.factory.auth.UserFactory;
+import gestionDeReservas.model.entity.Visitor;
 import gestionDeReservas.repository.IUserRepository;
 import gestionDeReservas.services.Interface.AuthService;
 import lombok.AccessLevel;
@@ -75,6 +76,11 @@ public class AuthImplService implements AuthService {
         user.setDni(editUser.dni() != null ? editUser.dni() : user.getDni());
 
         userRepository.save(user);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
     }
 
     private void validateNewUsernameAndEmail(EditUserRequestDTO editUser) {

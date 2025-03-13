@@ -5,7 +5,11 @@ import java.util.List;
 
 import gestionDeReservas.enums.RoomStatus;
 import gestionDeReservas.exception.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import gestionDeReservas.model.entity.RoomType;
+import gestionDeReservas.services.Interface.RoomTypeServiceUI;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -20,40 +24,37 @@ import gestionDeReservas.services.Interface.RoomServiceUI;
 import jakarta.transaction.Transactional;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class RoomService implements RoomServiceUI {
-    
-    @Autowired
-    private IRoomRepository IRoomRepository;
-
-    @Autowired
-    private RoomMapper roomMapper;
-
-    @Autowired
-    private RoomFactory roomFactory;
+    IRoomRepository roomRepository;
+    RoomTypeServiceUI roomTypeService;
+    RoomMapper roomMapper;
+    RoomFactory roomFactory;
 
     @Override
     public List<RoomGetDTO> getAllRooms() {
-        return IRoomRepository
+        return roomRepository
         .findAll()
         .stream()
-        .map((r) -> roomMapper.toGetDTO(r))
+        .map(roomMapper::toGetDTO)
         .toList();
     }
 
     @Override
-    public RoomGetDTO getRoomById(int id) throws Exception{
+    public RoomGetDTO getRoomById(int id){
         Room room = getRoom(id);
         return roomMapper.toGetDTO(room);
     }
 
     @Override
-    public RoomGetDTO  addRoom(RoomCreateRequestDTO roomCreateRequestDTO) throws Exception {
+    public RoomGetDTO  addRoom(RoomCreateRequestDTO roomCreateRequestDTO){
         Room room = roomFactory.buildRoom(roomCreateRequestDTO);
-        return roomMapper.toGetDTO(IRoomRepository.save(room));
+        return roomMapper.toGetDTO(roomRepository.save(room));
     }
 
     @Override
-    public RoomGetDTO editRoom(RoomEditRequestDTO roomEditRequestDTO) throws Exception {
+    public RoomGetDTO editRoom(RoomEditRequestDTO roomEditRequestDTO){
         Room room = getRoom(roomEditRequestDTO.id());
         
         room.setName(roomEditRequestDTO.name());
@@ -62,23 +63,23 @@ public class RoomService implements RoomServiceUI {
         if (roomEditRequestDTO.typeRoomID() != null) {
             room.setRoomType(roomFactory
             .getTypeRoomService()
-            .findRoomTypeById(roomEditRequestDTO.typeRoomID()));
+            .getRoomTypeById(roomEditRequestDTO.typeRoomID()));
         }
-        return roomMapper.toGetDTO(IRoomRepository.save(room));
+        return roomMapper.toGetDTO(roomRepository.save(room));
     }
 
     @Override
     @Transactional
-    public void deleteRoom(Integer id) throws Exception {
-        IRoomRepository.delete(IRoomRepository
+    public void deleteRoom(Integer id){
+        roomRepository.delete(roomRepository
         .findById(id)
         .orElseThrow(() -> new NotFoundException("room not found with id" + id)));
     }
 
     @Override
     @Scheduled(cron = "0 0 8 * * *", zone = "America/Argentina/Buenos_Aires")
-    public void checkStatusRooms() {
-        List<Room> rooms = IRoomRepository.findAll();
+    public void updateRoomsAvailable() {
+        List<Room> rooms = roomRepository.findAll();
         LocalDate currentDate = LocalDate.now();
 
         rooms.forEach(room -> {
@@ -88,17 +89,34 @@ public class RoomService implements RoomServiceUI {
 
                     if (room.getRoomStatus() != newStatus) {
                         room.setRoomStatus(newStatus);
-                        IRoomRepository.save(room);
+                        roomRepository.save(room);
                     }
                 });
     }
 
+    @Override
+    public List<RoomGetDTO> getAvailableRoomsDTO(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {
+        return roomMapper.RoomGetAllDTO(getAvailableRooms(roomTypeId,checkIn,checkOut));
+    }
+
+    @Override
+    public List<Room> getAvailableRooms(Integer roomTypeId, LocalDate checkIn, LocalDate checkOut) {
+        RoomType roomType = roomTypeService.getRoomTypeById(roomTypeId);
+        return roomType.getRooms().stream()
+                .filter(room ->  !isRoomBooked(room.getId(), checkIn, checkOut))
+                .toList();
+    }
+
+    private boolean isRoomBooked(Integer roomId, LocalDate checkIn, LocalDate checkOut) {
+        return roomRepository.countOverlappingReservations(roomId, checkIn, checkOut);
+    }
+
     private boolean roomNotIsAvailable(LocalDate currentDate, Integer roomId) {
-        return IRoomRepository.notIsAvailable(currentDate,roomId);
+        return roomRepository.notIsAvailable(currentDate,roomId);
     }
 
     private Room getRoom(Integer roomId){
-        return  IRoomRepository
+        return  roomRepository
                 .findById(roomId)
                 .orElseThrow(() -> new NotFoundException("room not found with id" + roomId)) ;
     }
