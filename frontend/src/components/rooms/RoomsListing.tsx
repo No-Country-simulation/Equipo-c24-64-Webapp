@@ -6,7 +6,7 @@ import useScrollAnimation from "@/hooks/useInView.ts";
 import { useNavigate } from "react-router-dom";
 
 const RoomListing: React.FC = () => {
-  const { rooms, roomType, setReservation } = useSearchStore();
+  const { rooms, roomType } = useSearchStore();
   const { ref, inView } = useScrollAnimation();
   const navigate = useNavigate();
   const getRoomTypeName = (type: string) => {
@@ -33,10 +33,10 @@ const RoomListing: React.FC = () => {
         price: room.typeRoom.price,
       },
     };
-
-    setReservation(reservationData);
+    sessionStorage.setItem("reserva", JSON.stringify(reservationData));
     navigate("/confirmation");
   };
+
   return (
     <div className="p-4">
       <motion.div
@@ -86,7 +86,7 @@ const RoomListing: React.FC = () => {
                     </button>
                   </div>
                 </div>
-                {/* Por ahora el carrousel de imagenes no hace cambio de imagenes porque en la ddbb no hay ninguna cargada, estoamos mostrando una estatica por ahora */}
+
                 <div className="relative w-full max-w-lg mx-auto flex items-center ">
                   <button
                     title="Imagen Siguiente"

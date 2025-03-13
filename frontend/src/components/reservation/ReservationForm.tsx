@@ -7,6 +7,7 @@ import useSearchStore from "@/hooks/useSearchStore.tsx";
 import { calculatePrice } from "@/utils/totalPrice";
 import toast from "react-hot-toast";
 import sonidoConfirmacion from "@/assets/confirmFormSound.mp3";
+import { Link } from "react-router-dom";
 const schema = yup.object({
   nombre: yup.string().required("El nombre es requerido"),
   apellido: yup.string().required("El apellido es requerido"),
@@ -41,9 +42,12 @@ const schema = yup.object({
 type FormData = yup.InferType<typeof schema>;
 
 const ReservationForm = () => {
-  const { reservation, checkIn, checkOut, guests } = useSearchStore();
+  const { checkIn, checkOut, guests } = useSearchStore();
+  const reserva = sessionStorage.getItem("reserva");
+  const reservaParseada = reserva ? JSON.parse(reserva) : null;
+  console.log(reservaParseada);
   const { nightQuantity, totalPrice, subTotalPrice, ivaInDollars } =
-    calculatePrice(checkIn, checkOut, reservation?.typeRoom.price ?? 0);
+    calculatePrice(checkIn, checkOut, reservaParseada?.typeRoom.price ?? 0);
   const {
     register,
     handleSubmit,
@@ -55,14 +59,14 @@ const ReservationForm = () => {
     },
   });
   const roomsQuantity = guests.rooms;
-  const audioRef = useRef(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const onSubmit = async (data: FormData) => {
     const bookingData = {
       checkIn,
       checkOut,
-      peopleQuantity: reservation?.capacity,
-      idRoomType: reservation?.id,
+      peopleQuantity: reservaParseada?.capacity,
+      idRoomType: reservaParseada?.id,
       email: data.email,
       roomsQuantity: roomsQuantity,
       specialRequests: data.peticionesEspeciales,
@@ -119,9 +123,11 @@ const ReservationForm = () => {
         }
       } else {
         toast.success("Reserva confirmada y formulario enviado con exito!");
+
         setTimeout(() => {
-          audioRef.current.play();
+          audioRef.current?.play();
         }, 600);
+        sessionStorage.clear();
       }
     } catch (error) {
       console.error("Error:", error);
@@ -535,8 +541,8 @@ const ReservationForm = () => {
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-700">Personas</span>
                   <span className="text-sm">
-                    {guests.adults} Adultos -{" "}
-                    {guests.children > 0 ? <>{guests.children} Niño/s</> : ""}
+                    {guests.adults} Adultos{" "}
+                    {guests.children > 0 ? <>{guests.children}- Niño/s</> : ""}
                   </span>
                 </div>
               </div>
@@ -551,13 +557,13 @@ const ReservationForm = () => {
                   </button>
                 </div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm">{reservation?.name}</span>
+                  <span className="text-sm">{reservaParseada?.name}</span>
                   <span className="text-sm"></span>
                 </div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm">1 noche</span>
+                  <span className="text-sm">{nightQuantity} noches</span>
                   <span className="text-sm">
-                    USD {reservation?.typeRoom.price}
+                    USD {reservaParseada?.typeRoom.price}
                   </span>
                 </div>
                 <div className="flex justify-between font-medium">
@@ -576,10 +582,6 @@ const ReservationForm = () => {
                 <div className="flex justify-between mb-1">
                   <span className="text-sm text-gray-700">Impuestos:</span>
                   <span className="text-sm">USD {ivaInDollars}</span>
-                </div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-sm text-gray-700">Tasa reserva:</span>
-                  <span className="text-sm">-</span>
                 </div>
               </div>
 
@@ -613,9 +615,9 @@ const ReservationForm = () => {
               <p className="text-xs text-gray-600 mb-2">
                 Disponible para extranjeros no residentes
               </p>
-              <a href="/contacto" className="text-blue-500 text-xs">
+              <Link to="/contacto" className="text-blue-500 text-xs">
                 + Click aquí
-              </a>
+              </Link>
             </div>
           </div>
         </div>
