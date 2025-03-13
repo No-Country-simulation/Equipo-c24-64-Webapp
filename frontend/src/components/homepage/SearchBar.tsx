@@ -2,6 +2,8 @@ import { Users, ChevronDown, Search } from "lucide-react";
 import { useForm } from "react-hook-form";
 import useSearchStore from "@/hooks/useSearchStore.tsx";
 import fetchRooms from "@/services/fetchRooms";
+import { hoy, fechaMañana } from "@/utils/fechaActual";
+
 import "./home.css";
 
 interface SearchForm {
@@ -80,6 +82,7 @@ const SearchBar: React.FC = () => {
                 type="date"
                 value={checkIn}
                 onChange={(e) => setCheckIn(e.target.value)}
+                min={hoy}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 placeholder="Check In"
               />
@@ -97,6 +100,7 @@ const SearchBar: React.FC = () => {
                 type="date"
                 value={checkOut}
                 onChange={(e) => setCheckOut(e.target.value)}
+                min={fechaMañana}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 placeholder="Check Out"
               />

@@ -37,7 +37,6 @@ const RoomListing: React.FC = () => {
     setReservation(reservationData);
     navigate("/confirmation");
   };
-  console.log(rooms);
   return (
     <div className="p-4">
       <motion.div

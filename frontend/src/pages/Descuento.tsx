@@ -4,7 +4,6 @@ import { Link, useParams } from "react-router-dom";
 const Descuento: React.FC = () => {
   const { codigoDescuento } = useParams<{ codigoDescuento: string }>();
   const [copiaExitosa, setCopiaExitosa] = useState<string>("");
-  console.log(codigoDescuento);
 
   const handleCopy = () => {
     navigator.clipboard

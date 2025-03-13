@@ -37,7 +37,6 @@ const Form = () => {
   });
 
   useEffect(() => {
-    console.log(isLoading);
     const fetchHabitaciones = async () => {
       setIsLoading(true);
       const habitaciones = await fetchRooms("rooms");
@@ -45,7 +44,6 @@ const Form = () => {
       setIsLoading(false);
     };
     fetchHabitaciones();
-    console.log(isLoading);
   }, []);
 
   return (
