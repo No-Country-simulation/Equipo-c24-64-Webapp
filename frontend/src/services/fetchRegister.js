@@ -1,39 +1,32 @@
+import useSearchStore from "@/hooks/useSearchStore";
 const API_HOST = import.meta.env.VITE_API_HOST;
 
-const fetchRegister = async (url, data) => {
+const fetchRooms = async (url, roomType) => {
   try {
-    const response = await fetch(`${API_HOST}/api/${url}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(`${API_HOST}/api/${url}`);
+    const data = await response.json();
+    let filteredRooms = data;
+    if (roomType) {
+      const capacityMap = {
+        single: 1,
+        double: 2,
+        triple: 3,
+        cuadruple: 4,
+        quintuple: 5,
+        suite: 6,
+      };
+      const targetCapacity = capacityMap[roomType];
 
-    if (!response.ok) {
-      const error = await response.json();
-      let errorMessage = "";
-      if (error.error) {
-        if (error.message.includes("already exists")) {
-          errorMessage = "Usuario ya registrado, intenta nuevamente.";
-        } else if (error.message.includes("internal_server_error")) {
-          errorMessage = "Intenta más tarde, hay un problema temporal.";
-        } else {
-          errorMessage = "Error al registrar usuario. Intentalo más tarde";
-        }
-      } else {
-        errorMessage = "En este momento no podemos procesar tu solicitud.";
+      if (targetCapacity !== undefined) {
+        filteredRooms = data.filter((room) => room.capacity === targetCapacity);
       }
-      return { success: false, errorMessage };
     }
-
-    return { success: true };
+    useSearchStore.getState().setRooms(filteredRooms);
+    return filteredRooms;
   } catch (error) {
-    console.error("Error en fetchRegister:", error);
-    return {
-      success: false,
-      errorMessage: "Ocurrió un error inesperado. Inténtalo más tarde.",
-    };
+    console.error("Error fetching rooms:", error);
+    return [];
   }
 };
-export default fetchRegister;
+
+export default fetchRooms;
