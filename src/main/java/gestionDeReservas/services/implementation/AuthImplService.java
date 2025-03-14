@@ -2,13 +2,11 @@ package gestionDeReservas.services.implementation;
 
 import gestionDeReservas.exception.BadRequestException;
 import gestionDeReservas.exception.NotFoundException;
+import gestionDeReservas.mapper.UserMapper;
 import gestionDeReservas.model.dto.auth.*;
 import gestionDeReservas.model.entity.User;
 import gestionDeReservas.config.security.jwt.JwtService;
 import gestionDeReservas.exception.RegisterException;
-import gestionDeReservas.factory.auth.AuthResponseDTOFactory;
-import gestionDeReservas.factory.auth.UserFactory;
-import gestionDeReservas.model.entity.Visitor;
 import gestionDeReservas.repository.IUserRepository;
 import gestionDeReservas.services.Interface.AuthService;
 import lombok.AccessLevel;
@@ -16,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,11 +21,9 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class AuthImplService implements AuthService {
     IUserRepository userRepository;
-    UserFactory userFactory;
+    UserMapper userMapper;
     AuthenticationManager authenticationManager;
-    AuthResponseDTOFactory authResponseFactory;
     JwtService jwtService;
-    PasswordEncoder passwordEncoder;
 
     @Override
     public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
@@ -37,19 +32,17 @@ public class AuthImplService implements AuthService {
                         loginRequestDTO.password()));
 
         User user = findUser(loginRequestDTO);
-
-        return authResponseFactory.buildResponseAuthDTO(user);
+        return userMapper.buildResponseAuthDTO(user);
     }
 
     @Override
     public AuthResponseDTO register(RegisterRequestDTO userToRegisterDTO) {
         validateRegistration(userToRegisterDTO);
 
-        User user = userFactory.buildUser(userToRegisterDTO);
-
+        User user = userMapper.buildUser(userToRegisterDTO);
         userRepository.save(user);
 
-        return authResponseFactory.buildResponseAuthDTO(user);
+        return userMapper.buildResponseAuthDTO(user);
     }
 
     @Override
@@ -59,23 +52,15 @@ public class AuthImplService implements AuthService {
     }
 
     @Override
-    public void edit(String email, EditUserRequestDTO editUser) {
+    public void edit(String email, EditUserRequestDTO editUserRequestDTO) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("user with email: "+email +" not founded"));
 
-        validateNewUsernameAndEmail(editUser);
+        validateNewUsernameAndEmail(editUserRequestDTO);
 
-        user.setEmail(editUser.email() != null ? editUser.email() : user.getEmail());
-        user.setUsername(editUser.username() != null ? editUser.username() : user.getUsername());
-        user.setPassword(editUser.password() != null ? passwordEncoder.encode(editUser.password()) :
-                passwordEncoder.encode(user.getPassword()));
-        user.setName(editUser.name() != null ? editUser.name() : user.getName());
-        user.setLastname(editUser.lastname() != null ? editUser.lastname() : user.getLastname());
-        user.setAddress(editUser.address() != null ? editUser.address() : user.getAddress());
-        user.setPhoneNumber(editUser.phoneNumber() != null ? editUser.phoneNumber() : user.getPhoneNumber());
-        user.setDni(editUser.dni() != null ? editUser.dni() : user.getDni());
+        User editedUser = userMapper.toEditUser(editUserRequestDTO,user);
 
-        userRepository.save(user);
+        userRepository.save(editedUser);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package gestionDeReservas.services.implementation;
 
+import gestionDeReservas.mapper.ImageMapper;
 import gestionDeReservas.model.dto.CloudinaryDTO.CloudinaryResponseDTO;
 import gestionDeReservas.model.entity.Image;
-import gestionDeReservas.factory.ImageFactory;
 import gestionDeReservas.repository.ImageRepository;
 import gestionDeReservas.services.Interface.ImageServiceUI;
 import lombok.AccessLevel;
@@ -19,8 +19,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class ImageService implements ImageServiceUI {
     CloudinaryService cloudinaryService;
-    private ImageFactory imageFactory;
-    private ImageRepository imageRepository;
+    ImageMapper imageMapper;
+    ImageRepository imageRepository;
 
     @Override
     public void removeImage(int id) throws Exception {
@@ -64,7 +64,7 @@ public class ImageService implements ImageServiceUI {
     }
 
     private Image createAndSaveImage(CloudinaryResponseDTO response) {
-        Image image = imageFactory.buildImage(response);
+        Image image = imageMapper.toImage(response);
         return imageRepository.save(image);
     }
 }

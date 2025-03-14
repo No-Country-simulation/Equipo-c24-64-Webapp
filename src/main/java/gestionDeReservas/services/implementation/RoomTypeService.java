@@ -55,8 +55,7 @@ public class RoomTypeService implements RoomTypeServiceUI {
     @Override
     public RoomTypeGetDTO editTypeRoom(EditRoomTypeDTO roomType){
         Integer id = roomType.id();
-        RoomType room = roomTypeRepository
-        .findById(id)
+        RoomType room = roomTypeRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("Room type not found"));
 
         room.setName(roomType.name());

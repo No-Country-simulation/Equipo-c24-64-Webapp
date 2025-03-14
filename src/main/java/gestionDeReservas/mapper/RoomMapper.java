@@ -1,6 +1,6 @@
 package gestionDeReservas.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import gestionDeReservas.model.dto.RoomDTO.RoomGetDTO;
@@ -11,10 +11,9 @@ import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 @Component
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@RequiredArgsConstructor
 public class RoomMapper {
-
-    @Autowired
     RoomTypeMapper roomTypeMapper;
 
     public RoomGetDTO toGetDTO(Room room){

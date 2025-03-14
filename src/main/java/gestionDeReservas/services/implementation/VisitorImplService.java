@@ -28,7 +28,6 @@ public class VisitorImplService implements VisitorService {
 
             visitorRepository.save(visitor);
         }
-
     }
 
     @Override

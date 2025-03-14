@@ -1,4 +1,4 @@
-package gestionDeReservas.factory.booking;
+package gestionDeReservas.mapper;
 
 import gestionDeReservas.model.dto.booking.BookingMailDTO;
 import gestionDeReservas.model.entity.Booking;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
 @Component
-public class BookingMailFactory {
+public class BookingMailMapper {
     public BookingMailDTO buildBookingMail(Booking booking) {
         Visitor visitor = booking.getVisitor();
         User user = booking.getUser();

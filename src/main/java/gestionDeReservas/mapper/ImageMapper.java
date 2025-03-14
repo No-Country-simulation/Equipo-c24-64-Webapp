@@ -1,5 +1,6 @@
 package gestionDeReservas.mapper;
 
+import gestionDeReservas.model.dto.CloudinaryDTO.CloudinaryResponseDTO;
 import gestionDeReservas.model.dto.ImageDTO.ImageGetDTO;
 import gestionDeReservas.model.entity.Image;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,13 @@ public class ImageMapper {
                 .id(image.getId())
                 .url(image.getUrl())
                 .publicId(image.getPublicId())
+                .build();
+    }
 
+    public Image toImage(CloudinaryResponseDTO respDTO){
+        return Image.builder()
+                .publicId(respDTO.publicId())
+                .url(respDTO.url())
                 .build();
     }
 }

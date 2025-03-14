@@ -1,8 +1,8 @@
 package gestionDeReservas.services.implementation;
 
 import gestionDeReservas.exception.*;
-import gestionDeReservas.factory.booking.BookingFactory;
-import gestionDeReservas.factory.booking.BookingMailFactory;
+import gestionDeReservas.factory.BookingFactory;
+import gestionDeReservas.mapper.BookingMailMapper;
 import gestionDeReservas.mapper.BookingMapper;
 import gestionDeReservas.model.dto.booking.BookingMailDTO;
 import gestionDeReservas.model.dto.booking.BookingRequestDTO;
@@ -29,7 +29,7 @@ public class BookingImplService implements BookingService {
     VisitorService visitorService;
     AuthService authService;
     BookingMailService bookingMailService;
-    BookingMailFactory bookingMailFactory;
+    BookingMailMapper bookingMailMapper;
     BookingFactory bookingFactory;
     BookingMapper bookingMapper;
 
@@ -67,7 +67,7 @@ public class BookingImplService implements BookingService {
     }
 
     private void CreateBookingEmail(Booking booking) {
-        BookingMailDTO bookingMail = bookingMailFactory.buildBookingMail(booking);
+        BookingMailDTO bookingMail = bookingMailMapper.buildBookingMail(booking);
         bookingMailService.sendBookingMail(bookingMail);
     }
 
