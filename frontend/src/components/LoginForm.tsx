@@ -29,12 +29,17 @@ const LoginForm: React.FC = () => {
   });
 
   const url = "auth/login";
+
   const onSubmit = async (data: ILoginInputs) => {
     const logIn = await fetchLogin(url, data);
-
+    console.log(logIn);
     if (logIn.success) {
       toast.success("Inicio de sesión exitoso");
-      navigate("/");
+      if (logIn.role === "RECEPTIONIST") {
+        navigate("/dashboard");
+      } else {
+        navigate("/");
+      }
     } else {
       toast.error(logIn.errorMessage);
     }

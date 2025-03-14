@@ -16,7 +16,7 @@ const Header = () => {
       setUsuario(`${nombre} ${apellido}`);
     }
   }, []);
-
+  const role = sessionStorage.getItem("role");
   const handleLogout = () => {
     sessionStorage.clear();
     toast.success("Sesión cerrada correctamente");
@@ -34,11 +34,11 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
-            <a href="/" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <span className="text-2xl font-bold text-blue-600">
                 Luxe Haven
               </span>
-            </a>
+            </Link>
           </div>
           <div className="hidden md:flex items-center space-x-4">
             <a
@@ -51,17 +51,20 @@ const Header = () => {
             {usuario ? (
               <>
                 <FaRegUserCircle size={24} />
-                <Link to="/userProfile" className="font-medium disabled ">
+                <Link
+                  to={role === "RECEPTIONIST" ? "/dashboard" : "/userProfile"}
+                  className="font-medium disabled "
+                >
                   {usuario}
                 </Link>
               </>
             ) : (
-              <a
-                href="/login"
+              <Link
+                to="/login"
                 className="text-gray-700 hover:text-blue-600 transition-colors"
               >
                 Iniciar sesión
-              </a>
+              </Link>
             )}
             <div className="relative">
               <button
@@ -102,12 +105,12 @@ const Header = () => {
                       Cerrar sesión
                     </button>
                   ) : (
-                    <a
-                      href="/register"
+                    <Link
+                      to="/register"
                       className="block px-4 py-2 text-blue-600 hover:text-blue-700 transition-colors mt-3"
                     >
                       Registrate
-                    </a>
+                    </Link>
                   )}
                 </div>
               )}
@@ -123,7 +126,6 @@ const Header = () => {
           </button>
         </div>
       </div>
-
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden border-t border-gray-200">
@@ -157,17 +159,17 @@ const Header = () => {
               {usuario ? (
                 <div className="flex space-x-2">
                   <FaRegUserCircle size={24} />
-                  <a href="#" className="font-medium disabled ">
+                  <Link to="#" className="font-medium disabled ">
                     {usuario}
-                  </a>
+                  </Link>
                 </div>
               ) : (
-                <a
-                  href="/login"
+                <Link
+                  to="/login"
                   className="block text-gray-700 hover:text-blue-600 transition-colors"
                 >
                   Iniciá sesión
-                </a>
+                </Link>
               )}
               {usuario ? (
                 <button
@@ -178,12 +180,12 @@ const Header = () => {
                   Cerrar sesión
                 </button>
               ) : (
-                <a
-                  href="/register"
+                <Link
+                  to="/register"
                   className="block text-blue-600 hover:text-blue-700 transition-colors"
                 >
                   Registrate
-                </a>
+                </Link>
               )}
             </div>
           </div>

@@ -16,7 +16,7 @@ const Home: React.FC = () => {
       <Header />
       <Hero />
       {/* <SearchBar/> */}
-      <section className="pt-12 pb-4 px-4 sm:px-8 bg-gray-50">
+      <section className="pt-12 px-4 sm:px-8 bg-gray-50">
         <RoomListing />
       </section>
       <section className="pb-12 px-4 sm:px-8 bg-gray-100">

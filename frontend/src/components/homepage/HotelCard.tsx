@@ -68,9 +68,17 @@ interface HotelCardProps {
   title: string;
   location: string;
   price: string;
-  deal?: string; // Optional deal price
+  deal?: string;
 }
-
+interface Hotel {
+  id: number;
+  image: string;
+  title: string;
+  location: string;
+  price: string;
+  link: string;
+  deal?: string;
+}
 const HotelCard: React.FC<HotelCardProps> = ({
   image,
   title,
@@ -90,7 +98,7 @@ const HotelCard: React.FC<HotelCardProps> = ({
             className="w-full h-48 object-cover"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              target.src = "/placeholder-image.jpg"; // Imagen de respaldo si la URL original falla
+              target.src = "/placeholder-image.jpg";
             }}
           />
         </div>
@@ -112,7 +120,7 @@ const HotelCard: React.FC<HotelCardProps> = ({
         )}
 
         <Link
-          to="#"
+          to="/error"
           title="Obtener oferta"
           className="px-4 flex py-2 bg-gradient-to-r bg-blue-600 text-white font-medium transition-all rounded-lg"
         >
@@ -123,10 +131,8 @@ const HotelCard: React.FC<HotelCardProps> = ({
   );
 };
 
-// Function to add deals to the hotel data
-const addDealsToHotels = (hotelData) => {
+const addDealsToHotels = (hotelData: Hotel[]): Hotel[] => {
   return hotelData.map((hotel) => {
-    // Calculate a deal price (approx. 30% off)
     const originalPrice = parseFloat(
       hotel.price.replace(/\./g, "").replace(",", ".")
     );
@@ -137,18 +143,15 @@ const addDealsToHotels = (hotelData) => {
       location: Math.floor(Math.random() * 3 + 1).toString(), // Random floor 1-3
       originalTitle: hotel.title,
       deal: dealPrice,
-      link: "#", // Update link to go to the /deal page
+      link: "#",
     };
   });
 };
 
-// Main section component
 const HotelOffers = () => {
-  // Use a ref for the whole section instead of individual items
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true });
 
-  // Transform the imported hotels data to add deals
   const hotelsWithDeals = addDealsToHotels(hotels);
   const hasHotels = hotelsWithDeals.length > 0;
 

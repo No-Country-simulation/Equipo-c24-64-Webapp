@@ -20,7 +20,7 @@ function Footer() {
       // Configuración para web3forms
       const formData = new FormData();
       formData.append("email", data.email);
-      formData.append("access_key", "8563bba6-aa5b-4520-b8d7-bebaaf8b13ae"); 
+      formData.append("access_key", "8563bba6-aa5b-4520-b8d7-bebaaf8b13ae");
       formData.append("subject", "Nueva suscripción a newsletter");
       formData.append("from_name", "Luxe Haven Newsletter");
 
@@ -191,6 +191,7 @@ function Footer() {
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
                     alt="Visa"
+                    loading="lazy"
                     className="h-8 bg-white p-1 rounded"
                   />
                 </a>
@@ -198,6 +199,7 @@ function Footer() {
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
                     alt="Mastercard"
+                    loading="lazy"
                     className="h-8 bg-white p-1 rounded"
                   />
                 </a>
@@ -205,6 +207,7 @@ function Footer() {
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
                     alt="PayPal"
+                    loading="lazy"
                     className="h-8 bg-white p-1 rounded"
                   />
                 </a>
@@ -212,6 +215,7 @@ function Footer() {
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg"
                     alt="American Express"
+                    loading="lazy"
                     className="h-8 bg-white p-1 rounded"
                   />
                 </a>

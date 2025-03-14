@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import fetchRegister from "@/services/fetchRegister";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
@@ -85,12 +85,12 @@ const RegisterForm = () => {
               </h2>
               <p className="mt-2 text-center text-sm text-gray-600">
                 ¿Ya tienes una cuenta?{" "}
-                <a
-                  href="/login"
+                <Link
+                  to="/login"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   Ingrese aquí
-                </a>
+                </Link>
               </p>
             </div>
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>

@@ -11,11 +11,12 @@ const Hero: React.FC = () => {
         autoPlay
         muted
         loop
+        playsInline
       >
         <source src={bannerHero} type="video/mp4" />
         <source src={bannerHero} type="video/webm" />
       </video>
-      <div className="absolute bottom-0 left-0 w-full h-72 full bg-gradient-to-b from-transparent to-gray-50 z-10"></div>
+      <div className="absolute bottom-0 left-0 w-full h-42 p-0 m-0 full bg-gradient-to-b from-transparent to-gray-50 z-10"></div>
 
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -23,7 +24,7 @@ const Hero: React.FC = () => {
         transition={{ duration: 0.8 }}
         className="relative text-center text-white px-6"
       >
-        <h1 className="text-6xl font-bold mb-4 inter ">
+        <h1 className="text-6xl font-bold mb-4 inter">
           Bienvenido a Luxe Haven
         </h1>
         <p className="text-2xl mb-6 font-medium">
