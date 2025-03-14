@@ -61,7 +61,9 @@ function Footer() {
                   <input
                     type="email"
                     placeholder={t("footer.email_placeholder")}
-                    className={`px-4 py-2 rounded-lg bg-gray-100 w-full md:w-80 text-black ${errors.email ? "border-red-500 border-2" : ""}`}
+                    className={`px-4 py-2 rounded-lg bg-gray-100 w-full md:w-80 text-black ${
+                      errors.email ? "border-red-500 border-2" : ""
+                    }`}
                     {...register("email", {
                       required: t("footer.email_required"),
                       pattern: {
@@ -182,6 +184,7 @@ function Footer() {
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
                     alt="Visa"
+                    loading="lazy"
                     className="h-8 bg-white p-1 rounded"
                   />
                 </a>
@@ -189,6 +192,7 @@ function Footer() {
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
                     alt="Mastercard"
+                    loading="lazy"
                     className="h-8 bg-white p-1 rounded"
                   />
                 </a>
@@ -196,6 +200,7 @@ function Footer() {
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
                     alt="PayPal"
+                    loading="lazy"
                     className="h-8 bg-white p-1 rounded"
                   />
                 </a>
@@ -203,6 +208,7 @@ function Footer() {
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg"
                     alt="American Express"
+                    loading="lazy"
                     className="h-8 bg-white p-1 rounded"
                   />
                 </a>

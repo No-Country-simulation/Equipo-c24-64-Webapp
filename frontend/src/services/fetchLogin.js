@@ -34,12 +34,12 @@ const fetchLogin = async (url, data) => {
       return { success: false, errorMessage };
     }
 
-    const { token, name, lastname } = await response.json();
-    Object.entries({ token, name, lastname }).forEach(([key, value]) =>
+    const { token, name, lastname, role } = await response.json();
+    Object.entries({ token, name, lastname, role }).forEach(([key, value]) =>
       sessionStorage.setItem(key, value)
     );
 
-    return { success: true };
+    return { success: true, role: role };
   } catch (error) {
     console.error("Error en fetchLogin:", error);
     return {

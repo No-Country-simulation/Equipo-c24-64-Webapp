@@ -34,7 +34,7 @@ const Weather: React.FC = () => {
 
   const API_KEY = "6d51cd4aa4deb04d9eaa166f1616a848";
   const CITY = "Buenos Aires";
-  const CACHE_TIME = 5 * 60 * 1000; // el tiempo es en ms
+  const CACHE_TIME = 5 * 60 * 1000;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,7 +82,7 @@ const Weather: React.FC = () => {
     };
 
     fetchData();
-  }, [i18n.language]); // Asegúrate de que el fetch se dispare cuando cambie el idioma
+  }, [i18n.language]); 
 
   const getWeatherIcon = (main: string) => {
     switch (main.toLowerCase()) {
@@ -177,7 +177,8 @@ const Weather: React.FC = () => {
                         {translateWeatherDescription(weather.weather[0].main)}
                       </p>
                       <p className="text-sm text-gray-500 mt-1">
-                        {t("weather.feels_like")}: {Math.round(weather.main.feels_like)}°C
+                        {t("weather.feels_like")}:{" "}
+                        {Math.round(weather.main.feels_like)}°C
                       </p>
                       <p className="text-sm text-gray-500">
                         {t("weather.humidity")}: {weather.main.humidity}%
@@ -194,7 +195,9 @@ const Weather: React.FC = () => {
                       className="bg-white py-2 rounded-lg shadow-sm text-center transform transition-transform duration-200 hover:scale-105"
                     >
                       <p className="font-semibold text-blue-900 mb-2">
-                        {index === 0 ? t("weather.today") : getDayName(day.dt_txt)}
+                        {index === 0
+                          ? t("weather.today")
+                          : getDayName(day.dt_txt)}
                       </p>
                       <div className="flex justify-center">
                         {getWeatherIcon(day.weather[0].main)}

@@ -2,8 +2,10 @@ import { Users, ChevronDown, Search } from "lucide-react";
 import { useForm } from "react-hook-form";
 import useSearchStore from "@/hooks/useSearchStore.tsx";
 import fetchRooms from "@/services/fetchRooms";
-import "./home.css";
+import { hoy, fechaMañana } from "@/utils/fechaActual";
 import { useTranslation } from "react-i18next";
+
+import "./home.css";
 
 interface SearchForm {
   roomType: string;
@@ -12,19 +14,20 @@ interface SearchForm {
 }
 
 const SearchBar: React.FC = () => {
-  const [t] = useTranslation("global");
   const {
     isGuestsOpen,
     checkIn,
     checkOut,
     roomType,
     guests,
+
     setIsGuestsOpen,
     setCheckIn,
     setCheckOut,
     setRoomType,
     handleGuestsChange,
   } = useSearchStore();
+  const [t] = useTranslation("global");
 
   const {
     register,
@@ -34,19 +37,15 @@ const SearchBar: React.FC = () => {
 
   const onSubmit = async (data: any) => {
     const { roomType, checkIn, checkOut } = data;
-
     setRoomType(roomType);
     setCheckIn(checkIn);
     setCheckOut(checkOut);
-
-    await fetchRooms("rooms");
+    await fetchRooms("rooms", roomType);
   };
   return (
     <div className="max-w-6xl mx-auto px-4 mt-8 " id="searchBar">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold mb-2">
-          {t("searchbar.title")}
-        </h2>
+        <h2 className="text-2xl font-bold mb-2">{t("searchbar.title")}</h2>
         <h3 className="text-xl mb-2">{t("searchbar.subtitle")}</h3>
       </div>
       <div className="bg-white rounded-lg shadow-xl py-4 px-3">
@@ -83,6 +82,7 @@ const SearchBar: React.FC = () => {
                 type="date"
                 value={checkIn}
                 onChange={(e) => setCheckIn(e.target.value)}
+                min={hoy}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 placeholder="Check In"
               />
@@ -100,6 +100,7 @@ const SearchBar: React.FC = () => {
                 type="date"
                 value={checkOut}
                 onChange={(e) => setCheckOut(e.target.value)}
+                min={fechaMañana}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 placeholder="Check Out"
               />
@@ -121,7 +122,9 @@ const SearchBar: React.FC = () => {
                     {!guests ? (
                       <span className="text-sm">Viajeros</span>
                     ) : (
-                      <span>{guests.adults} {t("searchbar.adults")}</span>
+                      <span>
+                        {guests.adults} {t("searchbar.adults")}
+                      </span>
                     )}
                     <br />
                   </div>
@@ -157,7 +160,7 @@ const SearchBar: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span>{t("searchbar.children")}</span>
+                      <span>Niños</span>
                       <div className="flex items-center gap-3">
                         <button
                           type="button"

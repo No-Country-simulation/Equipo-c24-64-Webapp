@@ -1,13 +1,11 @@
 import useSearchStore from "@/hooks/useSearchStore";
 const API_HOST = import.meta.env.VITE_API_HOST;
 
-const fetchRooms = async (url) => {
-  const { roomType } = useSearchStore.getState();
+const fetchRooms = async (url, roomType) => {
   try {
     const response = await fetch(`${API_HOST}/api/${url}`);
     const data = await response.json();
     let filteredRooms = data;
-
     if (roomType) {
       const capacityMap = {
         single: 1,
@@ -19,12 +17,11 @@ const fetchRooms = async (url) => {
       };
       const targetCapacity = capacityMap[roomType];
 
-      if (targetCapacity) {
+      if (targetCapacity !== undefined) {
         filteredRooms = data.filter((room) => room.capacity === targetCapacity);
       }
     }
     useSearchStore.getState().setRooms(filteredRooms);
-
     return filteredRooms;
   } catch (error) {
     console.error("Error fetching rooms:", error);

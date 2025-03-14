@@ -1,4 +1,4 @@
-import Form from "@/components/dashboard/Form.jsx";
+import Form from "@/components/dashboard/Form.js";
 import Header from "@/layouts/Header";
 
 function Dashboard() {
@@ -8,7 +8,6 @@ function Dashboard() {
       <div className="mt-16">
         <Form />
       </div>
-      {/* <Rooms /> */}
     </>
   );
 }

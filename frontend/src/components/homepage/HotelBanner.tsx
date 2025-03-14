@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 
 function HotelBanner() {
   const { t } = useTranslation("global");
+
   const { ref, inView } = useScrollAnimation();
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -53,7 +54,6 @@ function HotelBanner() {
       name: t("hotelbanner.services"),
     },
   ];
-
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === hotelSlides.length - 1 ? 0 : prev + 1));
   };
@@ -98,9 +98,7 @@ function HotelBanner() {
                       {amenity.icon}
                     </div>
                   </div>
-                  <span className="text-sm text-slate-300">
-                    {amenity.name}
-                  </span>
+                  <span className="text-sm text-slate-300">{amenity.name}</span>
                 </div>
               ))}
             </div>
@@ -115,12 +113,13 @@ function HotelBanner() {
             {hotelSlides.map((slide, index) => (
               <div
                 key={index}
-                className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
-                  }`}
+                className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
+                  index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
+                }`}
               >
                 <img
                   src={slide.image}
-                  alt={t(`spaSlidesone.title${index + 1}`)}
+                  alt={slide.title}
                   loading="lazy"
                   className="w-full h-full object-cover"
                 />
@@ -134,10 +133,11 @@ function HotelBanner() {
                         <button
                           key={dotIndex}
                           onClick={() => goToSlide(dotIndex)}
-                          className={`w-3 h-3 rounded-full transition-all ${dotIndex === currentSlide
+                          className={`w-3 h-3 rounded-full transition-all ${
+                            dotIndex === currentSlide
                               ? "bg-blue-500 w-8"
                               : "bg-white/50 hover:bg-white/80"
-                            }`}
+                          }`}
                           aria-label={`Go to slide ${dotIndex + 1}`}
                         />
                       ))}

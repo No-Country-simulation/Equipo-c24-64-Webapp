@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 const FAQ = () => {
   const { ref, inView } = useInView();
-  const { t } = useTranslation("global"); // Asegúrate de usar el namespace correcto
+  const { t } = useTranslation("global");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleAnswer = (index: number) => {
@@ -15,9 +15,7 @@ const FAQ = () => {
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-8" id="faq">
-      <h2 className="text-2xl font-bold text-center mb-6">
-        {t("faq.title")}
-      </h2>
+      <h2 className="text-2xl font-bold text-center mb-6">{t("faq.title")}</h2>
       <div className="space-y-4 cursor-pointer" ref={ref}>
         {t("faq.questions", { returnObjects: true }).map(
           (item: { question: string; answer: string }, index: number) => (

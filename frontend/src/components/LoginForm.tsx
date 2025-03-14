@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { BackgroundBeams } from "@/styles/bgLogin/BackgroundBeams";
+import { BackgroundBeams } from "@/assets/styles/bgLogin/BackgroundBeams";
 import fetchLogin from "@/services/fetchLogin";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -28,23 +28,27 @@ const LoginForm: React.FC = () => {
   } = useForm<ILoginInputs>({
     resolver: yupResolver(schema),
   });
-
+  const [t] = useTranslation("global");
   const url = "auth/login";
+
   const onSubmit = async (data: ILoginInputs) => {
     const logIn = await fetchLogin(url, data);
-
+    console.log(logIn);
     if (logIn.success) {
       toast.success("Inicio de sesión exitoso");
-      navigate("/");
+      if (logIn.role === "RECEPTIONIST") {
+        navigate("/dashboard");
+      } else {
+        navigate("/");
+      }
     } else {
       toast.error(logIn.errorMessage);
     }
   };
-  const [t] = useTranslation("global");
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <BackgroundBeams />
+      <BackgroundBeams className="hidden lg:block" />
       <div className="my-4 sm:mx-auto sm:w-full sm:max-w-md z-10">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <div className="sm:mx-auto sm:w-full sm:max-w-md pb-6">
@@ -138,7 +142,7 @@ const LoginForm: React.FC = () => {
               {t("loginform.forgotpassword")}
             </a>
             <p className="mt-8 text-center text-sm text-gray-600">
-            {t("loginform.notcount")}{" "}
+              {t("loginform.notcount")}{" "}
               <a
                 href="/register"
                 className="font-medium text-indigo-600 hover:text-indigo-500"

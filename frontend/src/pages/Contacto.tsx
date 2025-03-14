@@ -20,8 +20,8 @@ const Contacto = () => {
             transition={{ duration: 0.5 }}
           >
             <p className="text-lg leading-relaxed text-slate-500 mt-3">
-            {t("contact.subtitle")} <br />
-            {t("contact.description")}
+              {t("contact.subtitle")} <br />
+              {t("contact.description")}
             </p>
             <div className="mt-5">
               <div className="flex items-center mt-2 space-x-2 text-gray-600">
@@ -60,10 +60,10 @@ const Contacto = () => {
       <div className="w-full bg-gray-50 py-12">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8 text-blue-600">
-          {t("contact.address")}
+            {t("contact.address")}
           </h2>
           <p className="text-lg font-semibold text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-          {t("contact.textone")}
+            {t("contact.textone")}
           </p>
           <div className="flex justify-center">
             <iframe

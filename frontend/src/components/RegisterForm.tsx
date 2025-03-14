@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import fetchRegister from "@/services/fetchRegister";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
-import { BackgroundBeams } from "@/styles/bgLogin/BackgroundBeams";
-import {useTranslation} from "react-i18next";
+import { BackgroundBeams } from "@/assets/styles/bgLogin/BackgroundBeams";
+import { useTranslation } from "react-i18next";
 
 interface IFormInputs {
   name: string;
@@ -61,6 +61,7 @@ const RegisterForm = () => {
   } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
   });
+  const [t] = useTranslation("global");
 
   const url = "auth/register";
   const onSubmit = async (data: IFormInputs) => {
@@ -73,12 +74,10 @@ const RegisterForm = () => {
     }
   };
 
-  const  [ t ] = useTranslation("global");
-
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <Toaster position="top-center" reverseOrder={false} />
-      <BackgroundBeams className="min-h-[162vh]" />
+      <BackgroundBeams className="min-h-[162vh] hidden lg:block" />
       <div className="my-4 sm:mx-auto sm:w-full sm:max-w-md z-10">
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
@@ -87,13 +86,13 @@ const RegisterForm = () => {
                 {t("registerform.account")}
               </h2>
               <p className="mt-2 text-center text-sm text-gray-600">
-              {t("registerform.haveaacount")}{" "}
-                <a
-                  href="/login"
+                {t("registerform.haveaacount")}{" "}
+                <Link
+                  to="/login"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   {t("registerform.register")}
-                </a>
+                </Link>
               </p>
             </div>
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>

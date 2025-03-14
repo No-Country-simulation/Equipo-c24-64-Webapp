@@ -39,7 +39,7 @@ export const hotelSlides: HotelSlide[] = [
   {
     image:
       "https://i.postimg.cc/Wz0Lry5P/vecteezy-luxurious-pool-in-the-garden-of-a-private-villa-hanging-11602775.jpg",
-    title: "Comodidad",
+    title: "Titulo 5",
     subtitle: "",
     link: "#",
   },

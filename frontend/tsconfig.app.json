@@ -28,5 +28,8 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "swiper.d.ts" // Incluye el archivo de declaración si está fuera de la carpeta src
+  ]
 }

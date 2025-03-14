@@ -7,7 +7,9 @@ import useSearchStore from "@/hooks/useSearchStore.tsx";
 import { calculatePrice } from "@/utils/totalPrice";
 import toast from "react-hot-toast";
 import sonidoConfirmacion from "@/assets/confirmFormSound.mp3";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
 const schema = yup.object({
   nombre: yup.string().required("El nombre es requerido"),
   apellido: yup.string().required("El apellido es requerido"),
@@ -42,9 +44,12 @@ const schema = yup.object({
 type FormData = yup.InferType<typeof schema>;
 
 const ReservationForm = () => {
-  const { reservation, checkIn, checkOut, guests } = useSearchStore();
+  const { checkIn, checkOut, guests } = useSearchStore();
+  const reserva = sessionStorage.getItem("reserva");
+  const reservaParseada = reserva ? JSON.parse(reserva) : null;
+  console.log(reservaParseada);
   const { nightQuantity, totalPrice, subTotalPrice, ivaInDollars } =
-    calculatePrice(checkIn, checkOut, reservation?.typeRoom.price ?? 0);
+    calculatePrice(checkIn, checkOut, reservaParseada?.typeRoom.price ?? 0);
   const {
     register,
     handleSubmit,
@@ -55,15 +60,17 @@ const ReservationForm = () => {
       formaPago: "tarjeta",
     },
   });
+  const [t] = useTranslation("global");
+
   const roomsQuantity = guests.rooms;
-  const audioRef = useRef(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const onSubmit = async (data: FormData) => {
     const bookingData = {
       checkIn,
       checkOut,
-      peopleQuantity: reservation?.capacity,
-      idRoomType: reservation?.id,
+      peopleQuantity: reservaParseada?.capacity,
+      idRoomType: reservaParseada?.id,
       email: data.email,
       roomsQuantity: roomsQuantity,
       specialRequests: data.peticionesEspeciales,
@@ -120,16 +127,16 @@ const ReservationForm = () => {
         }
       } else {
         toast.success("Reserva confirmada y formulario enviado con exito!");
+
         setTimeout(() => {
-          audioRef.current.play();
+          audioRef.current?.play();
         }, 600);
+        sessionStorage.clear();
       }
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
-  const [ t ] = useTranslation("global");
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -147,7 +154,7 @@ const ReservationForm = () => {
                 {t("reservationform.data")}
               </h2>
               <p className="text-sm text-gray-500 mb-4">
-              {t("reservationform.datainformation")}
+                {t("reservationform.datainformation")}
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -233,16 +240,16 @@ const ReservationForm = () => {
                       errors.nacionalidad ? "border-red-500" : "border-gray-300"
                     }`}
                   >
-                    <option value="">{t("reservationform.selectnacionality")}</option>
+                    <option value="">Seleccione Nacionalidad</option>
                     <option value="argentina">Argentina</option>
-                    <option value="brasil">{t("reservationform.countryone")}</option>
+                    <option value="brasil">Brasil</option>
                     <option value="chile">Chile</option>
                     <option value="colombia">Colombia</option>
-                    <option value="mexico">{t("reservationform.countrytwo")}</option>
-                    <option value="peru">{t("reservationform.countrythree")}</option>
+                    <option value="mexico">México</option>
+                    <option value="peru">Perú</option>
                     <option value="uruguay">Uruguay</option>
                     <option value="venezuela">Venezuela</option>
-                    <option value="otro">{t("reservationform.other")}</option>
+                    <option value="otro">Otro</option>
                   </select>
                   {errors.nacionalidad && (
                     <p className="text-red-500 text-xs mt-1">
@@ -269,7 +276,9 @@ const ReservationForm = () => {
                   >
                     <option value="">{t("reservationform.select")}</option>
                     <option value="dni">{t("reservationform.dni")}</option>
-                    <option value="pasaporte">{t("reservationform.passport")}</option>
+                    <option value="pasaporte">
+                      {t("reservationform.passport")}
+                    </option>
                     <option value="cedula">{t("reservationform.id")}</option>
                   </select>
                   {errors.tipoDocumento && (
@@ -347,7 +356,7 @@ const ReservationForm = () => {
             {/* Forma de Pago */}
             <div className="mb-8">
               <h2 className="text-2xl font-medium text-gray-700 mb-4">
-              {t("reservationform.paymentmethod")}
+                {t("reservationform.paymentmethod")}
               </h2>
 
               <div className="border border-gray-200 rounded-md mb-4">
@@ -368,14 +377,14 @@ const ReservationForm = () => {
                         {t("reservationform.payment")}
                       </label>
                       <p className="text-xs text-gray-500">
-                      {t("reservationform.confirmbook")}
+                        {t("reservationform.confirmbook")}
                       </p>
                     </div>
                   </div>
 
                   <div className="mt-4 pl-6">
                     <p className="text-sm font-medium text-gray-700 mb-2">
-                    {t("reservationform.card")}
+                      {t("reservationform.card")}
                     </p>
                     <div className="flex space-x-6">
                       <div className="flex items-center">
@@ -394,6 +403,7 @@ const ReservationForm = () => {
                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png"
                             alt="Mastercard"
                             className="h-8"
+                            loading="lazy"
                           />
                         </label>
                       </div>
@@ -411,6 +421,7 @@ const ReservationForm = () => {
                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png"
                             alt="Visa"
                             className="h-6"
+                            loading="lazy"
                           />
                         </label>
                       </div>
@@ -428,6 +439,7 @@ const ReservationForm = () => {
                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/200px-American_Express_logo_%282018%29.svg.png"
                             alt="American Express"
                             className="h-6"
+                            loading="lazy"
                           />
                         </label>
                       </div>
@@ -456,13 +468,14 @@ const ReservationForm = () => {
                         {t("reservationform.paypal")}
                       </label>
                       <p className="text-xs text-gray-500">
-                      {t("reservationform.textone")}
+                        {t("reservationform.textone")}
                       </p>
                       <div className="mt-2">
                         <img
                           src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/200px-PayPal.svg.png"
                           alt="PayPal"
                           className="h-8"
+                          loading="lazy"
                         />
                       </div>
                     </div>
@@ -498,6 +511,7 @@ const ReservationForm = () => {
                 <img
                   src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
                   alt="Hotel"
+                  loading="lazy"
                   className="w-20 h-20 object-cover rounded-md mr-4"
                 />
                 <div>
@@ -517,29 +531,45 @@ const ReservationForm = () => {
               <div className="border-t border-gray-200 pt-4 mb-4">
                 <div className="flex justify-between mb-2">
                   <span className="text-sm font-medium text-gray-700">
-                  {t("reservationform.nights")}
+                    {t("reservationform.nights")}
                   </span>
                   <span className="text-sm font-medium">{nightQuantity}</span>
                 </div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm text-gray-700">{t("reservationform.checkin")}</span>
+                  <span className="text-sm text-gray-700">
+                    {t("reservationform.checkin")}
+                  </span>
                   <span className="text-sm">{checkIn}</span>
                 </div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm text-gray-700">{t("reservationform.checkout")}</span>
+                  <span className="text-sm text-gray-700">
+                    {t("reservationform.checkout")}
+                  </span>
                   <span className="text-sm">{checkOut}</span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span className="text-sm text-gray-700">
-                  {t("reservationform.polits")}
+                    {t("reservationform.polits")}
                   </span>
-                  <span className="text-sm text-red-500">{t("reservationform.cancellation")}</span>
+                  <span className="text-sm text-red-500">
+                    {" "}
+                    {t("reservationform.cancellation")}
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-700">{t("reservationform.person")}</span>
+                  <span className="text-sm text-gray-700">
+                    {" "}
+                    {t("reservationform.person")}
+                  </span>
                   <span className="text-sm">
-                    {guests.adults} {t("reservationform.adults")} -{" "}
-                    {guests.children > 0 ? <>{guests.children} {t("reservationform.children")}</> : ""}
+                    {guests.adults} {t("reservationform.adults")}{" "}
+                    {guests.children > 0 ? (
+                      <>
+                        {guests.children}- {t("reservationform.children")}
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </span>
                 </div>
               </div>
@@ -547,25 +577,25 @@ const ReservationForm = () => {
               <div className="border-t border-gray-200 pt-4 mb-4">
                 <div className="flex justify-between mb-2">
                   <span className="text-sm font-medium text-gray-700">
-                  {t("reservationform.rooms")}
+                    {t("reservationform.rooms")}
                   </span>
                   <button className="text-blue-500 text-sm">
                     <span>-</span>
                   </button>
                 </div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm">{reservation?.name}</span>
+                  <span className="text-sm">{reservaParseada?.name}</span>
                   <span className="text-sm"></span>
                 </div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm">1 noche</span>
+                  <span className="text-sm">{nightQuantity} noches</span>
                   <span className="text-sm">
-                    USD {reservation?.typeRoom.price}
+                    USD {reservaParseada?.typeRoom.price}
                   </span>
                 </div>
                 <div className="flex justify-between font-medium">
                   <span className="text-sm font-semibold">
-                  {t("reservationform.totalroom")}
+                    {t("reservationform.totalroom")}
                   </span>
                   <span className="text-sm">USD {subTotalPrice}</span>
                 </div>
@@ -577,12 +607,10 @@ const ReservationForm = () => {
                   <span className="text-sm">USD {subTotalPrice}</span>
                 </div>
                 <div className="flex justify-between mb-1">
-                  <span className="text-sm text-gray-700">{t("reservationform.tax")}</span>
+                  <span className="text-sm text-gray-700">
+                    {t("reservationform.tax")}
+                  </span>
                   <span className="text-sm">USD {ivaInDollars}</span>
-                </div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-sm text-gray-700">{t("reservationform.booking")}</span>
-                  <span className="text-sm">-</span>
                 </div>
               </div>
 
@@ -614,11 +642,11 @@ const ReservationForm = () => {
                 </div>
               </div>
               <p className="text-xs text-gray-600 mb-2">
-              {t("reservationform.textthree")}
+                {t("reservationform.textthree")}
               </p>
-              <a href="/contacto" className="text-blue-500 text-xs">
+              <Link to="/contacto" className="text-blue-500 text-xs">
                 + {t("reservationform.click")}
-              </a>
+              </Link>
             </div>
           </div>
         </div>

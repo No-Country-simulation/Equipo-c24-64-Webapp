@@ -1,3 +1,5 @@
+import "swiper/css";
+import "swiper/css/autoplay";
 import { useState } from "react";
 import { spaSlides } from "@/data/SpaBanner";
 import reseñasData from "@/data/Reseñas";
@@ -13,13 +15,10 @@ import {
 } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/autoplay";
 import { useTranslation } from "react-i18next";
 
-// Utiliza el hook useTranslation en el componente
 const SpaSection: React.FC = () => {
-  const { t } = useTranslation("global"); // Asegúrate de usar el namespace correcto
+  const { t } = useTranslation("global");
 
   const amenitiesData = [
     {
@@ -33,7 +32,6 @@ const SpaSection: React.FC = () => {
       description: t("spasection.amenities.textfour"),
     },
   ];
-
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = () => {
@@ -47,7 +45,6 @@ const SpaSection: React.FC = () => {
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
   };
-
   return (
     <div className="max-w-7xl mx-auto">
       <div className="text-center mb-12">
@@ -55,7 +52,7 @@ const SpaSection: React.FC = () => {
           Luxe Haven Spa & Wellness
         </h1>
         <p className="text-lg text-blue-700 max-w-2xl mx-auto">
-          {t("spasection.title")}{" "}
+          Tu refugio de bienestar en el corazón de{" "}
           <span className="font-bold">Recoleta</span>
         </p>
       </div>
@@ -65,7 +62,7 @@ const SpaSection: React.FC = () => {
           <div className="flex items-center gap-2 mb-6">
             <Sparkles className="h-7 w-7 text-indigo-600 animate-bounce" />
             <h2 className="text-2xl font-bold text-blue-900">
-              {t("spasection.texttwo")}
+              Experiencia Premium
             </h2>
           </div>
 
@@ -110,16 +107,14 @@ const SpaSection: React.FC = () => {
               modules={[Autoplay]}
               className="mySwiper"
             >
-              {t("spasectiondata.reviews", { returnObjects: true }).map(
-                (review: { text: string; author: string }, index: number) => (
-                  <SwiperSlide
-                    key={index}
-                    className="flex justify-center items-center"
-                  >
-                    <ReviewCard text={review.text} author={review.author} />
-                  </SwiperSlide>
-                )
-              )}
+              {reseñasData.map((review, index) => (
+                <SwiperSlide
+                  key={index}
+                  className="flex justify-center items-center"
+                >
+                  <ReviewCard text={review.text} author={review.author} />
+                </SwiperSlide>
+              ))}
             </Swiper>
           </div>
         </div>
@@ -135,7 +130,7 @@ const SpaSection: React.FC = () => {
               >
                 <img
                   src={slide.image}
-                  alt={t(`spaSlides.title${index + 1}`)}
+                  alt={slide.title}
                   loading="lazy"
                   className="w-full h-full object-cover"
                 />
@@ -192,7 +187,7 @@ const SpaSection: React.FC = () => {
 };
 
 const FeatureCard: React.FC<{
-  icon: JSX.Element;
+  icon: React.ReactNode;
   title: string;
   description: string;
 }> = ({ icon, title, description }) => {

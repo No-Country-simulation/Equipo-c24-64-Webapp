@@ -42,17 +42,13 @@ const ServiceCards: React.FC<ServiceCardsProps> = ({
               }`}
               style={{ backgroundImage: `url(${service.image})` }}
             />
-            {/* Capa de superposición oscura con degradado */}
             <div className="absolute inset-0 bg-black/50 bg-gradient-to-t from-black/10 to-transparent transition-opacity group-hover:bg-black/40" />
 
-            {/* Título del servicio */}
             <div className="absolute inset-0 flex items-center justify-center">
               <h3 className="text-white text-2xl font-semibold text-center px-4">
                 {service.title}
               </h3>
             </div>
-
-            {/* Enlace clickeable */}
             <Link
               to={service.link}
               title={service.title}

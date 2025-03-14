@@ -10,4 +10,20 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  build: {
+    rollupOptions: {
+      onwarn(warning, rollupWarn) {
+        if (
+          warning.code === "UNUSED_EXTERNAL" ||
+          warning.code === "MODULE_LEVEL_DIRECTIVE"
+        ) {
+          return;
+        }
+        rollupWarn(warning);
+      },
+    },
+  },
+  esbuild: {
+    logLevel: "silent",
+  },
 });

@@ -26,12 +26,8 @@ const Hero: React.FC = () => {
         transition={{ duration: 0.8 }}
         className="relative text-center text-white px-6"
       >
-        <h1 className="text-6xl font-bold mb-4 inter ">
-          {t("hero.title")}
-        </h1>
-        <p className="text-2xl mb-6 font-medium">
-          {t("hero.subtitle")}
-        </p>
+        <h1 className="text-6xl font-bold mb-4 inter ">{t("hero.title")}</h1>
+        <p className="text-2xl mb-6 font-medium">{t("hero.subtitle")}</p>
         <motion.a
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}

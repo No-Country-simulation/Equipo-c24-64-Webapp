@@ -23,7 +23,8 @@ const infoCodigoQr: InfoCodigoQr = {
 
 const CodigoQr: React.FC<CodigoQr> = () => {
   const [discountCode, setDiscountCode] = useState<string>("");
-  const [daysLeft, setDaysLeft] = useState<number>(7);
+  const [t] = useTranslation("global");
+  const daysLeft = 7;
 
   useEffect(() => {
     const generateDiscountCode = () => {
@@ -31,8 +32,6 @@ const CodigoQr: React.FC<CodigoQr> = () => {
     };
     setDiscountCode(generateDiscountCode());
   }, []);
-
-  const [ t ] = useTranslation("global");
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl shadow-xl overflow-hidden md:max-w-xl transform transition duration-500 hover:scale-105">
@@ -60,14 +59,11 @@ const CodigoQr: React.FC<CodigoQr> = () => {
             {infoCodigoQr.parrafo}
           </p>
 
-          {/* Nuevo mensaje destacado */}
           <div className="mt-4 bg-indigo-50 p-3 rounded-lg border-l-4 border-indigo-500">
             <div className="flex items-start gap-2">
               <span className="h-5 w-5 text-indigo-600 mt-0.5 flex-shrink-0 hidden sm:block md:block lg:block xl:block" />
               <p className="text-indigo-800 text-sm">
-                <span className="font-semibold">
-                  {t("qrcode.textone")}
-                </span>
+                <span className="font-semibold">{t("qrcode.textone")}</span>
               </p>
             </div>
           </div>
@@ -75,7 +71,7 @@ const CodigoQr: React.FC<CodigoQr> = () => {
           <div className="mt-5 flex justify-center">
             <div className="p-4 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200 relative">
               <div className="absolute -top-2 -right-2 bg-yellow-400 text-xs font-bold px-2 py-1 rounded-full text-gray-800">
-              {t("qrcode.texttwo")}
+                {t("qrcode.texttwo")}
               </div>
               <QRCodeSVG
                 value={`http://localhost:5173/descuento-masajes-30/${discountCode}`}
@@ -115,13 +111,13 @@ const CodigoQr: React.FC<CodigoQr> = () => {
             <div className="flex items-center gap-1">
               <MapPin className="h-3.5 w-3.5" />
               <span className="font-medium text-gray-600">
-              {t("qrcode.street")}
+                {t("qrcode.street")}
               </span>
             </div>
             <div className="flex items-center gap-1">
               <Calendar className="h-3.5 w-3.5" />
               <span className="font-medium text-gray-600">
-              {t("qrcode.week")}: 10am-6pm
+                {t("qrcode.week")}: 10am-6pm
               </span>
             </div>
           </div>
@@ -139,7 +135,7 @@ const CodigoQr: React.FC<CodigoQr> = () => {
               </span>
             </a>
             <p className="mt-2 text-xs text-gray-500">
-            {t("qrcode.textseven")}
+              {t("qrcode.textseven")}
             </p>
           </div>
         </div>

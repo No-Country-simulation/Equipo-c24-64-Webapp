@@ -22,13 +22,11 @@ const Descuento: React.FC = () => {
           {t("discount.textone")}
         </h1>
         <p className="mt-4 text-center text-lg text-gray-700">
-        {t("discount.texttwo")}
+          {t("discount.texttwo")}
         </p>
 
         <div className="mt-6 text-center">
-          <p className="text-sm text-gray-500">
-          {t("discount.textthree")}
-          </p>
+          <p className="text-sm text-gray-500">{t("discount.textthree")}</p>
           <div className="mt-2 p-3 bg-gray-50 border-2 border-dashed rounded-lg">
             <p className="text-xl font-semibold text-indigo-600">
               {codigoDescuento}
@@ -45,7 +43,9 @@ const Descuento: React.FC = () => {
           </div>
 
           {copiaExitosa && (
-            <p className="mt-2 font-semibold text-sm text-green-500">{copiaExitosa}</p>
+            <p className="mt-2 font-semibold text-sm text-green-500">
+              {copiaExitosa}
+            </p>
           )}
         </div>
       </div>
