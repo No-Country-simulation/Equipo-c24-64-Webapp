@@ -27,7 +27,7 @@ spring:
     name: "Gestion De Reservas"
 
   profiles:
-    active: prod  # o 'prod' para producción
+    active: local  # o 'prod' para producción
   jpa:
     hibernate:
       ddl-auto: update
