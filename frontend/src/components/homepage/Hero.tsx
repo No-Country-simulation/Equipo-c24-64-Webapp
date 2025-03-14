@@ -10,7 +10,7 @@ const Hero: React.FC = () => {
       id="hero"
     >
       <video
-        className="absolute top-0 left-0 w-full h-full object-cover"
+        className="absolute top-0 left-0 w-full h-full object-cover brightness-75"
         autoPlay
         muted
         loop
