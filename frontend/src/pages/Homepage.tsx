@@ -7,16 +7,23 @@ import RoomListing from "@/components/rooms/RoomsListing";
 import FAQ from "../components/homepage/FAQ";
 import Weather from "../components/Weather";
 import HotelCard from "../components/homepage/HotelCard";
+import hotels from "../data/hotel";
 import HotelBanner from "../components/homepage/HotelBanner";
+import { motion } from "framer-motion";
+import useScrollAnimation from "@/hooks/useInView";
 import SpaSection from "@/components/spaSection/SpaSection";
+import { useTranslation } from "react-i18next";
 
 const Home: React.FC = () => {
+  const [ t ] = useTranslation("global");
+  const { ref, inView } = useScrollAnimation();
+  const hasHotels = Array.isArray(hotels) && hotels.length > 0;
   return (
     <div className="bg-white text-black min-h-screen ">
       <Header />
       <Hero />
       {/* <SearchBar/> */}
-      <section className="pt-12 px-4 sm:px-8 bg-gray-50">
+      <section className="pt-12 pb-4 px-4 sm:px-8 bg-gray-50">
         <RoomListing />
       </section>
       <section className="pb-12 px-4 sm:px-8 bg-gray-100">
@@ -36,7 +43,38 @@ const Home: React.FC = () => {
       <FAQ />
       {/* Sección de Ofertas de Hoteles */}
       <section className="py-12" id="ofertas">
-        <HotelCard />
+        <h2 className="text-2xl font-bold text-center mb-6">
+          {t("homepage.title")}
+        </h2>
+        <div className="flex flex-wrap gap-6 justify-center">
+          {hasHotels ? (
+            hotels.map((hotel) => (
+              <motion.a
+                ref={ref}
+                initial={{ opacity: 0, y: 100 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 1 }}
+                href={hotel.link}
+                key={hotel.id}
+              >
+                <HotelCard
+                  image={hotel.image}
+                  title={hotel.title}
+                  location={hotel.location}
+                  price={hotel.price}
+                />
+              </motion.a>
+            ))
+          ) : (
+            <p>{t("homepage.title2")}</p>
+          )}
+        </div>
+        <div>
+          <audio controls>
+            <source src="ruta-de-tu-musica.mp3" type="audio/mp3" />
+            {t("homepage.title3")}
+          </audio>
+        </div>
       </section>
       <Footer />
     </div>

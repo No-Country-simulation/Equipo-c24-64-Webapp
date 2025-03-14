@@ -1,4 +1,4 @@
-import Form from "@/components/dashboard/Form.js";
+import Form from "@/components/dashboard/Form.jsx";
 import Header from "@/layouts/Header";
 
 function Dashboard() {

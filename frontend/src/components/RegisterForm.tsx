@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import fetchRegister from "@/services/fetchRegister";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
-import { BackgroundBeams } from "@/assets/styles/bgLogin/BackgroundBeams";
+import { BackgroundBeams } from "@/styles/bgLogin/BackgroundBeams";
+import {useTranslation} from "react-i18next";
 
 interface IFormInputs {
   name: string;
@@ -72,6 +73,8 @@ const RegisterForm = () => {
     }
   };
 
+  const  [ t ] = useTranslation("global");
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <Toaster position="top-center" reverseOrder={false} />
@@ -81,16 +84,16 @@ const RegisterForm = () => {
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <div className="pt-6 pb-8 sm:mx-auto sm:w-full sm:max-w-md">
               <h2 className="text-center text-3xl font-extrabold text-blue-600">
-                Crear una cuenta
+                {t("registerform.account")}
               </h2>
               <p className="mt-2 text-center text-sm text-gray-600">
-                ¿Ya tienes una cuenta?{" "}
-                <Link
-                  to="/login"
+              {t("registerform.haveaacount")}{" "}
+                <a
+                  href="/login"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
-                  Ingrese aquí
-                </Link>
+                  {t("registerform.register")}
+                </a>
               </p>
             </div>
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -99,7 +102,7 @@ const RegisterForm = () => {
                   htmlFor="name"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Nombre
+                  {t("registerform.name")}
                 </label>
                 <div className="mt-1">
                   <input
@@ -122,7 +125,7 @@ const RegisterForm = () => {
                   htmlFor="lastname"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Apellido
+                  {t("registerform.lastname")}
                 </label>
                 <div className="mt-1">
                   <input
@@ -145,7 +148,7 @@ const RegisterForm = () => {
                   htmlFor="username"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Nombre de Usuario
+                  {t("registerform.username")}
                 </label>
                 <div className="mt-1">
                   <input
@@ -167,7 +170,7 @@ const RegisterForm = () => {
                   htmlFor="dni"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  DNI
+                  {t("registerform.dni")}
                 </label>
                 <div className="mt-1">
                   <input
@@ -189,7 +192,7 @@ const RegisterForm = () => {
                   htmlFor="address"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Dirección
+                  {t("registerform.address")}
                 </label>
                 <div className="mt-1">
                   <input
@@ -212,7 +215,7 @@ const RegisterForm = () => {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Email
+                  {t("registerform.email")}
                 </label>
                 <div className="mt-1">
                   <input
@@ -235,7 +238,7 @@ const RegisterForm = () => {
                   htmlFor="phoneNumber"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Teléfono
+                  {t("registerform.phone")}
                 </label>
                 <div className="mt-1">
                   <input
@@ -258,7 +261,7 @@ const RegisterForm = () => {
                   htmlFor="password"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Contraseña
+                  {t("registerform.password")}
                 </label>
                 <div className="mt-1">
                   <input
@@ -279,7 +282,7 @@ const RegisterForm = () => {
                   htmlFor="confirmPassword"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Confirmar Contraseña
+                  {t("registerform.confirmpassword")}
                 </label>
                 <div className="mt-1">
                   <input

@@ -1,13 +1,25 @@
-import { useEffect, useState } from "react";
-import { Menu, X, Heart } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+import { Menu, X, Heart, Globe } from "lucide-react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { toast } from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { t, i18n } = useTranslation("global");
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [usuario, setUsuario] = useState("");
+  const languageRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    localStorage.setItem('language', lng);
+    setIsLanguageOpen(false); 
+  };
+
   useEffect(() => {
     const nombre = sessionStorage.getItem("name");
     const apellido = sessionStorage.getItem("lastname");
@@ -16,7 +28,7 @@ const Header = () => {
       setUsuario(`${nombre} ${apellido}`);
     }
   }, []);
-  const role = sessionStorage.getItem("role");
+
   const handleLogout = () => {
     sessionStorage.clear();
     toast.success("Sesión cerrada correctamente");
@@ -24,6 +36,22 @@ const Header = () => {
       window.location.href = "/";
     }, 500);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (languageRef.current && !languageRef.current.contains(event.target as Node)) {
+        setIsLanguageOpen(false);
+      }
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <header
@@ -34,65 +62,87 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
-            <Link to="/" className="flex items-center">
+            <a href="/" className="flex items-center">
               <span className="text-2xl font-bold text-blue-600">
                 Luxe Haven
               </span>
-            </Link>
+            </a>
           </div>
           <div className="hidden md:flex items-center space-x-4">
+            <div className="relative" ref={languageRef}>
+              <button
+                onClick={() => setIsLanguageOpen(!isLanguageOpen)}
+                className="flex cursor-pointer items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
+              >
+                <Globe size={20} />
+                <span>{t("header.language")}</span>
+              </button>
+              {isLanguageOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 border border-gray-200">
+                  <button
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                    onClick={() => changeLanguage("en")}
+                  >
+                    {t("header.english")}
+                  </button>
+                  <button
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                    onClick={() => changeLanguage("es")}
+                  >
+                    {t("header.spanish")}
+                  </button>
+                </div>
+              )}
+            </div>
             <a
-              href="/#"
+              href="/favorites"
               className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
             >
               <Heart size={20} />
-              <span>Favoritos</span>
+              <span>{t("favorites.favorites")}</span>
             </a>
             {usuario ? (
               <>
                 <FaRegUserCircle size={24} />
-                <Link
-                  to={role === "RECEPTIONIST" ? "/dashboard" : "/userProfile"}
-                  className="font-medium disabled "
-                >
+                <Link to="/userProfile" className="font-medium disabled">
                   {usuario}
                 </Link>
               </>
             ) : (
-              <Link
-                to="/login"
+              <a
+                href="/login"
                 className="text-gray-700 hover:text-blue-600 transition-colors"
               >
-                Iniciar sesión
-              </Link>
+                {t("login.login")}
+              </a>
             )}
-            <div className="relative">
+            <div className="relative" ref={menuRef}>
               <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="flex cursor-pointer items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
               >
                 <Menu size={20} />
-                <span>Menú</span>
+                <span>{t("option.option")}</span>
               </button>
-              {isOpen && (
+              {isMenuOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 border border-gray-200">
                   <Link
                     to="/"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                   >
-                    Inicio
+                    {t("option.home")}
                   </Link>
                   <a
                     href="#galeria"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                   >
-                    Galería
+                    {t("option.gallery")}
                   </a>
                   <Link
                     to="/contacto"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                   >
-                    Contacto
+                    {t("option.contact")}
                   </Link>
                   <div className="border-t border-gray-200 my-2"></div>
                   {usuario ? (
@@ -102,15 +152,15 @@ const Header = () => {
                       className="px-4 py-2 text-blue-600 w-full flex cursor-pointer hover:bg-gray-100 transition-colors"
                       onClick={handleLogout}
                     >
-                      Cerrar sesión
+                      {t("login.logout")}
                     </button>
                   ) : (
-                    <Link
-                      to="/register"
+                    <a
+                      href="/register"
                       className="block px-4 py-2 text-blue-600 hover:text-blue-700 transition-colors mt-3"
                     >
-                      Registrate
-                    </Link>
+                      {t("option.register")}
+                    </a>
                   )}
                 </div>
               )}
@@ -119,57 +169,58 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
+
       {/* Mobile Menu */}
-      {isOpen && (
+      {isMenuOpen && (
         <div className="md:hidden border-t border-gray-200">
           <div className="px-4 py-3 space-y-3">
             <a
-              href="#"
+              href="/favorites"
               className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
             >
               <Heart size={20} />
-              <span>Favoritos</span>
+              <span>{t("favorites.favorites")}</span>
             </a>
             <Link
               to="/"
               className="block text-gray-700 hover:text-blue-600 transition-colors"
             >
-              Inicio
+              {t("option.home")}
             </Link>
             <a
               href="#galeria"
               className="block text-gray-700 hover:text-blue-600 transition-colors"
             >
-              Galería
+              {t("option.gallery")}
             </a>
             <Link
               to="/contacto"
               className="block text-gray-700 hover:text-blue-600 transition-colors"
             >
-              Contacto
+              {t("option.contact")}
             </Link>
             <div className="border-t border-gray-200 pt-3 flex justify-between items-center py-1">
               {usuario ? (
                 <div className="flex space-x-2">
                   <FaRegUserCircle size={24} />
-                  <Link to="#" className="font-medium disabled ">
+                  <a href="#" className="font-medium disabled">
                     {usuario}
-                  </Link>
+                  </a>
                 </div>
               ) : (
-                <Link
-                  to="/login"
+                <a
+                  href="/login"
                   className="block text-gray-700 hover:text-blue-600 transition-colors"
                 >
-                  Iniciá sesión
-                </Link>
+                  {t("login.login")}
+                </a>
               )}
               {usuario ? (
                 <button
@@ -177,15 +228,15 @@ const Header = () => {
                   className="text-blue-600"
                   onClick={handleLogout}
                 >
-                  Cerrar sesión
+                  {t("login.logout")}
                 </button>
               ) : (
-                <Link
-                  to="/register"
+                <a
+                  href="/register"
                   className="block text-blue-600 hover:text-blue-700 transition-colors"
                 >
-                  Registrate
-                </Link>
+                  {t("login.register")}
+                </a>
               )}
             </div>
           </div>

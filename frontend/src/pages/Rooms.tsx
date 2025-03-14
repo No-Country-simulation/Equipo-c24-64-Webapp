@@ -7,7 +7,7 @@ function Rooms() {
     <>
       <Header />
       <div className="mt-16">
-         <RoomsListing /> 
+        <RoomsListing />
         <Footer />
       </div>
     </>

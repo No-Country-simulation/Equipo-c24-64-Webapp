@@ -1,6 +1,7 @@
 import { create } from "zustand";
+
 export interface Room {
-  id: number;
+  id: string;
   name: string;
   description: string;
   capacity: number;
@@ -18,6 +19,18 @@ interface SearchState {
   checkOut: string;
   roomType: string;
   rooms: Room[];
+  reservation: {
+    id: string;
+    name: string;
+    description: string;
+    capacity: number;
+    typeRoom: {
+      name: string;
+      description: string;
+      capacity: number;
+      price: number;
+    };
+  } | null;
   guests: {
     adults: number;
     children: number;
@@ -33,6 +46,7 @@ interface SearchState {
     children: number;
     rooms: number;
   }) => void;
+  setReservation: (reservation: SearchState["reservation"]) => void;
   handleGuestsChange: (
     type: "adults" | "children" | "rooms",
     operation: "add" | "subtract"
@@ -45,6 +59,7 @@ const useSearchStore = create<SearchState>((set) => ({
   checkOut: "",
   roomType: "",
   rooms: [],
+  reservation: null,
   guests: {
     adults: 2,
     children: 0,
@@ -56,6 +71,7 @@ const useSearchStore = create<SearchState>((set) => ({
   setRoomType: (roomType) => set({ roomType }),
   setGuests: (guests) => set({ guests }),
   setRooms: (rooms) => set({ rooms }),
+  setReservation: (reservation) => set({ reservation }),
   handleGuestsChange: (type, operation) => {
     set((state) => ({
       guests: {

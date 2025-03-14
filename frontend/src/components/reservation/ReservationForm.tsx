@@ -7,7 +7,7 @@ import useSearchStore from "@/hooks/useSearchStore.tsx";
 import { calculatePrice } from "@/utils/totalPrice";
 import toast from "react-hot-toast";
 import sonidoConfirmacion from "@/assets/confirmFormSound.mp3";
-import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const schema = yup.object({
   nombre: yup.string().required("El nombre es requerido"),
   apellido: yup.string().required("El apellido es requerido"),
@@ -42,12 +42,9 @@ const schema = yup.object({
 type FormData = yup.InferType<typeof schema>;
 
 const ReservationForm = () => {
-  const { checkIn, checkOut, guests } = useSearchStore();
-  const reserva = sessionStorage.getItem("reserva");
-  const reservaParseada = reserva ? JSON.parse(reserva) : null;
-  console.log(reservaParseada);
+  const { reservation, checkIn, checkOut, guests } = useSearchStore();
   const { nightQuantity, totalPrice, subTotalPrice, ivaInDollars } =
-    calculatePrice(checkIn, checkOut, reservaParseada?.typeRoom.price ?? 0);
+    calculatePrice(checkIn, checkOut, reservation?.typeRoom.price ?? 0);
   const {
     register,
     handleSubmit,
@@ -59,14 +56,14 @@ const ReservationForm = () => {
     },
   });
   const roomsQuantity = guests.rooms;
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRef = useRef(null);
 
   const onSubmit = async (data: FormData) => {
     const bookingData = {
       checkIn,
       checkOut,
-      peopleQuantity: reservaParseada?.capacity,
-      idRoomType: reservaParseada?.id,
+      peopleQuantity: reservation?.capacity,
+      idRoomType: reservation?.id,
       email: data.email,
       roomsQuantity: roomsQuantity,
       specialRequests: data.peticionesEspeciales,
@@ -123,16 +120,16 @@ const ReservationForm = () => {
         }
       } else {
         toast.success("Reserva confirmada y formulario enviado con exito!");
-
         setTimeout(() => {
-          audioRef.current?.play();
+          audioRef.current.play();
         }, 600);
-        sessionStorage.clear();
       }
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
+  const [ t ] = useTranslation("global");
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -147,10 +144,10 @@ const ReservationForm = () => {
           <div className="lg:w-2/3">
             <div className="mb-8">
               <h2 className="text-2xl font-medium text-gray-700 mb-2">
-                Tus Datos
+                {t("reservationform.data")}
               </h2>
               <p className="text-sm text-gray-500 mb-4">
-                Datos del titular de la reserva.
+              {t("reservationform.datainformation")}
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -159,7 +156,7 @@ const ReservationForm = () => {
                     htmlFor="nombre"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Nombre
+                    {t("reservationform.name")}
                   </label>
                   <input
                     type="text"
@@ -181,7 +178,7 @@ const ReservationForm = () => {
                     htmlFor="apellido"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Apellido
+                    {t("reservationform.lastname")}
                   </label>
                   <input
                     type="text"
@@ -204,7 +201,7 @@ const ReservationForm = () => {
                   htmlFor="telefono"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Teléfono
+                  {t("reservationform.phone")}
                 </label>
                 <input
                   type="tel"
@@ -227,7 +224,7 @@ const ReservationForm = () => {
                     htmlFor="nacionalidad"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Nacionalidad
+                    {t("reservationform.nacionality")}
                   </label>
                   <select
                     id="nacionalidad"
@@ -236,16 +233,16 @@ const ReservationForm = () => {
                       errors.nacionalidad ? "border-red-500" : "border-gray-300"
                     }`}
                   >
-                    <option value="">Seleccione Nacionalidad</option>
+                    <option value="">{t("reservationform.selectnacionality")}</option>
                     <option value="argentina">Argentina</option>
-                    <option value="brasil">Brasil</option>
+                    <option value="brasil">{t("reservationform.countryone")}</option>
                     <option value="chile">Chile</option>
                     <option value="colombia">Colombia</option>
-                    <option value="mexico">México</option>
-                    <option value="peru">Perú</option>
+                    <option value="mexico">{t("reservationform.countrytwo")}</option>
+                    <option value="peru">{t("reservationform.countrythree")}</option>
                     <option value="uruguay">Uruguay</option>
                     <option value="venezuela">Venezuela</option>
-                    <option value="otro">Otro</option>
+                    <option value="otro">{t("reservationform.other")}</option>
                   </select>
                   {errors.nacionalidad && (
                     <p className="text-red-500 text-xs mt-1">
@@ -259,7 +256,7 @@ const ReservationForm = () => {
                     htmlFor="tipoDocumento"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Tipo Documento
+                    {t("reservationform.typeid")}
                   </label>
                   <select
                     id="tipoDocumento"
@@ -270,10 +267,10 @@ const ReservationForm = () => {
                         : "border-gray-300"
                     }`}
                   >
-                    <option value="">Elegir</option>
-                    <option value="dni">DNI</option>
-                    <option value="pasaporte">Pasaporte</option>
-                    <option value="cedula">Cédula de Identidad</option>
+                    <option value="">{t("reservationform.select")}</option>
+                    <option value="dni">{t("reservationform.dni")}</option>
+                    <option value="pasaporte">{t("reservationform.passport")}</option>
+                    <option value="cedula">{t("reservationform.id")}</option>
                   </select>
                   {errors.tipoDocumento && (
                     <p className="text-red-500 text-xs mt-1">
@@ -288,7 +285,7 @@ const ReservationForm = () => {
                   htmlFor="numeroDocumento"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Número de Documento
+                  {t("reservationform.idnumber")}
                 </label>
                 <input
                   type="text"
@@ -313,7 +310,7 @@ const ReservationForm = () => {
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Dirección de e-mail
+                    {t("reservationform.email")}
                   </label>
                   <input
                     type="email"
@@ -336,7 +333,7 @@ const ReservationForm = () => {
                   htmlFor="peticionesEspeciales"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Peticiones Especiales
+                  {t("reservationform.wish")}
                 </label>
                 <textarea
                   id="peticionesEspeciales"
@@ -350,7 +347,7 @@ const ReservationForm = () => {
             {/* Forma de Pago */}
             <div className="mb-8">
               <h2 className="text-2xl font-medium text-gray-700 mb-4">
-                Forma de Pago
+              {t("reservationform.paymentmethod")}
               </h2>
 
               <div className="border border-gray-200 rounded-md mb-4">
@@ -368,17 +365,17 @@ const ReservationForm = () => {
                         htmlFor="anticipado"
                         className="block text-sm font-medium text-gray-700 mb-1"
                       >
-                        Pago Anticipado 100%
+                        {t("reservationform.payment")}
                       </label>
                       <p className="text-xs text-gray-500">
-                        Confirme la reserva y asegure disponibilidad
+                      {t("reservationform.confirmbook")}
                       </p>
                     </div>
                   </div>
 
                   <div className="mt-4 pl-6">
                     <p className="text-sm font-medium text-gray-700 mb-2">
-                      Seleccione Tarjeta
+                    {t("reservationform.card")}
                     </p>
                     <div className="flex space-x-6">
                       <div className="flex items-center">
@@ -456,10 +453,10 @@ const ReservationForm = () => {
                         htmlFor="paypal"
                         className="block text-sm font-medium text-gray-700 mb-1"
                       >
-                        Pago con PayPal
+                        {t("reservationform.paypal")}
                       </label>
                       <p className="text-xs text-gray-500">
-                        Pague de forma segura utilizando su cuenta de PayPal
+                      {t("reservationform.textone")}
                       </p>
                       <div className="mt-2">
                         <img
@@ -484,7 +481,7 @@ const ReservationForm = () => {
                   htmlFor="aceptaTerminos"
                   className="text-sm text-gray-700"
                 >
-                  Acepto términos y condiciones
+                  {t("reservationform.texttwo")}
                 </label>
                 {errors.aceptaTerminos && (
                   <p className="text-red-500 text-xs ml-2">
@@ -520,29 +517,29 @@ const ReservationForm = () => {
               <div className="border-t border-gray-200 pt-4 mb-4">
                 <div className="flex justify-between mb-2">
                   <span className="text-sm font-medium text-gray-700">
-                    CANT. DE NOCHES
+                  {t("reservationform.nights")}
                   </span>
                   <span className="text-sm font-medium">{nightQuantity}</span>
                 </div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm text-gray-700">LLEGADA</span>
+                  <span className="text-sm text-gray-700">{t("reservationform.checkin")}</span>
                   <span className="text-sm">{checkIn}</span>
                 </div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm text-gray-700">SALIDA</span>
+                  <span className="text-sm text-gray-700">{t("reservationform.checkout")}</span>
                   <span className="text-sm">{checkOut}</span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span className="text-sm text-gray-700">
-                    POLÍTICA DE CANCEL.
+                  {t("reservationform.polits")}
                   </span>
-                  <span className="text-sm text-red-500">No Reembolsable</span>
+                  <span className="text-sm text-red-500">{t("reservationform.cancellation")}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-700">Personas</span>
+                  <span className="text-sm text-gray-700">{t("reservationform.person")}</span>
                   <span className="text-sm">
-                    {guests.adults} Adultos{" "}
-                    {guests.children > 0 ? <>{guests.children}- Niño/s</> : ""}
+                    {guests.adults} {t("reservationform.adults")} -{" "}
+                    {guests.children > 0 ? <>{guests.children} {t("reservationform.children")}</> : ""}
                   </span>
                 </div>
               </div>
@@ -550,25 +547,25 @@ const ReservationForm = () => {
               <div className="border-t border-gray-200 pt-4 mb-4">
                 <div className="flex justify-between mb-2">
                   <span className="text-sm font-medium text-gray-700">
-                    HABITACIÓN
+                  {t("reservationform.rooms")}
                   </span>
                   <button className="text-blue-500 text-sm">
                     <span>-</span>
                   </button>
                 </div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm">{reservaParseada?.name}</span>
+                  <span className="text-sm">{reservation?.name}</span>
                   <span className="text-sm"></span>
                 </div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm">{nightQuantity} noches</span>
+                  <span className="text-sm">1 noche</span>
                   <span className="text-sm">
-                    USD {reservaParseada?.typeRoom.price}
+                    USD {reservation?.typeRoom.price}
                   </span>
                 </div>
                 <div className="flex justify-between font-medium">
                   <span className="text-sm font-semibold">
-                    TOTAL HABITACIÓN:
+                  {t("reservationform.totalroom")}
                   </span>
                   <span className="text-sm">USD {subTotalPrice}</span>
                 </div>
@@ -580,8 +577,12 @@ const ReservationForm = () => {
                   <span className="text-sm">USD {subTotalPrice}</span>
                 </div>
                 <div className="flex justify-between mb-1">
-                  <span className="text-sm text-gray-700">Impuestos:</span>
+                  <span className="text-sm text-gray-700">{t("reservationform.tax")}</span>
                   <span className="text-sm">USD {ivaInDollars}</span>
+                </div>
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">{t("reservationform.booking")}</span>
+                  <span className="text-sm">-</span>
                 </div>
               </div>
 
@@ -598,7 +599,7 @@ const ReservationForm = () => {
                 type="submit"
                 className="px-4 py-2 w-full cursor-pointer bg-blue-500 text-white rounded-md hover:bg-blue-600"
               >
-                Confirmar reserva
+                {t("reservationform.confirmationbook")}
               </button>
             </div>
             <div className="border border-gray-200 rounded-md p-4">
@@ -613,11 +614,11 @@ const ReservationForm = () => {
                 </div>
               </div>
               <p className="text-xs text-gray-600 mb-2">
-                Disponible para extranjeros no residentes
+              {t("reservationform.textthree")}
               </p>
-              <Link to="/contacto" className="text-blue-500 text-xs">
-                + Click aquí
-              </Link>
+              <a href="/contacto" className="text-blue-500 text-xs">
+                + {t("reservationform.click")}
+              </a>
             </div>
           </div>
         </div>
