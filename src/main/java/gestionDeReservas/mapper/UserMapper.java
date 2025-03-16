@@ -18,7 +18,7 @@ public class UserMapper {
     PasswordEncoder passwordEncoder;
     JwtService jwtService;
 
-    public User buildUser(RegisterRequestDTO registerRequestDTO){
+    public User toAuthResponseDTO(RegisterRequestDTO registerRequestDTO){
         return User
                 .builder()
                 .username(registerRequestDTO.username())

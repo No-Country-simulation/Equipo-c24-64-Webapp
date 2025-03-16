@@ -41,7 +41,7 @@ public class AuthImplService implements AuthService {
     public AuthResponseDTO register(RegisterRequestDTO userToRegisterDTO) {
         validateRegistration(userToRegisterDTO);
 
-        User user = userMapper.buildUser(userToRegisterDTO);
+        User user = userMapper.toAuthResponseDTO(userToRegisterDTO);
         userRepository.save(user);
 
         return userMapper.createResponseAuthDTO(user);
