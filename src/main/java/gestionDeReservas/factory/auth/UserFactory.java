@@ -1,8 +1,6 @@
-package gestionDeReservas.mapper;
+package gestionDeReservas.factory.auth;
 
-import gestionDeReservas.config.security.jwt.JwtService;
 import gestionDeReservas.enums.Role;
-import gestionDeReservas.model.dto.auth.AuthResponseDTO;
 import gestionDeReservas.model.dto.auth.RegisterRequestDTO;
 import gestionDeReservas.model.entity.User;
 import lombok.AccessLevel;
@@ -14,11 +12,12 @@ import org.springframework.stereotype.Component;
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 @RequiredArgsConstructor
-public class UserMapper {
+public class UserFactory {
     PasswordEncoder passwordEncoder;
-    JwtService jwtService;
 
     public User buildUser(RegisterRequestDTO registerRequestDTO){
+        String username = registerRequestDTO.username();
+        String upperName = username.toUpperCase();
         return User
                 .builder()
                 .username(registerRequestDTO.username())
@@ -29,22 +28,7 @@ public class UserMapper {
                 .phoneNumber(registerRequestDTO.phoneNumber())
                 .dni(registerRequestDTO.dni())
                 .password(passwordEncoder.encode(registerRequestDTO.password()))
-                .role(Role.CUSTOMER)
+                .role(upperName.equals("ADMIN") ? Role.RECEPTIONIST : Role.CUSTOMER)
                 .build();
     }
-
-    public AuthResponseDTO createResponseAuthDTO(User user){
-        return AuthResponseDTO
-                .builder()
-                .email(user.getEmail())
-                .name(user.getName())
-                .lastname(user.getLastname())
-                .role(Role.CUSTOMER)
-                .token(jwtService.getToken(user))
-                .username(user.getUsername())
-                .address(user.getAddress())
-                .phoneNumber(user.getPhoneNumber())
-                .build();
-    }
-
 }

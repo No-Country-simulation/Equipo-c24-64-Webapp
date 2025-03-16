@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +25,7 @@ public class AuthImplService implements AuthService {
     UserMapper userMapper;
     AuthenticationManager authenticationManager;
     JwtService jwtService;
+    PasswordEncoder passwordEncoder;
 
     @Override
     public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
@@ -32,7 +34,7 @@ public class AuthImplService implements AuthService {
                         loginRequestDTO.password()));
 
         User user = findUser(loginRequestDTO);
-        return userMapper.buildResponseAuthDTO(user);
+        return userMapper.createResponseAuthDTO(user);
     }
 
     @Override
@@ -42,7 +44,7 @@ public class AuthImplService implements AuthService {
         User user = userMapper.buildUser(userToRegisterDTO);
         userRepository.save(user);
 
-        return userMapper.buildResponseAuthDTO(user);
+        return userMapper.createResponseAuthDTO(user);
     }
 
     @Override
@@ -57,10 +59,9 @@ public class AuthImplService implements AuthService {
                 .orElseThrow(() -> new NotFoundException("user with email: "+email +" not founded"));
 
         validateNewUsernameAndEmail(editUserRequestDTO);
+        toEditUser(editUserRequestDTO,user);
 
-        User editedUser = userMapper.toEditUser(editUserRequestDTO,user);
-
-        userRepository.save(editedUser);
+        userRepository.save(user);
     }
 
     @Override
@@ -83,5 +84,17 @@ public class AuthImplService implements AuthService {
     private User findUser(LoginRequestDTO loginRequestDTO) {
         return userRepository.findByUsernameOrEmail(loginRequestDTO.identifier())
                 .orElseThrow(() -> new BadRequestException("user Not exists"));
+    }
+
+    private void toEditUser(EditUserRequestDTO editUser, User user) {
+        user.setEmail(editUser.email() != null ? editUser.email() : user.getEmail());
+        user.setUsername(editUser.username() != null ? editUser.username() : user.getUsername());
+        user.setPassword(editUser.password() != null ? passwordEncoder.encode(editUser.password()) :
+                user.getPassword());
+        user.setName(editUser.name() != null ? editUser.name() : user.getName());
+        user.setLastname(editUser.lastname() != null ? editUser.lastname() : user.getLastname());
+        user.setAddress(editUser.address() != null ? editUser.address() : user.getAddress());
+        user.setPhoneNumber(editUser.phoneNumber() != null ? editUser.phoneNumber() : user.getPhoneNumber());
+        user.setDni(editUser.dni() != null ? editUser.dni() : user.getDni());
     }
 }
